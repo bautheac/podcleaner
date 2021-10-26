@@ -361,6 +361,81 @@ general_clean_entries <- function(directory, verbose){
   utils_execute(verbose, clean, directory = directory, ignore_case = ignore_case)
 }
 
+
+#' Mutate operation(s) in general directory dataframe column(s)
+#'
+#' Attempts to clean the provided general directory dataframe provided.
+#'
+#' @param directory A general directory dataframe. Columns must include `occupation`,
+#'   `forename`, `surname` and `addresses`.
+#' @param verbose Whether the function should be executed silently (`FALSE`) or
+#'   not (`TRUE`).
+#'
+#' @return A dataframe.
+#'
+#' @examples
+#' directory <- data.frame(
+#'   page = c("71", "71"),
+#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+#'   addresses = c(
+#'     "1S20 Londn rd; ho. 13<J Queun sq",
+#'     "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+#'   ),
+#'   stringsAsFactors = FALSE
+#' )
+#' general_clean_entries(directory, verbose = FALSE)
+general_clean_directory_plain <- function(directory, verbose){
+
+  clean <- function(...){
+    # Fix structure ####
+    general_fix_structure(directory, verbose = verbose) %>%
+
+    # Clean entries ####
+     general_clean_entries(verbose = verbose)
+  }
+
+  utils_execute(verbose, clean, directory = directory)
+}
+
+#' Mutate operation(s) in general directory dataframe column(s)
+#'
+#' Attempts to clean the provided general directory dataframe provided. Shows a
+#'   progress bar indication the progression of the function.
+#'
+#' @param directory A general directory dataframe. Columns must include `occupation`,
+#'   `forename`, `surname` and `addresses`.
+#' @param verbose Whether the function should be executed silently (`FALSE`) or
+#'   not (`TRUE`).
+#'
+#' @return A dataframe.
+#'
+#' @examples
+#' directory <- data.frame(
+#'   page = c("71", "71"),
+#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+#'   addresses = c(
+#'     "1S20 Londn rd; ho. 13<J Queun sq",
+#'     "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+#'   ),
+#'   stringsAsFactors = FALSE
+#' )
+#' general_clean_entries(directory, verbose = FALSE)
+general_clean_directory_progress <- function(directory, verbose){
+
+  directory_split <- split(directory, (1L:nrow(directory) %/% 500L))
+
+  pb <- progress::progress_bar$new(
+    format = "  cleaning records [:bar] :percent eta: :eta",
+    total = length(directory_split), clear = FALSE, width = 100L
+  )
+
+  purrr::map_dfr(directory_split, function(df) {
+    pb$tick(); general_clean_directory_plain(df, verbose)
+  })
+}
+
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
 #' Attempts to clean the provided general directory dataframe provided.
@@ -386,15 +461,9 @@ general_clean_entries <- function(directory, verbose){
 #' general_clean_entries(directory, verbose = FALSE)
 #'
 #' @export
-general_clean_directory <- function(directory, verbose){
+general_clean_directory <- function(directory, progress = TRUE, verbose = FALSE){
 
-  clean <- function(...){
-    # Fix structure ####
-    general_fix_structure(directory, verbose = verbose) %>%
-
-      # Clean entries ####
-    general_clean_entries(verbose = verbose)
-  }
-
-  utils_execute(verbose, clean, directory = directory)
+  if (progress) general_clean_directory_progress(directory, verbose)
+  else general_clean_directory_plain(directory, verbose)
 }
+

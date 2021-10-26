@@ -169,10 +169,10 @@ test_that("general_clean_entries works for various entries", {
   expect_equal(general_clean_entries(directory, verbose = FALSE), out)
 })
 
-# clean_directory ####
-test_that("general_clean_directory works in general", {
+# general_clean_directory_progress ####
+test_that("general_clean_directory_progress works in general", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
     addresses = c(
@@ -190,5 +190,55 @@ test_that("general_clean_directory works in general", {
     address.house.number = c("136", "265", "265"),
     address.house.body = c("Queen Square.", "Argyle Street.", "Argyle Street.")
   )
-  expect_equal(general_clean_directory(directory, verbose = FALSE), out)
+  expect_equal(general_clean_directory_progress(directory, verbose = FALSE), out)
+})
+
+# general_clean_directory_plain ####
+test_that("general_clean_directory_plain works in general", {
+  directory <- tibble::tibble(
+    page = rep("71", 2L),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+    addresses = c(
+      "1S20 Londn rd; ho. 13<J Queun sq",
+      "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+    )
+  )
+  out <- tibble::tibble(
+    page = rep("71", 3L),
+    surname = c("Abbott", "Abercromby", "Abercromby"),
+    forename = c("William", "Alexander", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker", "Baker"),
+    address.trade.number = c("18, 20", "12", "29"),
+    address.trade.body = c("London Road.", "Dixon Street.", "Anderston Quay."),
+    address.house.number = c("136", "265", "265"),
+    address.house.body = c("Queen Square.", "Argyle Street.", "Argyle Street.")
+  )
+  expect_equal(general_clean_directory_plain(directory, verbose = FALSE), out)
+})
+
+# clean_directory ####
+test_that("general_clean_directory works in general", {
+  directory <- tibble::tibble(
+    page = rep("71", 2L),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+    addresses = c(
+      "1S20 Londn rd; ho. 13<J Queun sq",
+      "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+    )
+  )
+  out <- tibble::tibble(
+    page = rep("71", 3L),
+    surname = c("Abbott", "Abercromby", "Abercromby"),
+    forename = c("William", "Alexander", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker", "Baker"),
+    address.trade.number = c("18, 20", "12", "29"),
+    address.trade.body = c("London Road.", "Dixon Street.", "Anderston Quay."),
+    address.house.number = c("136", "265", "265"),
+    address.house.body = c("Queen Square.", "Argyle Street.", "Argyle Street.")
+  )
+  expect_equal(
+    general_clean_directory(directory, progress = TRUE, verbose = FALSE), out
+  )
 })
