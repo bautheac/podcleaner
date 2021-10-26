@@ -16,5 +16,5 @@ A vector of character strings.
 Attempts to clean entries of unwanted special characters
 }
 \examples{
-clean_specials(c("Wine and spirit ■merchant", "Mac» William"))
+clean_specials(c("Wine and spirit »merchant", "Mac» William"))
 }

@@ -976,7 +976,7 @@ globals_forenames <- tibble::tribble(
   "\\bKen(neth)?\\b(?(1)|\\.)",             "Kenneth",                   TRUE,
   "\\bLaurence\\b",                         "Laurence",                  TRUE,
   "\\bLawr(?:ence)?\\b",                    "Lawrence",                  TRUE,
-  "\\Malc?(?:om)?\\b",                      "Malcolm",                   TRUE,
+  "\\bMalc?(?:om)?\\b",                     "Malcolm",                   TRUE,
   "\\bMarg(?:are)?t?\\b",                   "Margaret",                  TRUE,
   "\\bMary\\b",                             "Mary",                      TRUE,
   "\\bMat(hew)?\\b(?(1)|\\.)",              "Mathew",                    TRUE,

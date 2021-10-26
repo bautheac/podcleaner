@@ -35,7 +35,7 @@ test_that("clean_surname works for various surnames", {
 # specials ####
 test_that("clean_specials works for various special characters", {
   expect_equal(
-    clean_specials(c("Wine and spirit ■merchant", "Mac» William")),
+    clean_specials(c("Wine and spirit »merchant", "Mac» William")),
     c("Wine and spirit merchant", "Mac William")
   )
 })
@@ -53,7 +53,7 @@ test_that("clean_mac works in general", {
 # address_pre_clean ####
 test_that("clean_address_pre_clean works for various addresses", {
   expect_equal(
-    clean_address_pre_clean(c(": 1S20 Lond■n st.   -", "13<J st enoch sq,;")),
+    clean_address_pre_clean(c(": 1S20 Lond»n st.   -", "13<J st enoch sq,;")),
     c("1S20 Londn st.", "13<J Saint Enoch sq.")
   )
 })

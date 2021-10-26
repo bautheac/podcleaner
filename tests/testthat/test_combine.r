@@ -112,10 +112,10 @@ test_that("combine_label_failled_matches works for various entries", {
 })
 
 
-# match_general_to_trades ####
-test_that("combine_match_general_to_trades works in general", {
+# combine_match_general_to_trades_plain ####
+test_that("combine_match_general_to_trades_plain works in general", {
   trades_directory <- tibble::tibble(
-    page = c("71", "71", "71"),
+    page = rep("71", 3L),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
@@ -123,7 +123,7 @@ test_that("combine_match_general_to_trades works in general", {
     address.trade.body = c("London Road", "Dixon Place", "High Street")
   )
   general_directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c("18, 20", ""),
@@ -144,8 +144,49 @@ test_that("combine_match_general_to_trades works in general", {
     )
   )
   expect_equal(
-    combine_match_general_to_trades(
-      trades_directory, general_directory, verbose = FALSE, method = "osa", max_dist = 5
+    combine_match_general_to_trades_plain(
+      trades_directory, general_directory, verbose = FALSE,
+      method = "osa", max_dist = 5
+    ),
+    out
+  )
+})
+
+# combine_match_general_to_trades_progress ####
+test_that("combine_match_general_to_trades_progress works in general", {
+  trades_directory <- tibble::tibble(
+    page = rep("71", 3L),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street")
+  )
+  general_directory <- tibble::tibble(
+    page = rep("71", 2L),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade.number = c("18, 20", ""),
+    address.house.number = c("136", "29"),
+    address.trade.body = c("London Road", "Dixon Place"),
+    address.house.body = c("Queen Square", "Anderston Quay")
+  )
+  out <- tibble::tibble(
+    page = rep("71", 3L),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street"),
+    address.house.number = c("136", "29", ""),
+    address.house.body = c(
+      "Queen Square", "Anderston Quay", "Failled to match with general directory"
+    )
+  )
+  expect_equal(
+    combine_match_general_to_trades_progress(
+      trades_directory, general_directory, verbose = FALSE,
+      method = "osa", max_dist = 5
     ),
     out
   )
@@ -184,7 +225,8 @@ test_that("combine_match_general_to_trades works in general", {
   )
   expect_equal(
     combine_match_general_to_trades(
-      trades_directory, general_directory, verbose = FALSE, method = "osa", max_dist = 5
+      trades_directory, general_directory, progress = TRUE, verbose = FALSE,
+      method = "osa", max_dist = 5
     ),
     out
   )

@@ -239,7 +239,7 @@ clean_occupation <- function(occupations){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_specials(c("Wine and spirit ■merchant", "Mac» William"))
+#' clean_specials(c("Wine and spirit »merchant", "Mac» William"))
 clean_specials <- function(x){
 
   clean <- gsub('[»■•"]', "", x, ignore.case = ignore_case, perl = perl)

@@ -1,15 +1,18 @@
 Package: podcleaner
-Title: What the Package Does (One Line, Title Case)
+Title: Legacy Scottish Post Office Directories Cleaner
 Version: 0.0.0.9000
 Authors@R: 
-    person("Olivier", "Bauthéac", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person(
+        "Olivier", "Bauthéac", , "olivier.bautheac@strath.ac.uk",
+        role = c("aut", "cre")
+    )
+Description: Attemps to clean OCR errors in legacy Scottish Post Office Directories.
 Imports: 
     dplyr,
     fuzzyjoin,
     here,
     magrittr,
+    progress,
     purrr,
     rlang,
     stringi,

@@ -207,6 +207,9 @@ combine_label_failled_matches <- function(directory){
 }
 
 
+
+
+
 #' Match general to trades directory records
 #'
 #' Attempts to complement trades directory dataframe with house address
@@ -218,6 +221,137 @@ combine_label_failled_matches <- function(directory){
 #' @param general_directory A general directory dataframe. Columns must include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
 #'   `address.house.number`, `address.house.body`.
+#' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
+#' @param verbose Whether the function should be executed silently (`FALSE`) or
+#'   not (`TRUE`).
+#' @param ... Further arguments to be passed down to
+#'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
+#'
+#' @return A dataframe.
+#'
+#' @seealso \code{\link{combine_match_general_to_trades}}.
+#'
+#' @examples
+#' trades_directory <- data.frame(
+#'   page = c("71", "71"),
+#'   surname = c("Abbott", "Abercromby", "Blair"),
+#'   forename = c("William", "Alexander", "John Hugh"),
+#'   occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+#'   address.trade.number = c("18, 20", "12", "280"),
+#'   address.trade.body = c("London Road", "Dixon Place", "High Street"),
+#'   stringsAsFactors = FALSE
+#' )
+#' general_directory <- data.frame(
+#'   page = c("71", "71"),
+#'   surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+#'   occupation = c("Wine and spirit merchant", "Baker"),
+#'   address.trade.number = c("18, 20", ""),
+#'   address.house.number = c("136", "29"),
+#'   address.trade.body = c("London Road", "Dixon Place"),
+#'   address.house.body = c("Queen Square", "Anderston Quay"),
+#'   stringsAsFactors = FALSE
+#' )
+#' combine_match_general_to_trades_plain(
+#'  trades_directory, general_directory, verbose = FALSE,
+#'  method = "osa", max_dist = 5
+#' )
+combine_match_general_to_trades_plain <- function(
+  trades_directory, general_directory, verbose, ...
+) {
+
+  fun <- function(trades_directory, general_directory, ...) {
+    trades_directory <- combine_make_match_string(trades_directory)
+    general_directory <- combine_make_match_string(general_directory) %>%
+      dplyr::select(dplyr::matches("^address.house"), match.string)
+
+    combined <- fuzzyjoin::stringdist_left_join(
+      x = trades_directory, y = general_directory, by = "match.string", ...
+    )
+
+    dplyr::select(combined, -dplyr::matches("match")) %>%
+      combine_label_failled_matches()
+  }
+
+  utils_execute(verbose, fun, trades_directory, general_directory, ...)
+}
+
+
+#' Match general to trades directory records
+#'
+#' Attempts to complement trades directory dataframe with house address
+#'   information from the general directory dataframe provided by matching records
+#'   from the two datasets using the distance metric specified. Shows a progress
+#'   bar indicating function progression.
+#'
+#' @param trades_directory A trades directory dataframe. Columns must include
+#'   `surname`, `forename`, `address.trade.number`, `address.trade.body`.
+#' @param general_directory A general directory dataframe. Columns must include
+#'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
+#'   `address.house.number`, `address.house.body`.
+#' @param verbose Whether the function should be executed silently (`FALSE`) or
+#'   not (`TRUE`).
+#' @param ... Further arguments to be passed down to
+#'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
+#'
+#' @return A dataframe.
+#'
+#' @seealso \code{\link{combine_match_general_to_trades}}.
+#'
+#' @examples
+#' trades_directory <- data.frame(
+#'   page = c("71", "71"),
+#'   surname = c("Abbott", "Abercromby", "Blair"),
+#'   forename = c("William", "Alexander", "John Hugh"),
+#'   occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+#'   address.trade.number = c("18, 20", "12", "280"),
+#'   address.trade.body = c("London Road", "Dixon Place", "High Street"),
+#'   stringsAsFactors = FALSE
+#' )
+#' general_directory <- data.frame(
+#'   page = c("71", "71"),
+#'   surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+#'   occupation = c("Wine and spirit merchant", "Baker"),
+#'   address.trade.number = c("18, 20", ""),
+#'   address.house.number = c("136", "29"),
+#'   address.trade.body = c("London Road", "Dixon Place"),
+#'   address.house.body = c("Queen Square", "Anderston Quay"),
+#'   stringsAsFactors = FALSE
+#' )
+#' combine_match_general_to_trades_plain(
+#'  trades_directory, general_directory, verbose = FALSE,
+#'  method = "osa", max_dist = 5
+#' )
+combine_match_general_to_trades_progress <- function(
+  trades_directory, general_directory, verbose, ...
+) {
+
+  trades_directory_split <- split(
+    trades_directory, (1L:nrow(trades_directory) %/% 500L)
+  )
+
+  pb <- progress::progress_bar$new(
+    format = "  matching records [:bar] :percent eta: :eta",
+    total = length(trades_directory_split), clear = FALSE, width = 100L
+  )
+
+  purrr::map_dfr(trades_directory_split, function(df) {
+    pb$tick()
+    combine_match_general_to_trades_plain(df, general_directory, verbose, ...)
+  })
+}
+
+#' Match general to trades directory records
+#'
+#' Attempts to complement trades directory dataframe with house address
+#'   information from the general directory dataframe provided by matching records
+#'   from the two datasets using the distance metric specified.
+#'
+#' @param trades_directory A trades directory dataframe. Columns must include
+#'   `surname`, `forename`, `address.trade.number`, `address.trade.body`.
+#' @param general_directory A general directory dataframe. Columns must include
+#'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
+#'   `address.house.number`, `address.house.body`.
+#' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #' @param ... Further arguments to be passed down to
@@ -246,29 +380,23 @@ combine_label_failled_matches <- function(directory){
 #'   stringsAsFactors = FALSE
 #' )
 #' combine_match_general_to_trades(
-#'  trades_directory, general_directory, method = "osa", verbose = FALSE, max_dist = 5
+#'  trades_directory, general_directory, progres = TRUE, verbose = FALSE,
+#'  method = "osa", max_dist = 5
 #' )
 #'
 #' @export
-combine_match_general_to_trades <- function(trades_directory, general_directory, verbose, ...){
+combine_match_general_to_trades <- function(
+  trades_directory, general_directory, progress = TRUE, verbose = FALSE, ...
+){
 
-  fun <- function(trades_directory, general_directory, ...) {
-    trades_directory <- combine_make_match_string(trades_directory)
-    general_directory <- combine_make_match_string(general_directory) %>%
-      dplyr::select(dplyr::matches("^address.house"), match.string)
-
-    combined <- fuzzyjoin::stringdist_left_join(
-      x = trades_directory, y = general_directory, by = "match.string", ...
+  if (progress)
+    combine_match_general_to_trades_progress(
+      trades_directory, general_directory, verbose, ...
     )
-
-    dplyr::select(combined, -dplyr::matches("match")) %>%
-      combine_label_failled_matches()
-  }
-
-  utils_execute(
-    verbose, fun, trades_directory = trades_directory,
-    general_directory = general_directory, ...
-  )
+  else
+    combine_match_general_to_trades_plain(
+      trades_directory, general_directory, verbose, ...
+    )
 }
 
 

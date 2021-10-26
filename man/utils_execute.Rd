@@ -22,5 +22,5 @@ Executes the function provided. Execution can be silenced via the \code{verbose}
 parameter.
 }
 \examples{
-execute(TRUE, message, "I'm showing in console")
+utils_execute(TRUE, message, "I'm showing in console")
 }
