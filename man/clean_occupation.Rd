@@ -7,7 +7,7 @@
 clean_occupation(occupations)
 }
 \arguments{
-\item{names}{A character string vector of occupation(s).}
+\item{occupations}{A character string vector of occupation(s).}
 }
 \value{
 A vector of character strings.
@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean provided occupation
 }
 \examples{
-clean_occupation(c("Wine and spirit mercht", "Bkr"))
+\dontrun{
+  clean_occupation(c("Wine and spirit mercht", "Bkr"))
+}
 }

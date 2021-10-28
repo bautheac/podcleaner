@@ -16,16 +16,18 @@ A dataframe.
 Clean "occupation" column of provided directory dataframe.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("wine and spirit mercht", "bkr"),
-  address.number = c(" -; 1820", ",,12"),
-  address.body = c(
-  "London st. ; house, Mary hill.*",
-  "&;Dixon st.; residence, Craigrownie, Cove.$"
-  ),
-  stringsAsFactors = FALSE
-)
-utils_clean_occupations(directory)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("wine and spirit mercht", "bkr"),
+    address.number = c(" -; 1820", ",,12"),
+    address.body = c(
+      "London st. ; house, Mary hill.*",
+      "&;Dixon st.; residence, Craigrownie, Cove.$"
+    ),
+    stringsAsFactors = FALSE
+  )
+  utils_clean_occupations(directory)
+}
 }

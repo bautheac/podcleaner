@@ -7,7 +7,7 @@
 clean_specials(x)
 }
 \arguments{
-\item{names}{A character string vector of occupation(s).}
+\item{x}{A character string vector.}
 }
 \value{
 A vector of character strings.
@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean entries of unwanted special characters
 }
 \examples{
-clean_specials(c("Wine and spirit »merchant", "Mac» William"))
+\dontrun{
+  clean_specials(c("Wine and spirit \u00bbmerchant", "Mac\u00bb William"))
+}
 }

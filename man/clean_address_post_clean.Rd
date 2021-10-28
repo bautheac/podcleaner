@@ -4,7 +4,7 @@
 \alias{clean_address_post_clean}
 \title{Post-cleaning operation for address entries}
 \usage{
-clean_address_post_clean(address)
+clean_address_post_clean(addresses)
 }
 \arguments{
 \item{addresses}{A character string vector of addresses.}
@@ -16,5 +16,9 @@ A vector of character strings.
 Performs post-cleaning operations on provided address entries.
 }
 \examples{
-clean_address_post_clean(c(": 1820 London Street.   -", "136 Saint Enoch Square,;"))
+\dontrun{
+  clean_address_post_clean(
+    c(": 1820 London Street.   -", "136 Saint Enoch Square,;")
+  )
+}
 }

@@ -17,5 +17,7 @@ Attempts to clean places in provided address entries: street, road, place,
 quay, etc.
 }
 \examples{
-clean_address_places(c("Bothwell Cir.", "Railway arch."))
+\dontrun{
+  clean_address_places(c("Bothwell Cir.", "Railway arch."))
+}
 }

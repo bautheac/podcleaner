@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to standardise possessives in provided address entries.
 }
 \examples{
-clean_address_possessives(c("Adam's Court", "Aird's Lane"))
+\dontrun{
+  clean_address_possessives(c("Adam's Court", "Aird's Lane"))
+}
 }

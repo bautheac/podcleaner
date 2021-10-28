@@ -7,7 +7,7 @@
 utils_IO_load(...)
 }
 \arguments{
-\item{...}{Destination parameters to be passed to \code{\link{IO_path}}.}
+\item{...}{Destination parameters to be passed to \code{\link{utils_IO_path}}.}
 }
 \value{
 R object from destination \code{.rds} file.
@@ -16,5 +16,7 @@ R object from destination \code{.rds} file.
 Load saved object as \code{.rds} file. back into memory.
 }
 \examples{
-utils_IO_load("home/projects", "glasgow-entrepreneurs")
+\dontrun{
+  utils_IO_load("home/projects", "glasgow-entrepreneurs")
+}
 }

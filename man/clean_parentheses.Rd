@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean entries of unwanted information displayed in brackets.
 }
 \examples{
-clean_parentheses("Miller street. (Agents).")
+\dontrun{
+  clean_parentheses("Miller street. (Agents).")
+}
 }

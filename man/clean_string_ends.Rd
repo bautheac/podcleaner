@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean ends of strings provided
 }
 \examples{
-clean_string_ends(c(" -; 18, 20 Mary hill.*", ",,12 Dixon Street^"))
+\dontrun{
+  clean_string_ends(c(" -; 18, 20 Mary hill.*", ",,12 Dixon Street^"))
+}
 }

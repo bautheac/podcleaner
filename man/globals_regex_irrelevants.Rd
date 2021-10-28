@@ -15,6 +15,6 @@ Regular expression used to match irrelevant information in the directory
 dataset provided.
 }
 \seealso{
-\code{\link{utils$clear_irrelevants}}
+\code{\link{utils_clear_irrelevants}}
 }
 \keyword{datasets}

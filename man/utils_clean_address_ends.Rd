@@ -16,10 +16,12 @@ A vector of character strings.
 Clean beginning and end of the provided address entries.
 }
 \examples{
-utils_clean_address_ends(
-  c(
-    " -; 18, 20 London st.; house, Mary hill.*",
-    ",,12 &;Dixon st.; residence, Craigrownie, Cove.$"
+\dontrun{
+  utils_clean_address_ends(
+    c(
+      " -; 18, 20 London st.; house, Mary hill.*",
+      ",,12 &;Dixon st.; residence, Craigrownie, Cove.$"
+    )
   )
-)
+}
 }

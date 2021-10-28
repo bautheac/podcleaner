@@ -16,5 +16,7 @@ A vector of character strings.
 Carries out miscellaneous cleaning operations in provided address entries.
 }
 \examples{
-clean_address_others(c("18, 20 London. Street, Agents", "136 Dixon Road d"))
+\dontrun{
+  clean_address_others(c("18, 20 London. Street, Agents", "136 Dixon Road d"))
+}
 }

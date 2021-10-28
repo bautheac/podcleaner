@@ -26,8 +26,18 @@ of the provided dataframe. Converts all series of white space and/or tab(s)
 in the body of all dataframe entries into a single white space.
 }
 \examples{
-df <- data.frame(location = "  glasgow ", occupation = "wine    merchant")
-df <- utils_squish_all_columns(df)
-df <- data.frame(location = "  glasgow ", occupation = "wine    merchant")
-df <- utils_squish_all_columns(df)
+\dontrun{
+  df <- data.frame(
+    location = "  glasgow ", occupation = "wine    merchant",
+    stringsAsFactors = FALSE
+  )
+  df <- utils_squish_all_columns(df)
+}
+\dontrun{
+  df <- data.frame(
+    location = "  glasgow ", occupation = "wine    merchant",
+    stringsAsFactors = FALSE
+  )
+  df <- utils_squish_all_columns(df)
+}
 }

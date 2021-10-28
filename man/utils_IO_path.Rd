@@ -11,7 +11,7 @@ utils_IO_path(directory_path, ..., extension)
 character string.}
 
 \item{...}{File name components provided as character strings to be passed
-down to \code{\link{make_file}}.}
+down to \code{\link{utils_make_file}}.}
 
 \item{extension}{File extension as character string}
 }
@@ -23,5 +23,7 @@ Paste provided path to directory and file name provided using '/' as
 separator.
 }
 \examples{
-utils_IO_path("home/projects", "glasgow-entrepreneurs", "csv")
+\dontrun{
+  utils_IO_path("home/projects", "glasgow-entrepreneurs", "csv")
+}
 }

@@ -15,6 +15,6 @@ Regular expression used in the making of the match.string that eventually
 enables the matching of general and trades directory records.
 }
 \seealso{
-\code{\link{combine$label_failled_matches}}
+\code{\link{combine_label_failed_matches}}
 }
 \keyword{datasets}

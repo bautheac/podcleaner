@@ -193,7 +193,7 @@ test_that("utils_regmatches_if_not_empty works for various patterns and argument
 ## format_directory_raw ####
 test_that("utils_format_directory_raw works for various directory names and entries", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep(71L, 2L),
     surname = c("ABBOTT     ", " ABERCROMBY"), forename = c("Wm.", "Alex"),
     occupation = c("wine and spirit merchant", "baker"),
     addresses = c(
@@ -203,7 +203,7 @@ test_that("utils_format_directory_raw works for various directory names and entr
   )
   out <- tibble::tibble(
     directory = c("1861-1862", "1861-1862"),
-    page = c(71, 71),
+    page = rep(71L, 2L),
     surname = c("ABBOTT", "ABERCROMBY"), forename = c("Wm.", "Alex"),
     occupation = c("wine and spirit merchant", "baker"),
     addresses = c(
@@ -214,7 +214,7 @@ test_that("utils_format_directory_raw works for various directory names and entr
   expect_equal(utils_format_directory_raw(directory, "1861-1862"), out)
 
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep(71L, 2L),
     surname = c("   ABBOTT ", " ABERCROMBY"), forename = c("Wm.", "Alex"),
     occupation = c("wine and spirit merchant", "baker"),
     addresses = c(
@@ -224,7 +224,7 @@ test_that("utils_format_directory_raw works for various directory names and entr
   )
   out <- tibble::tibble(
     directory = c("1863-1864", "1863-1864"),
-    page = c(71, 71),
+    page = rep(71L, 2L),
     surname = c("ABBOTT", "ABERCROMBY"), forename = c("Wm.", "Alex"),
     occupation = c("wine and spirit merchant", "baker"),
     addresses = c(
@@ -238,7 +238,7 @@ test_that("utils_format_directory_raw works for various directory names and entr
 ## clear_irrelevants ####
 test_that("utils_clear_irrelevants works for various entries", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant — See Advertisement in Appendix.", "Baker"),
     address.trade.number = c("18, 20", "12"),
@@ -248,7 +248,7 @@ test_that("utils_clear_irrelevants works for various entries", {
   )
   regex <- globals_regex_irrelevants
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c("18, 20", "12"),
@@ -262,7 +262,7 @@ test_that("utils_clear_irrelevants works for various entries", {
 ## clean_occupations ####
 test_that("utils_clean_occupations works for various occupations", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABBOTT", "ABERCROMBY"), forename = c("Wm.", "Alex"),
     occupation = c("wine and spirit mercht", "bkr"),
     addresses = c(
@@ -271,7 +271,7 @@ test_that("utils_clean_occupations works for various occupations", {
     )
   )
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABBOTT", "ABERCROMBY"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     addresses = c(
@@ -285,7 +285,7 @@ test_that("utils_clean_occupations works for various occupations", {
 ## clean_names ####
 test_that("utils_clean_names works for various names", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     addresses = c(
@@ -294,7 +294,7 @@ test_that("utils_clean_names works for various names", {
     )
   )
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
     addresses = c(
@@ -331,7 +331,7 @@ test_that("utils_clean_address_body works for various address bodies", {
 ## clean_address ####
 test_that("utils_clean_address works for various address components", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.number = c("-;1820", ",,12"),
@@ -341,7 +341,7 @@ test_that("utils_clean_address works for various address components", {
     )
   )
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.number = c("18, 20", "12"),
@@ -353,7 +353,7 @@ test_that("utils_clean_address works for various address components", {
   expect_equal(utils_clean_address(directory, "number"), out)
 
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.number = c("-;1820", ",,12"),
@@ -365,7 +365,7 @@ test_that("utils_clean_address works for various address components", {
   expect_equal(utils_clean_address(directory, "body"), out)
 
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.number = c("18, 20", "12"),
@@ -375,7 +375,7 @@ test_that("utils_clean_address works for various address components", {
     )
   )
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.number = c("18, 20", "12"),
@@ -391,7 +391,7 @@ test_that("utils_clean_address works for various address components", {
 ## remove_address_prefix ####
 test_that("utils_remove_address_prefix works for various pre-fixes", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     addresses = c(
@@ -401,7 +401,7 @@ test_that("utils_remove_address_prefix works for various pre-fixes", {
   )
   regex <- globals_regex_address_prefix
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     addresses = c(
@@ -416,7 +416,7 @@ test_that("utils_remove_address_prefix works for various pre-fixes", {
 ## label_missing_addresses ####
 test_that("utils_label_missing_addresses works in general", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c(" -; 1820", ""),
@@ -426,7 +426,7 @@ test_that("utils_label_missing_addresses works in general", {
     )
   )
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c(" -; 1820", ""),

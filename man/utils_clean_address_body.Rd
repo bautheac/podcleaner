@@ -16,7 +16,9 @@ A vector of character strings.
 Clean body record of provided address(es).
 }
 \examples{
-utils_clean_address_body(
-  c("London st.", "Mary hill.*", "&;Dixon st.", "Craigrownie, Cove.$")
-)
+\dontrun{
+  utils_clean_address_body(
+    c("London st.", "Mary hill.*", "&;Dixon st.", "Craigrownie, Cove.$")
+  )
+}
 }

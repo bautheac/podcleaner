@@ -42,21 +42,23 @@ Attempts to separate multiple trade addresses in the general directory dataframe
 provided for entries for which more than one are provided.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  addresses.trade = c(
-    "18, 20 London Street, 136 Queen Street; 134, 136 South Portland Street",
-    "12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-  ),
-  stringsAsFactors = FALSE
-)
-regex_split <- globals_regex_split_trade_addresses
-regex_filter <- globals_regex_and_filter
-regex_match <- globals_regex_and_match
-general_split_trade_addresses(
-  directory, regex_split, regex_filter, regex_match,
-  ignore_case_split = FALSE, ignore_case_filter = TRUE, ignore_case_match = FALSE
-)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    addresses.trade = c(
+      "18, 20 London Street, 136 Queen Street; 134, 136 South Portland Street",
+      "12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
+    ),
+    stringsAsFactors = FALSE
+  )
+  regex_split <- globals_regex_split_trade_addresses
+  regex_filter <- globals_regex_and_filter
+  regex_match <- globals_regex_and_match
+  general_split_trade_addresses(
+    directory, regex_split, regex_filter, regex_match,
+    ignore_case_split = FALSE, ignore_case_filter = TRUE, ignore_case_match = FALSE
+  )
+}
 }

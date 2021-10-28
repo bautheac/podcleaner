@@ -34,11 +34,11 @@ not found.}
 \item{ignore_case_filter}{Boolean specifying whether case should be ignored
 (\code{TRUE}) or not (\code{FALSE}) in search for \code{regex_filter} in \code{string_filter}.}
 
+\item{ignore_case_match}{Boolean specifying whether case should be ignored
+(\code{TRUE}) or not (\code{FALSE}) in search for \code{regex_search} in \code{string_search}.}
+
 \item{not}{Boolean specifying whether to negate the \code{regex_filter} search
 pattern (\code{TRUE}) or not (\code{FALSE}).}
-
-\item{ignore_case_search}{Boolean specifying whether case should be ignored
-(\code{TRUE}) or not (\code{FALSE}) in search for \code{regex_search} in \code{string_search}.}
 }
 \value{
 A character string vector.
@@ -50,8 +50,10 @@ any match or an empty string if none. If original pattern not found, returns
 the default character string provided.
 }
 \examples{
-utils_regmatches_if_found_or_replace(
-  c("glasgow-entrepreneurs", "aberdeen-entrepreneurs"), "^glasgow",
-  "edinburgh-entrepreneurs", "^.+(?=-)", "merchant", TRUE, TRUE, FALSE
-)
+\dontrun{
+  utils_regmatches_if_found(
+    c("glasgow-entrepreneurs", "aberdeen-entrepreneurs"), "^glasgow",
+    "edinburgh-entrepreneurs", "^.+(?=-)", "merchant", TRUE, TRUE, FALSE
+  )
+}
 }

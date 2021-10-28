@@ -35,7 +35,7 @@ test_that("clean_surname works for various surnames", {
 # specials ####
 test_that("clean_specials works for various special characters", {
   expect_equal(
-    clean_specials(c("Wine and spirit »merchant", "Mac» William")),
+    clean_specials(c("Wine and spirit \u00bbmerchant", "Mac\u00bb William")),
     c("Wine and spirit merchant", "Mac William")
   )
 })

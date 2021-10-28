@@ -1,20 +1,16 @@
-source(here::here("R", "globals.r"))
-
 # Define globals ####
 `%>%` <- magrittr::`%>%`
 ignore_case <- TRUE
 perl <- TRUE
 
 
-# Functions ####
+# Main ####
 
-## Main ####
+## Address ####
 
-### Address ####
+### clean_address_body ####
 
-#### Body ####
-
-#' Clean address entry bodies
+#' Clean address entries body
 #'
 #' Attempts to clean body of address entries provided.
 #'
@@ -23,7 +19,9 @@ perl <- TRUE
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_body(c("1S20 Londun st.", "13<J Dixon rd"))
+#' \dontrun{
+#'   clean_address_body(c("1S20 Londun st.", "13<J Dixon rd"))
+#' }
 clean_address_body <- function(addresses){
 
   # Pre-clean
@@ -40,7 +38,7 @@ clean_address_body <- function(addresses){
   clean
 }
 
-#### Numbers ####
+### clean_address_number ####
 
 #' Clean address entry numbers
 #'
@@ -51,12 +49,12 @@ clean_address_body <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_number(c("1S20 Londun st.", "13<J Dixon rd"))
-clean_address_number <- function(address){
+#' \dontrun{
+#'   clean_address_number(c("1S20 Londun st.", "13<J Dixon rd"))
+#' }
+clean_address_number <- function(addresses){
 
-  clean <- address
-
-  clean <- clean_string_ends(clean)
+  clean <- clean_string_ends(addresses)
 
   # OCR errors
 
@@ -123,18 +121,22 @@ clean_address_number <- function(address){
   clean
 }
 
-### Name ####
+## Name ####
+
+### clean_title ####
 
 #' Clean entries name title
 #'
 #' Attempts to clean titles attached to names provided: Captain, Major, etc.
 #'
-#' @param addresses A character string vector of title(s).
+#' @param titles A character string vector of title(s).
 #'
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_title(c("  Capt Wm. ABOT", "?-Rev Alex ABRCROMBIE"))
+#' \dontrun{
+#'   clean_title(c("  Capt Wm. ABOT", "?-Rev Alex ABRCROMBIE"))
+#' }
 clean_title <- function(titles){
 
   clean <- titles
@@ -148,9 +150,10 @@ clean_title <- function(titles){
   })
 
   clean
+
 }
 
-#### Forename ####
+### clean_forename ####
 
 #' Clean entries forename
 #'
@@ -166,7 +169,9 @@ clean_title <- function(titles){
 #'   B. -> Bernard, C. -> Colin, D. -> David, etc.
 #'
 #' @examples
-#' clean_forename(c("McWm.", "Jas."))
+#' \dontrun{
+#'   clean_forename(c("McWm.", "Jas."))
+#' }
 clean_forename <- function(names){
 
   clean <- clean_mac(names)
@@ -178,7 +183,8 @@ clean_forename <- function(names){
   clean
 }
 
-#### Surname ####
+### clean_surname ####
+
 #' Clean entries surname
 #'
 #' Attempts to clean provided surname.
@@ -193,7 +199,9 @@ clean_forename <- function(names){
 #'   Bayne, Baynes -> Bayne; Beattie, Beatty -> Beatty; etc.
 #'
 #' @examples
-#' clean_surname(c("ABOT", "ABRCROMBIE"))
+#' \dontrun{
+#'   clean_surname(c("ABOT", "ABRCROMBIE"))
+#' }
 clean_surname <- function(names){
 
   clean <- clean_mac(names)
@@ -205,18 +213,22 @@ clean_surname <- function(names){
   clean
 }
 
+## clean_occupation ####
+
 #' Clean entries occupation
 #'
 #' Attempts to clean provided occupation
 #'
-#' @param names A character string vector of occupation(s).
+#' @param occupations A character string vector of occupation(s).
 #'
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_occupation(c("Wine and spirit mercht", "Bkr"))
-### Occupation ####
+#' \dontrun{
+#'   clean_occupation(c("Wine and spirit mercht", "Bkr"))
+#' }
 clean_occupation <- function(occupations){
+
   clean <- occupations
 
   purrr::pwalk(globals_occupations, function(pattern, replacement, ignore_case){
@@ -228,25 +240,31 @@ clean_occupation <- function(occupations){
 
 
 
-## Utils ####
+# Utils ####
+
+## clean_specials ####
 
 #' Clean entries special characters
 #'
 #' Attempts to clean entries of unwanted special characters
 #'
-#' @param names A character string vector of occupation(s).
+#' @param x A character string vector.
 #'
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_specials(c("Wine and spirit »merchant", "Mac» William"))
+#' \dontrun{
+#'   clean_specials(c("Wine and spirit \u00bbmerchant", "Mac\u00bb William"))
+#' }
 clean_specials <- function(x){
 
-  clean <- gsub('[»■•"]', "", x, ignore.case = ignore_case, perl = perl)
-  clean <- gsub("’", "'", clean, ignore.case = ignore_case, perl = perl)
+  clean <- gsub('[\u00bb\u00a6\u2022"]', "", x, ignore.case = ignore_case, perl = perl)
+  clean <- gsub("\u2019", "'", clean, ignore.case = ignore_case, perl = perl)
 
   clean
 }
+
+## clean_parentheses ####
 
 #' Clean entries of in brackets information
 #'
@@ -257,12 +275,16 @@ clean_specials <- function(x){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_parentheses("Miller street. (Agents).")
+#' \dontrun{
+#'   clean_parentheses("Miller street. (Agents).")
+#' }
 clean_parentheses <- function(x){
 
   clean <-gsub("(.*?)\\s?\\(.*", "\\1", x, ignore.case = ignore_case, perl = perl)
   clean
 }
+
+## clean_mac ####
 
 #' Standardise "Mac" prefix in people's name
 #'
@@ -273,7 +295,9 @@ clean_parentheses <- function(x){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_mac("McWilliam")
+#' \dontrun{
+#'   clean_mac("McWilliam")
+#' }
 clean_mac <- function(names){
 
   # Standardise Mac prefix
@@ -290,11 +314,11 @@ clean_mac <- function(names){
 
 
 
-## Helpers ####
+# Helpers ####
 
-### Address ####
+## Address ####
 
-#### Pre-clean ####
+### clean_address_pre_clean ####
 
 #' Pre-cleaning operation for address entries
 #'
@@ -305,7 +329,9 @@ clean_mac <- function(names){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_pre_clean(c(": 1S20 Lond■n st.   -", "13<J st enoch sq,;"))
+#' \dontrun{
+#'   clean_address_pre_clean(c(": 1S20 Londun st.   -", "13<J st enoch sq,;"))
+#' }
 clean_address_pre_clean <- function(addresses){
 
   # Special characters
@@ -327,7 +353,7 @@ clean_address_pre_clean <- function(addresses){
 }
 
 
-#### Post-clean ####
+### clean_address_post_clean ####
 
 #' Post-cleaning operation for address entries
 #'
@@ -338,11 +364,15 @@ clean_address_pre_clean <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_post_clean(c(": 1820 London Street.   -", "136 Saint Enoch Square,;"))
-clean_address_post_clean <- function(address){
+#' \dontrun{
+#'   clean_address_post_clean(
+#'     c(": 1820 London Street.   -", "136 Saint Enoch Square,;")
+#'   )
+#' }
+clean_address_post_clean <- function(addresses){
 
   # Others
-  clean <- clean_address_others(address)
+  clean <- clean_address_others(addresses)
   # Clean ends
   clean <- clean_address_ends(clean)
 
@@ -350,7 +380,7 @@ clean_address_post_clean <- function(address){
 }
 
 
-#### Mac ####
+### clean_address_mac ####
 
 #' Standardise "Mac" prefix in address entries
 #'
@@ -361,7 +391,9 @@ clean_address_post_clean <- function(address){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_mac(c("McWilliam", "M'Donald", "M c Fyfe"))
+#' \dontrun{
+#'   clean_address_mac(c("McWilliam", "M'Donald", "M c Fyfe"))
+#' }
 clean_address_mac <- function(addresses){
 
   clean <- addresses
@@ -377,7 +409,7 @@ clean_address_mac <- function(addresses){
 }
 
 
-#### Saints ####
+### clean_address_saints ####
 
 #' Clean "Saint" prefix in address entries
 #'
@@ -388,7 +420,9 @@ clean_address_mac <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_saints(c("St Georges st.", "St Enoch sq"))
+#' \dontrun{
+#'   clean_address_saints(c("St Georges st.", "St Enoch sq"))
+#' }
 clean_address_saints <- function(addresses){
 
   clean <- gsub(
@@ -412,7 +446,7 @@ clean_address_saints <- function(addresses){
 }
 
 
-#### Possessive ####
+### clean_address_possessives ####
 
 #' Standardise possessives in address entries
 #'
@@ -423,7 +457,9 @@ clean_address_saints <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_possessives(c("Adam's Court", "Aird's Lane"))
+#' \dontrun{
+#'   clean_address_possessives(c("Adam's Court", "Aird's Lane"))
+#' }
 clean_address_possessives <- function(addresses){
 
   clean <- gsub(
@@ -437,7 +473,7 @@ clean_address_possessives <- function(addresses){
   clean
 }
 
-#### Ends ####
+### clean_address_ends ####
 
 #' Clean ends in address entries
 #'
@@ -448,7 +484,9 @@ clean_address_possessives <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_ends(c(" -; 18, 20 London st.", ",,12 Dixon st.$  "))
+#' \dontrun{
+#'   clean_address_ends(c(" -; 18, 20 London st.", ",,12 Dixon st.$  "))
+#' }
 clean_address_ends <- function(addresses){
 
   # Trim white space(s) at start and end as well as multiple white spaces in a row
@@ -463,10 +501,6 @@ clean_address_ends <- function(addresses){
     "(?:^[A-Za-z]\\s|,?\\s[A-Za-z]$)", "", clean, ignore.case = FALSE, perl = perl
   )
 
-
-  # clean <- gsub("^[A-Z]\\s", "", clean, ignore.case = FALSE, perl = perl)
-  # clean <- gsub("(\\(\\w+))(\\.)?$", "\\1)\\2", clean, ignore.case = FALSE, perl = perl)
-
   # Place period at the end of address if none
   clean <- gsub("([^.])$", "\\1\\.", clean, ignore.case = ignore_case, perl = perl)
 
@@ -475,17 +509,20 @@ clean_address_ends <- function(addresses){
   clean
 }
 
-#' Clean ends in address entries
+### clean_address_attached_words ####
+
+#' Clean attached words in address entries
 #'
-#' Attempts to clean ends in provided address entries.
+#' Attempts to separate attached words in provided address entries.
 #'
 #' @param addresses A character string vector of addresses.
 #'
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_attached_words(c("18, 20 LondonSt.", "12 Dixon.st."))
-#### Attached words ####
+#' \dontrun{
+#'   clean_address_attached_words(c("18, 20 LondonSt.", "12 Dixon.st."))
+#' }
 clean_address_attached_words <- function(addresses){
 
   # If two words are only separated by a period or comma, replace period with
@@ -505,7 +542,7 @@ clean_address_attached_words <- function(addresses){
   clean
 }
 
-#### Places ####
+### clean_address_places ####
 
 #' Clean places in address entries
 #'
@@ -517,7 +554,9 @@ clean_address_attached_words <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_places(c("Bothwell Cir.", "Railway arch."))
+#' \dontrun{
+#'   clean_address_places(c("Bothwell Cir.", "Railway arch."))
+#' }
 clean_address_places <- function(addresses){
 
   clean <- addresses
@@ -526,7 +565,6 @@ clean_address_places <- function(addresses){
     clean <<- gsub(pattern, replacement,clean, ignore.case = ignore_case, perl = perl
     )
   })
-
 
   clean <- gsub(
     "((?<!Mil|Mill|B))(road|street)\\.?", "\\1 \\2", clean,
@@ -538,7 +576,7 @@ clean_address_places <- function(addresses){
   clean
 }
 
-#### Worksites ####
+### clean_address_worksites ####
 
 #' Clean worksites in address entries
 #'
@@ -549,10 +587,13 @@ clean_address_places <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_worksites("Woodyd")
+#' \dontrun{
+#'   clean_address_worksites("Woodyd")
+#' }
 clean_address_worksites <- function(addresses){
 
   clean <- addresses
+
   purrr::pwalk(globals_worksites, function(pattern, replacement, ignore_case){
     clean <<- gsub(pattern, replacement, clean, ignore.case = ignore_case, perl = perl)
   })
@@ -560,7 +601,7 @@ clean_address_worksites <- function(addresses){
   clean
 }
 
-#### Suffixes ####
+### clean_address_suffixes ####
 
 #' Clean unwanted suffixes in address entries
 #'
@@ -571,7 +612,9 @@ clean_address_worksites <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_suffixes("36 Rose street so")
+#' \dontrun{
+#'   clean_address_suffixes("36 Rose street so")
+#' }
 clean_address_suffixes <- function(addresses){
 
   clean <- addresses
@@ -581,13 +624,12 @@ clean_address_suffixes <- function(addresses){
     )
   })
 
-
   clean <- stringr::str_squish(clean)
 
   clean
 }
 
-#### Names ####
+### clean_address_names ####
 
 #' Clean place names in address entries
 #'
@@ -598,7 +640,9 @@ clean_address_suffixes <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_names(c("18, 20 Londun Street", "136 Dixn Road"))
+#' \dontrun{
+#'   clean_address_names(c("18, 20 Londun Street", "136 Dixn Road"))
+#' }
 clean_address_names <- function(addresses){
 
   clean <- addresses
@@ -608,13 +652,12 @@ clean_address_names <- function(addresses){
     )
   })
 
-
   clean <- stringr::str_squish(clean)
 
   clean
 }
 
-#### Others ####
+### clean_address_others ####
 
 #' Miscellaneous cleaning operations in address entries
 #'
@@ -625,7 +668,9 @@ clean_address_names <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_address_others(c("18, 20 London. Street, Agents", "136 Dixon Road d"))
+#' \dontrun{
+#'   clean_address_others(c("18, 20 London. Street, Agents", "136 Dixon Road d"))
+#' }
 clean_address_others <- function(addresses){
 
   # Get rid of parasite postfixes
@@ -634,10 +679,6 @@ clean_address_others <- function(addresses){
     "(.*?)\\s\\(?\\bag(?:en)?ts?\\b\\)?.?", "\\1", addresses,
     ignore.case = ignore_case, perl = perl
   )
-  ## (House)
-  # clean <- gsub("(.*)\\s\\(house\\).?", "\\1", clean, ignore.case = ignore_case, perl = perl)
-  ## (Work)
-  # clean <- gsub("(.*)\\s\\(work\\).?", "\\1", clean, ignore.case = ignore_case, perl = perl)
 
   # Get rid of parasite punctation
   clean <- gsub("'", "", clean, ignore.case = ignore_case, perl = perl)
@@ -663,7 +704,6 @@ clean_address_others <- function(addresses){
   )
 
   # Remove single letters
-  # browser()
   clean <- gsub(
     "(?:\\s[a-z]\\b|\\s\\.[a-z]\\.(?:\\s|$))", "", clean,
     ignore.case = FALSE, perl = perl
@@ -714,7 +754,9 @@ clean_address_others <- function(addresses){
 }
 
 
-### Names ####
+## Names ####
+
+### clean_name_ends ####
 
 #' Clean ends in entries names
 #'
@@ -725,7 +767,9 @@ clean_address_others <- function(addresses){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_name_ends(c("William-", "$Alexander", "John Hugh   "))
+#' \dontrun{
+#'   clean_name_ends(c("William-", "$Alexander", "John Hugh   "))
+#' }
 clean_name_ends <- function(names){
   clean <- gsub(
     "\\b\\W*$", "", names, ignore.case = ignore_case, perl = perl
@@ -737,9 +781,9 @@ clean_name_ends <- function(names){
   clean
 }
 
-#### Forename ####
+### Forename ####
 
-##### Separate words ####
+#### clean_forename_separate_words ####
 
 #' Separate double-barrelled forenames
 #'
@@ -750,7 +794,9 @@ clean_name_ends <- function(names){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_forename_separate_words(c("William", "Alexander", "JohnHugh"))
+#' \dontrun{
+#'   clean_forename_separate_words(c("William", "Alexander", "JohnHugh"))
+#' }
 clean_forename_separate_words <- function(names){
 
   clean <- gsub(
@@ -769,6 +815,8 @@ clean_forename_separate_words <- function(names){
   clean
 }
 
+#### clean_forename_punctuation ####
+
 #' Standardise punctuation in forenames
 #'
 #' Attempts to standardise punctuation in provided name entries.
@@ -778,7 +826,9 @@ clean_forename_separate_words <- function(names){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_forename_punctuation(c("William;", "Miss", "John,Hugh"))
+#' \dontrun{
+#'   clean_forename_punctuation(c("William;", "Miss", "John,Hugh"))
+#' }
 clean_forename_punctuation <- function(names){
 
   # Standardise end of string punctuation to a period.
@@ -805,7 +855,7 @@ clean_forename_punctuation <- function(names){
   clean
 }
 
-##### Spelling ####
+#### clean_forename_spelling ####
 
 #' Clean forenames spelling
 #'
@@ -816,7 +866,9 @@ clean_forename_punctuation <- function(names){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_forename_spelling(c("Wm.", "A.", "Jn Huh"))
+#' \dontrun{
+#'   clean_forename_spelling(c("Wm.", "A.", "Jn Huh"))
+#' }
 clean_forename_spelling <- function(names){
 
   clean <- names
@@ -831,7 +883,9 @@ clean_forename_spelling <- function(names){
   clean
 }
 
-#### Surname ####
+### Surname ####
+
+#### clean_surname_punctuation ####
 
 #' Standardise punctuation in forenames
 #'
@@ -842,7 +896,9 @@ clean_forename_spelling <- function(names){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_surname_punctuation(c("Abbott*", "*Abercromby", "Blair"))
+#' \dontrun{
+#'   clean_surname_punctuation(c("Abbott*", "*Abercromby", "Blair"))
+#' }
 clean_surname_punctuation <- function(names){
 
   # Get rid of orphan star characters
@@ -851,7 +907,7 @@ clean_surname_punctuation <- function(names){
   clean
 }
 
-##### Spelling ####
+#### clean_surname_spelling ####
 
 #' Clean surnames spelling
 #'
@@ -862,10 +918,12 @@ clean_surname_punctuation <- function(names){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_surname_spelling(c("ABOT junior", "ABRCROMBIE", "BLAI senior"))
-clean_surname_spelling <- function(name){
+#' \dontrun{
+#'   clean_surname_spelling(c("ABOT junior", "ABRCROMBIE", "BLAI senior"))
+#' }
+clean_surname_spelling <- function(names){
 
-  clean <- name
+  clean <- names
 
   # Clean OCR errors, standardise spelling
   purrr::pwalk(globals_surnames, function(pattern, replacement, ignore_case) {
@@ -883,7 +941,9 @@ clean_surname_spelling <- function(name){
   clean
 }
 
-### Others ####
+## Others ####
+
+### clean_string_ends ####
 
 #' Clean string ends
 #'
@@ -894,7 +954,9 @@ clean_surname_spelling <- function(name){
 #' @return A vector of character strings.
 #'
 #' @examples
-#' clean_string_ends(c(" -; 18, 20 Mary hill.*", ",,12 Dixon Street^"))
+#' \dontrun{
+#'   clean_string_ends(c(" -; 18, 20 Mary hill.*", ",,12 Dixon Street^"))
+#' }
 clean_string_ends <- function(strings){
   clean <- gsub(
     "^[[:punct:][:space:]]+\\b", "", strings,

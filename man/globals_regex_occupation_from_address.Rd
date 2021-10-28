@@ -15,6 +15,6 @@ Regular expression used to repatriate occupation from address column in general
 directory.
 }
 \seealso{
-\code{\link{general$repatriate_occupation_from_address}}
+\code{\link{general_repatriate_occupation_from_address}}
 }
 \keyword{datasets}

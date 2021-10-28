@@ -13,17 +13,21 @@ utils_clean_ends(directory, ...)
 }
 \value{
 A dataframe.
-directory <- data.frame(
-page = c("71", "71", "71"),
-surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-occupation = c("Wine and spirit merchant", "Baker", "Victualer"),
-address.trade.number = c(" -; 1820", "", "280"),
-address.trade.body = c("London st. ; house, Mary hill.*", "", "High stret"),
-stringsAsFactors = FALSE
-)
-utils_clean_ends(directory, address.trade.number, address.trade.body)
 }
 \description{
 Clean entry ends for the specified columns in the directory dataframe
 provided
+}
+\examples{
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71", "71"),
+    surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualer"),
+    address.trade.number = c(" -; 1820", "", "280"),
+    address.trade.body = c("London st. ; house, Mary hill.*", "", "High stret"),
+    stringsAsFactors = FALSE
+  )
+  utils_clean_ends(directory, address.trade.number, address.trade.body)
+}
 }

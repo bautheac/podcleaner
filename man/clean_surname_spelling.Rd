@@ -4,7 +4,7 @@
 \alias{clean_surname_spelling}
 \title{Clean surnames spelling}
 \usage{
-clean_surname_spelling(name)
+clean_surname_spelling(names)
 }
 \arguments{
 \item{names}{A character string vector of names.}
@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean spelling in provided name entries.
 }
 \examples{
-clean_surname_spelling(c("ABOT junior", "ABRCROMBIE", "BLAI senior"))
+\dontrun{
+  clean_surname_spelling(c("ABOT junior", "ABRCROMBIE", "BLAI senior"))
+}
 }

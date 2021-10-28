@@ -23,5 +23,7 @@ Bayne, Baynes -> Bayne; Beattie, Beatty -> Beatty; etc.
 }
 
 \examples{
-clean_surname(c("ABOT", "ABRCROMBIE"))
+\dontrun{
+  clean_surname(c("ABOT", "ABRCROMBIE"))
+}
 }

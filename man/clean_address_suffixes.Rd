@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean unwanted suffixes in provided address entries.
 }
 \examples{
-clean_address_suffixes("36 Rose street so")
+\dontrun{
+  clean_address_suffixes("36 Rose street so")
+}
 }

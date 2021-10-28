@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to standardise punctuation in provided name entries.
 }
 \examples{
-clean_surname_punctuation(c("Abbott*", "*Abercromby", "Blair"))
+\dontrun{
+  clean_surname_punctuation(c("Abbott*", "*Abercromby", "Blair"))
+}
 }

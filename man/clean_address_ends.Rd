@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean ends in provided address entries.
 }
 \examples{
-clean_address_ends(c(" -; 18, 20 London st.", ",,12 Dixon st.$  "))
+\dontrun{
+  clean_address_ends(c(" -; 18, 20 London st.", ",,12 Dixon st.$  "))
+}
 }

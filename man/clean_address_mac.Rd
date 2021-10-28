@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to standardise "Mac" prefix in provided address entries.
 }
 \examples{
-clean_address_mac(c("McWilliam", "M'Donald", "M c Fyfe"))
+\dontrun{
+  clean_address_mac(c("McWilliam", "M'Donald", "M c Fyfe"))
+}
 }

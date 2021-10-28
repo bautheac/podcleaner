@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean worksites in provided address entries.
 }
 \examples{
-clean_address_worksites("Woodyd")
+\dontrun{
+  clean_address_worksites("Woodyd")
+}
 }

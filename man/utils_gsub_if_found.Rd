@@ -50,9 +50,11 @@ character string and returns the output. If not return the default character
 string provided.
 }
 \examples{
-utils_gsub_if_found(
-  "^glasgow", c("glasgow-entrepreneurs", "aberdeen-entrepreneurs"),
-  "(?<=-).+$", "merchant", "edinburgh-entrepreneurs", "pattern not found",
-  TRUE, TRUE
-)
+\dontrun{
+  utils_gsub_if_found(
+    "^glasgow", c("glasgow-entrepreneurs", "aberdeen-entrepreneurs"),
+    "(?<=-).+$", "merchant", "edinburgh-entrepreneurs", "pattern not found",
+    TRUE, TRUE
+  )
+}
 }

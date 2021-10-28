@@ -21,17 +21,19 @@ A dataframe.
 Clean address entries in the provided directory dataframe.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  address.number = c(" -; 1820", ",,12"),
-  address.body = c(
-  "London st. ; house, Mary hill.*",
-  "&;Dixon st.; residence, Craigrownie, Cove.$"
-  ),
-  stringsAsFactors = FALSE
-)
-utils_clean_address(directory, "body")
-utils_clean_address(directory, "number")
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.number = c(" -; 1820", ",,12"),
+    address.body = c(
+      "London st. ; house, Mary hill.*",
+      "&;Dixon st.; residence, Craigrownie, Cove.$"
+    ),
+    stringsAsFactors = FALSE
+  )
+  utils_clean_address(directory, "body")
+  utils_clean_address(directory, "number")
+}
 }

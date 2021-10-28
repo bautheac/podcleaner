@@ -3,7 +3,7 @@
 
 ## Addresses ####
 
-### Names ####
+### globals_address_names ####
 
 #' Place names in address entries
 #'
@@ -23,7 +23,6 @@
 #' }
 globals_address_names <- tibble::tribble(
   ~pattern,                                                           ~replacement,                        ~ignore_case,
-  # "\\bAbbotsf?o?r?d?\\b\\.?(?=\\sP)", "Abbotsford", TRUE,
   "\\bAbbotsf?[ou]?r?d?\\b",                                          "Abbotsford",                        TRUE,
   "\\bAbbotsford.+\\s",                                               "Abbotsford ",                       TRUE,
   "\\bAbbotsford\\s(?:p.+)?l(?=[\\b.$])",                             "Abbotsford Place",                  TRUE,
@@ -36,7 +35,6 @@ globals_address_names <- tibble::tribble(
   "\\bAdelphist\\b",                                                  "Adelphi Street",                    TRUE,
   "\\bAlbany\\sp[a-z\\-]+",                                           "Albany Place",                      TRUE,
   "\\bAlpinest\\b",                                                   "Alpine Street",                     TRUE,
-  # "\\bAnd?e?r?s?t?o?n?\\b", "Anderston", TRUE,
   "\\bAn((?!n\\s))(?(1)d?e?r?s?t?o?n?\\b)",                           "Anderston",                         TRUE,
   "\\bA[nu]ders[lt]o(?:n|rs|u)\\b",                                   "Anderston",                         TRUE,
   "\\bAnderstreet\\b",                                                "Anderston",                         TRUE,
@@ -88,7 +86,6 @@ globals_address_names <- tibble::tribble(
   "\\bBridge?t(?:[ao][nu])?\\b",                                      "Bridgeton",                         TRUE,
   "\\bBridgn\\b",                                                     "Bridgeton",                         TRUE,
   "\\b(?<=Street|\\.)\\s?Bridgeton\\b",                               ", Bridgeton",                       TRUE,
-  # "\\bBroo?m([^h]?)(?(1)[et]?\\s?(?:law)?\\b)", "Broomielaw", TRUE,
   "\\bBroo?[mi]n?([^h]?)(?(1)(?:[eit]+)?\\s?(?:law)?j?\\b)",          "Broomielaw",                        TRUE,
   "\\bBroo[mn]i+el(?:aw)?\\b",                                        "Broomielaw",                        TRUE,
   "\\bBrunsw?(?:ic)?k?\\b",                                           "Brunswick",                         TRUE,
@@ -149,7 +146,6 @@ globals_address_names <- tibble::tribble(
   "\\bDalm?(?:a[ir])?j?[an]?(?:[ao][ce])?k?(?=\\b|rd)",               "Dalmarnock",                        TRUE,
   "\\bDahnarnock\\b",                                                 "Dalmarnock",                        TRUE,
   "\\bDalmarnockrd\\b",                                               "Dalmarnock Road",                   TRUE,
-  # "\\bD[eo]b(?:bie)?'?s?", "Dobbies", TRUE,
   "\\bDix[eo]?n\\b",                                                  "Dixon",                             TRUE,
   "\\bD[eo]b(?:bie)?'?s?\\.?\\s?[il]?o?a?n?\\b",                      "Dobbies Loan",                      TRUE,
   "\\bDoug(?:las)?\\b",                                               "Douglas",                           TRUE,
@@ -225,7 +221,6 @@ globals_address_names <- tibble::tribble(
   "\\bHelensb(?:urgh)?\\b",                                           "Helensburgh",                       TRUE,
   "\\bHigh\\b",                                                       "High",                              TRUE,
   "\\bHighst\\b",                                                     "High Street",                       TRUE,
-  # "\\bHill\\sStreet,\\s\\bGar(?:nethill)?\\b", "Hill Street, Garnethill", TRUE,
   "\\bHill\\b",                                                       "Hill",                              TRUE,
   "\\bHillh(?:ead)?\\b",                                              "Hillhead",                          TRUE,
   "\\bHolm\\b",                                                       "Holm",                              TRUE,
@@ -277,11 +272,6 @@ globals_address_names <- tibble::tribble(
   "\\bLyne?doch\\b",                                                  "Lynedoch",                          TRUE,
   "\\bM\\s?['c]\\s?(?=\\w)",                                          "Mac ",                              TRUE,
   "\\bMac,?\\s?(?=\\w)",                                              "Mac ",                              TRUE,
-  # "\\bMac(?=[a-z])", "Mac ", FALSE,
-  # "\\bMac,\\s(?=[a-z])", "Mac ", FALSE,
-  # "\\bMc\\b", "Mac, \\1", TRUE,
-  # "\\bM\\s?['ac],?\\s?(?=\\w)", "Mac ", FALSE,
-  # "\\bMain\\sSt?reee?t\\b", "Main Street", TRUE,
   "\\bMain\\sStreet.+?([A-Z]|off)",                                   "Main Street, \\1",                  FALSE,
   "\\bMain\\sStreet([A-Z]|off)",                                      "Main Street, \\1",                  FALSE,
   "\\bMa[il]tl(?:an)?d?\\b",                                          "Maitland",                          TRUE,
@@ -359,10 +349,10 @@ globals_address_names <- tibble::tribble(
   "\\bPort(?:-)land\\b",                                              "Portland",                          TRUE,
   "\\bPort-?man\\b",                                                  "Portman",                           TRUE,
   "\\bPort(?:-)ugal\\b",                                              "Portugal",                          TRUE,
-  "\\bPrince'?s'?[\\s\\–]+(\\w+)",                                    "Princes \\1",                       TRUE,
+  "\\bPrince'?s'?[\\s\u2013]+(\\w+)",                                 "Princes \\1",                       TRUE,
   "\\bProspect\\b",                                                   "Prospect",                          TRUE,
   "\\bQue[eu]n\\b",                                                   "Queen",                             TRUE,
-  "\\bQueen'?s'?[\\s\\–]+(\\w+)",                                     "Queens \\1",                        TRUE,
+  "\\bQueen'?s'?[\\s\u2013]+(\\w+)",                                  "Queens \\1",                        TRUE,
   "\\bRailw(?:ay)?\\b",                                               "Railway",                           TRUE,
   "\\bReg(?:en)?t?\\b",                                               "Regent",                            TRUE,
   "\\b[BR]egent\\b",                                                  "Regent",                            TRUE,
@@ -387,7 +377,6 @@ globals_address_names <- tibble::tribble(
   "\\bR.+\\bExc?h?(?:an)?(?:ange)?\\b",                               "Royal Exchange",                    TRUE,
   "\\bR[un]mford\\b",                                                 "Rumford",                           TRUE,
   "\\bRumfo.*?r(?:oa)?d\\b",                                          "Rumford",                           TRUE,
-  # "\\bR[un]mford\\sStreet[,\\s]Bridg(?:eton)?\\b", "Rumford Street, Bridgeton", TRUE,
   "\\bRuther([^f])(?(1).+)",                                          "Rutherglen Loan",                   TRUE,
   "\\bRutland\\b",                                                    "Rutland",                           TRUE,
   "^Saint\\s+James\\s+Street.+kin.+",                                 "Saint James Street, Kingston",      TRUE,
@@ -480,7 +469,8 @@ globals_address_names <- tibble::tribble(
   "\\bYoungs\\b",                                                     "Young street",                      TRUE
 )
 
-### Numbers ####
+
+### globals_numbers ####
 
 #' Numbers in address entries
 #'
@@ -499,39 +489,40 @@ globals_address_names <- tibble::tribble(
 #'   }
 #' }
 globals_numbers <- tibble::tribble(
-  ~pattern,                                   ~replacement,        ~ignore_case,
-  "(?<=\\d|^)[\\]iIl](?![A-Za-z])",            "1",                FALSE,
-  "[iIl](?=\\d|£)",                            "1",                FALSE,
-  "(?<=\\s)[iIl](?=,|\\s)",                    "1",                FALSE,
-  "(?<=\\d)S-'(?![A-Za-z])",                   "3",                FALSE,
-  "S-'(?=\\d)",                                "3",                FALSE,
-  "(?<=\\s)S-'(?=,|\\s)",                      "3",                FALSE,
-  "(?<=\\d)(?:C|G|<J|{J)(?![A-Za-z])",         "6",                FALSE,
-  "(?:C|G|<J)(?=\\d)",                         "6",                FALSE,
-  "(?<=\\s)(?:C|G|<J)(?=,|\\s)",               "6",                FALSE,
-  "(?<=\\d)T(?![A-Za-z])",                     "7",                FALSE,
-  "T(?=\\d)",                                  "7",                FALSE,
-  "(?<=\\s)T(?=,|\\s)",                        "7",                FALSE,
-  "(?<=\\d)S(?![A-Za-z])",                     "8",                FALSE,
-  "S(?=\\d)",                                  "8",                FALSE,
-  "(?<=\\s)S(?=,|\\s)",                        "8",                FALSE,
-  "(?<=\\d)S(?=[A-Z])",                        "8",                FALSE,
-  "\\blu\\b",                                  "10",               FALSE,
-  "\\bH(?=[A-Z])",                             "11 ",              FALSE,
-  "(?<=\\s|^)II(?=\\s)",                       "11 ",              FALSE,
-  "\\bIS\\b",                                  "18",               FALSE,
-  "\\bCI\\b",                                  "61",               FALSE,
-  "\\bfl\\b",                                  "71",               FALSE,
-  "\\bIll\\b",                                 "111",              FALSE,
-  "\\bllo(?=[A-Z])",                           "113",              FALSE,
-  "\\bHi\\b",                                  "114",              FALSE,
-  "(?<=\\d)-?(\\.5|£|\\^|\\||\\\\|f|h|i|j)-?", "1/2",              TRUE,
-  "(?<=\\s)j(?=\\s)",                          "1/2",              TRUE
+  ~pattern,                                             ~replacement,       ~ignore_case,
+  "(?<=\\d|^)[\\]iIl](?![A-Za-z])",                     "1",                FALSE,
+  "[iIl](?=\\d|\u00a3)",                                "1",                FALSE,
+  "(?<=\\s)[iIl](?=,|\\s)",                             "1",                FALSE,
+  "(?<=\\d)S-'(?![A-Za-z])",                            "3",                FALSE,
+  "S-'(?=\\d)",                                         "3",                FALSE,
+  "(?<=\\s)S-'(?=,|\\s)",                               "3",                FALSE,
+  "(?<=\\d)(?:C|G|<J|{J)(?![A-Za-z])",                  "6",                FALSE,
+  "(?:C|G|<J)(?=\\d)",                                  "6",                FALSE,
+  "(?<=\\s)(?:C|G|<J)(?=,|\\s)",                        "6",                FALSE,
+  "(?<=\\d)T(?![A-Za-z])",                              "7",                FALSE,
+  "T(?=\\d)",                                           "7",                FALSE,
+  "(?<=\\s)T(?=,|\\s)",                                 "7",                FALSE,
+  "(?<=\\d)S(?![A-Za-z])",                              "8",                FALSE,
+  "S(?=\\d)",                                           "8",                FALSE,
+  "(?<=\\s)S(?=,|\\s)",                                 "8",                FALSE,
+  "(?<=\\d)S(?=[A-Z])",                                 "8",                FALSE,
+  "\\blu\\b",                                           "10",               FALSE,
+  "\\bH(?=[A-Z])",                                      "11 ",              FALSE,
+  "(?<=\\s|^)II(?=\\s)",                                "11 ",              FALSE,
+  "\\bIS\\b",                                           "18",               FALSE,
+  "\\bCI\\b",                                           "61",               FALSE,
+  "\\bfl\\b",                                           "71",               FALSE,
+  "\\bIll\\b",                                          "111",              FALSE,
+  "\\bllo(?=[A-Z])",                                    "113",              FALSE,
+  "\\bHi\\b",                                           "114",              FALSE,
+  "(?<=\\d)-?(\\.5|\u00a3|\\^|\\||\\\\|f|h|i|j)-?",     "1/2",              TRUE,
+  "(?<=\\s)j(?=\\s)",                                   "1/2",              TRUE
 )
+
 
 ### Places ####
 
-#### Raw ####
+#### globals_places_raw ####
 #' Place types in address entries
 #'
 #' A character vector of common place types found in directory address entries
@@ -603,7 +594,8 @@ globals_places_raw <- c(
   "Wynd"
 )
 
-#### Regex ####
+
+#### globals_places_regex ####
 
 #' Place types in address entries
 #'
@@ -741,7 +733,8 @@ globals_places_regex <- tibble::tribble(
 )
 
 
-### Saints ####
+### globals_saints ####
+
 #' Saints in address names
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -786,7 +779,9 @@ globals_saints <- tibble::tribble(
   "\\bV\\smcen\\st\\b",         "Vincent",      TRUE
 )
 
-### Suffixes ####
+
+### globals_suffixes ####
+
 #' Address suffixes
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -823,7 +818,8 @@ globals_suffixes <- tibble::tribble(
 )
 
 
-### Worksites ####
+### globals_worksites ####
+
 #' Worksites in address entries
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -895,7 +891,8 @@ globals_worksites <- tibble::tribble(
 
 ## People ####
 
-### Forenames ####
+### globals_forenames ####
+
 #' Forenames in directory records
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -1008,7 +1005,9 @@ globals_forenames <- tibble::tribble(
   "\\bW\\b\\.?",                            "William",                   TRUE
 )
 
-### Macs ####
+
+### globals_macs ####
+
 #' "Mac" pre-fixes in name entries
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -1026,14 +1025,14 @@ globals_forenames <- tibble::tribble(
 #'   }
 #' }
 globals_macs <- tibble::tribble(
-  ~pattern,                     ~replacement,  ~ignore_case,
-  "\\bM\\s?['ac],?\\s?(?=\\w)", "Mac",         FALSE,
-  # "\\bMac,?\\s?(?=\\w)", "Mac", FALSE,
-  # "\\bMac(?=[a-z])", "Mac", FALSE,
-  "\\bMac,\\s(?=[a-z])",        "Mac",         FALSE
+  ~pattern,                                    ~replacement,                ~ignore_case,
+  "\\bM\\s?['ac],?\\s?(?=\\w)",                "Mac",                       FALSE,
+  "\\bMac,\\s(?=[a-z])",                       "Mac",                       FALSE
 )
 
-### Surnames ####
+
+### globals_surnames ####
+
 #' Surnames in directory records
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -1439,7 +1438,8 @@ globals_surnames <- tibble::tribble(
 
 
 
-## Occupations ####
+## globals_occupations ####
+
 #' Occupations in directory records
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -1559,7 +1559,8 @@ globals_occupations <- tibble::tribble(
 
 
 
-## Titles ####
+## globals_titles ####
+
 #' Titles in directory name records
 #'
 #' A dataset containing regular expression meant to match commonly (OCR) misread
@@ -1577,14 +1578,14 @@ globals_occupations <- tibble::tribble(
 #'   }
 #' }
 globals_titles <- tibble::tribble(
-  ~pattern,                     ~replacement,    ~ignore_case,
-  "\\bAdvisee\\b",              "Advisee",       TRUE,
-  "\\bCapt(?:ain)?\\b",         "Captain",       TRUE,
-  "\\bLieutenant\\b",           "Lieutenant",    TRUE,
-  "\\bMajor\\b",                "Major",         TRUE,
-  "\\bRev\\b\\.?",              "Reverend",      TRUE,
-  "\"Miss(es)?\\b\\.?",         "Miss\\1",       TRUE,
-  "\\bMrs\\b\\.?",              "Mrs.",           TRUE
+  ~pattern,                              ~replacement,                      ~ignore_case,
+  "\\bAdvisee\\b",                       "Advisee",                         TRUE,
+  "\\bCapt(?:ain)?\\b",                  "Captain",                         TRUE,
+  "\\bLieutenant\\b",                    "Lieutenant",                      TRUE,
+  "\\bMajor\\b",                         "Major",                           TRUE,
+  "\\bRev\\b\\.?",                       "Reverend",                        TRUE,
+  "\"Miss(es)?\\b\\.?",                  "Miss\\1",                         TRUE,
+  "\\bMrs\\b\\.?",                       "Mrs.",                            TRUE
 )
 
 
@@ -1636,18 +1637,21 @@ globals_titles <- tibble::tribble(
 
 ## Others ####
 
-## Ampersand ####
+## globals_ampersand_vector ####
 
-# #' Ampersand in directory entries
-# #'
-# #' A character vector of regular expressions to match common (OCR) errors in
-# #'   reading the ampersand character: "&" in directory entries.
-# #'
-# #' @format A character string vector.
-# globals_ampersand <- c(
-#   "[<('6ciqt]?[.$§#}|*%?&£34dfijJoqSy][.$~;*■•/\\-\"'cefjy[]?", "<f \\/", "tj \\-"
-# )
+#' Ampersand in directory entries
+#'
+#' A character vector of regular expressions to match common (OCR) errors in
+#'   reading the ampersand character: "&" in directory entries.
+#'
+#' @format A character string vector.
+globals_ampersand_vector <- c(
+  "[<('6ciqt]?[.$\u00a7#}|*%?&\u00a334dfijJoqSy][.$~;*\u00a6\u2022/\\-\"'cefjy[]?",
+  "<f \\/", "tj \\-"
+)
 
+
+## globals_and_single_quote ####
 
 #' Ampersand in directory entries
 #'
@@ -1659,17 +1663,21 @@ globals_titles <- tibble::tribble(
 #' @section Details:
 #'   Some regexes contain the single quote character: "'".
 globals_and_single_quote <- c(
-  "\\'&", "&", "\\$", "\\$■", "\\$•", "#", "§", "§•", "\\(f", "\\(J\\-", "<\\.f",
-  "<\\*", "<%", "<£■", "<£•", "<\\$■", "<§", "<§■",
+  "\\'&", "&", "\\$", "\\$\u00a6", "\\$\u2022", "#", "\u00a7", "\u00a7\u2022",
+  "\\(f", "\\(J\\-", "<\\.f", "<\\*", "<%", "<\u00a3\u00a6", "<\u00a3\u2022",
+  "<\\$\u00a6", "<\u00a7", "<\u00a7\u00a6",
   # "<\\|\\*", "<\\|\\'",
   "<f", "<f\\*",
-  "<\\-f", "<j", "<j\\-", "<j\\'", "<J \\-", "<J\\-", "<J\\'", "<J\\*", "<y", "<\\$•",
-  "«f", "and", "c\\$\\'", "c\\)\\'\\-",
+  "<\\-f", "<j", "<j\\-", "<j\\'", "<J \\-", "<J\\-", "<J\\'", "<J\\*", "<y",
+  "<\\$\u2022",
+  "\u00abf", "and", "c\\$\\'", "c\\)\\'\\-",
   "4", "4\\'",
   "cf", "cf\\'", "cj\\'", "cj\\-", "cj\\*", "cy", "d\\-", "d;", "ef", "ej\\-",
-  "f\\.", "fy", "g°\\-", "if", "ij\\'", "ij\\-", "ij \\-", "oJ", "q", "rj\\-",
+  "f\\.", "fy", "g\\u00b0\\-", "if", "ij\\'", "ij\\-", "ij \\-", "oJ", "q", "rj\\-",
   "S;", "t j\\-", "tf", "ti;", "tj\\-", "tj \\-", "ty"
 )
+
+## globals_and_double_quote ####
 
 #' Ampersand in directory entries
 #'
@@ -1680,9 +1688,10 @@ globals_and_single_quote <- c(
 #'
 #' @section Details:
 #'   Some regexes contain the doulbe quote character: '"'.
-globals_and_double_quote <- c(
-  '<J\\"', 'cj\\"'
-)
+globals_and_double_quote <- c('<J\\"', 'cj\\"')
+
+
+## globals_ampersand ####
 
 #' Ampersand in directory entries
 #'
@@ -1702,86 +1711,93 @@ globals_and_double_quote <- c(
 #'   }
 #' }
 globals_ampersand <- tibble::tribble(
-  ~pattern,           ~replacement, ~ignore_case,
-  "<f \\/",           "&",          TRUE,
-  "\\btj \\-",        "&",          TRUE,
-  "\\'&",             "&",          TRUE,
-  "\\$",              "&",          TRUE,
-  "\\$■",             "&",          TRUE,
-  "\\$•",             "&",          TRUE,
-  "#",                "&",          TRUE,
-  "§",                "&",          TRUE,
-  "§•",               "&",          TRUE,
-  "\\(f",             "&",          TRUE,
-  "\\(J\\-",          "&",          TRUE,
-  "<\\.f",            "&",          TRUE,
-  "<\\*",             "&",          TRUE,
-  "<%",               "&",          TRUE,
-  "<£■",              "&",          TRUE,
-  "<£•",              "&",          TRUE,
-  "<\\$■",            "&",          TRUE,
-  "<§",               "&",          TRUE,
-  "<§■",              "&",          TRUE,
-  "<\\|\\*",          "&",          TRUE,
-  "<\\|\\'",          "&",          TRUE,
-  "<f\\b",            "&",          TRUE,
-  "<f\\*",            "&",          TRUE,
-  "<\\-f",            "&",          TRUE,
-  "<j\\b",            "&",          TRUE,
-  "<j\\-",            "&",          TRUE,
-  "<j\\'",            "&",          TRUE,
-  "<J \\-",           "&",          TRUE,
-  "<J\\-",            "&",          TRUE,
-  "<J\\'",            "&",          TRUE,
-  "<J\\*",            "&",          TRUE,
-  "<y\\b",            "&",          TRUE,
-  "<\\$•",            "&",          TRUE,
-  "«f\\b",            "&",          TRUE,
-  "\\band\\b",        "&",          TRUE,
-  "c\\$\\'",          "&",          TRUE,
-  "c\\)\\'\\-",       "&",          TRUE,
-  "4",                "&",          TRUE,
-  "4\\'",             "&",          TRUE,
-  "\bcf\\b",          "&",          TRUE,
-  "\\bcf\\'",         "&",          TRUE,
-  "\\bcj\\b\\'",      "&",          TRUE,
-  "\\bcj\\-",         "&",          TRUE,
-  "\\bcj\\*",         "&",          TRUE,
-  "\\bcy\\b",         "&",          TRUE,
-  "\\bd\\-",          "&",          TRUE,
-  "\\bd;",            "&",          TRUE,
-  "\\bef\\b",         "&",          TRUE,
-  "\\bej\\-",         "&",          TRUE,
-  "\\bf\\.",          "&",          TRUE,
-  "\\bfy\\b",         "&",          TRUE,
-  "\\bg°\\-",         "&",          TRUE,
-  "\\bif\\b",         "&",          TRUE,
-  "\\bij\\'",         "&",          TRUE,
-  "\\bij\\-",         "&",          TRUE,
-  "\\bij \\-",        "&",          TRUE,
-  "\\boJ\\b",         "&",          TRUE,
-  "\\bq\\b",          "&",          TRUE,
-  "\\brj\\-",         "&",          TRUE,
-  "\\bS;",            "&",          TRUE,
-  "\\bt j\\-",        "&",          TRUE,
-  "\\btf\\b",         "&",          TRUE,
-  "\\bti;",           "&",          TRUE,
-  "\\btj\\-",         "&",          TRUE,
-  "\\btj \\-",        "&",          TRUE,
-  "\\bty\\b",         "&",          TRUE,
-  '<J\\"',            "&",          TRUE,
-  '\\bcj\\"',         "&",          TRUE
+  ~pattern,                         ~replacement,                           ~ignore_case,
+  "<f \\/",                         "&",                                    TRUE,
+  "\\btj \\-",                      "&",                                    TRUE,
+  "\\'&",                           "&",                                    TRUE,
+  "\\$",                            "&",                                    TRUE,
+  "\\$\u00a6",                      "&",                                    TRUE,
+  "\\$\u2022",                      "&",                                    TRUE,
+  "#",                              "&",                                    TRUE,
+  "\u00a7",                         "&",                                    TRUE,
+  "\u00a7\u2022",                   "&",                                    TRUE,
+  "\\(f",                           "&",                                    TRUE,
+  "\\(J\\-",                        "&",                                    TRUE,
+  "<\\.f",                          "&",                                    TRUE,
+  "<\\*",                           "&",                                    TRUE,
+  "<%",                             "&",                                    TRUE,
+  "<\u00a3\u00a6",                  "&",                                    TRUE,
+  "<\u00a3\u2022",                  "&",                                    TRUE,
+  "<\\$\u00a6",                     "&",                                    TRUE,
+  "<\u00a7",                        "&",                                    TRUE,
+  "<\u00a7\u00a6",                  "&",                                    TRUE,
+  "<\\|\\*",                        "&",                                    TRUE,
+  "<\\|\\'",                        "&",                                    TRUE,
+  "<f\\b",                          "&",                                    TRUE,
+  "<f\\*",                          "&",                                    TRUE,
+  "<\\-f",                          "&",                                    TRUE,
+  "<j\\b",                          "&",                                    TRUE,
+  "<j\\-",                          "&",                                    TRUE,
+  "<j\\'",                          "&",                                    TRUE,
+  "<J \\-",                         "&",                                    TRUE,
+  "<J\\-",                          "&",                                    TRUE,
+  "<J\\'",                          "&",                                    TRUE,
+  "<J\\*",                          "&",                                    TRUE,
+  "<y\\b",                          "&",                                    TRUE,
+  "<\\$\u2022",                     "&",                                    TRUE,
+  "\u00abf\\b",                     "&",                                    TRUE,
+  "\\band\\b",                      "&",                                    TRUE,
+  "c\\$\\'",                        "&",                                    TRUE,
+  "c\\)\\'\\-",                     "&",                                    TRUE,
+  "4",                              "&",                                    TRUE,
+  "4\\'",                           "&",                                    TRUE,
+  "\bcf\\b",                        "&",                                    TRUE,
+  "\\bcf\\'",                       "&",                                    TRUE,
+  "\\bcj\\b\\'",                    "&",                                    TRUE,
+  "\\bcj\\-",                       "&",                                    TRUE,
+  "\\bcj\\*",                       "&",                                    TRUE,
+  "\\bcy\\b",                       "&",                                    TRUE,
+  "\\bd\\-",                        "&",                                    TRUE,
+  "\\bd;",                          "&",                                    TRUE,
+  "\\bef\\b",                       "&",                                    TRUE,
+  "\\bej\\-",                       "&",                                    TRUE,
+  "\\bf\\.",                        "&",                                    TRUE,
+  "\\bfy\\b",                       "&",                                    TRUE,
+  "\\bg\\u00b0\\-",                 "&",                                    TRUE,
+  "\\bif\\b",                       "&",                                    TRUE,
+  "\\bij\\'",                       "&",                                    TRUE,
+  "\\bij\\-",                       "&",                                    TRUE,
+  "\\bij \\-",                      "&",                                    TRUE,
+  "\\boJ\\b",                       "&",                                    TRUE,
+  "\\bq\\b",                        "&",                                    TRUE,
+  "\\brj\\-",                       "&",                                    TRUE,
+  "\\bS;",                          "&",                                    TRUE,
+  "\\bt j\\-",                      "&",                                    TRUE,
+  "\\btf\\b",                       "&",                                    TRUE,
+  "\\bti;",                         "&",                                    TRUE,
+  "\\btj\\-",                       "&",                                    TRUE,
+  "\\btj \\-",                      "&",                                    TRUE,
+  "\\bty\\b",                       "&",                                    TRUE,
+  '<J\\"',                          "&",                                    TRUE,
+  '\\bcj\\"',                       "&",                                    TRUE
 )
 
 
 # Load ####
+
+## globals_general_colnames ####
 
 #' General directory column names
 #'
 #' A character vector of column names for general directories.
 #'
 #' @format A character string vector.
-globals_general_colnames <- c("page", "surname", "forename", "occupation", "addresses")
+globals_general_colnames <- c(
+  "page", "surname", "forename", "occupation", "addresses"
+)
+
+
+## globals_trades_colnames ####
 
 #' Trades directory column names
 #'
@@ -1792,6 +1808,9 @@ globals_trades_colnames <- c(
   "page", "rank", "occupation", "type", "surname", "forename",
   "address.trade.body", "address.trade.number"
 )
+
+
+## globals_union_colnames ####
 
 #' Combined directories column names
 #'
@@ -1809,6 +1828,8 @@ globals_union_colnames <- c(
 
 ## House ####
 
+## globals_regex_house_to_address ####
+
 #' Regular expression for mutate operations in directory datasets
 #'
 #' Regular expression used to move the word "house" from the occupation
@@ -1816,8 +1837,11 @@ globals_union_colnames <- c(
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{general$move_house_to_address}}
+#' @seealso \code{\link{general_move_house_to_address}}
 globals_regex_house_to_address <- ";\\s[bh][op](?:use|-)$"
+
+
+## globals_regex_house_split_trade ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1826,13 +1850,16 @@ globals_regex_house_to_address <- ";\\s[bh][op](?:use|-)$"
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{general$split_trade_house_addresses}}
+#' @seealso \code{\link{general_split_trade_house_addresses}}
 globals_regex_house_split_trade <- paste0(
-  "(?:^|[;,„\\s]*)",
+  "(?:^|[;,\u201e\\s]*)",
   "\\b(res(?:id)?(?:ence)?)?",
   "(?(1)()|((?:(?:[bht]|li|jh)[aop])(?:[ui\\/]se)?s?))\\b",
-  "[.,„\\s]+"
+  "[.,\u201e\\s]+"
 )
+
+
+## globals_regex_occupation_from_address ####
 
 ## Occupation ####
 #' Regular expression for mutate operations in directory datasets
@@ -1842,12 +1869,15 @@ globals_regex_house_split_trade <- paste0(
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{general$repatriate_occupation_from_address}}
+#' @seealso \code{\link{general_repatriate_occupation_from_address}}
 globals_regex_occupation_from_address <- paste0(
   "^(?:and\\s?)?(?:(?:",
   paste(globals_occupations$pattern, collapse = ")|(?:"),
   ")).+?(?=,|;|\\d|[A-Z]|$)"
 )
+
+
+## globals_regex_address_prefix ####
 
 ## Address ####
 #' Regular expression for mutate operations in directory datasets
@@ -1857,9 +1887,12 @@ globals_regex_occupation_from_address <- paste0(
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{utils$remove_address_prefix}}
+#' @seealso \code{\link{utils_remove_address_prefix}}
 globals_regex_address_prefix <-
   "\\b(?:depot|(?<!post\\s)office|stores|work(?:shop)?s?)\\b"
+
+
+## globals_regex_split_trade_addresses ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1896,6 +1929,9 @@ globals_regex_split_trade_addresses <- paste0(
   "))"
 )
 
+
+## globals_regex_and_filter ####
+
 #' Regular expression for mutate operations in directory datasets
 #'
 #' Regular expression used to the word "and" in a filtering operation part of a
@@ -1903,8 +1939,11 @@ globals_regex_split_trade_addresses <- paste0(
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{utils$split_trade_addresses}}
+#' @seealso \code{\link{general_split_trade_addresses}}
 globals_regex_and_filter <- "^and\\s\\d"
+
+
+## globals_regex_and_match ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1913,8 +1952,11 @@ globals_regex_and_filter <- "^and\\s\\d"
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{general$split_trade_addresses}}
+#' @seealso \code{\link{general_split_trade_addresses}}
 globals_regex_and_match <- "^and\\s\\K.+"
+
+
+## globals_regex_irrelevants ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1923,8 +1965,11 @@ globals_regex_and_match <- "^and\\s\\K.+"
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{utils$clear_irrelevants}}
-globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s— See.+|Appendix.+)"
+#' @seealso \code{\link{utils_clear_irrelevants}}
+globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s\u2014 See.+|Appendix.+)"
+
+
+## globals_regex_split_address_numbers ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1933,18 +1978,11 @@ globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s— See.+|Appendix.+)"
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{general$split_address_numbers_bodies}}
+#' @seealso \code{\link{general_split_address_numbers_bodies}}
 globals_regex_split_address_numbers <- "^[0-9,\\-\\s/]+?(?=\\s[[:alpha:]])"
 
-#' Regular expression for mutate operations in directory datasets
-#'
-#' Regular expression used to separate numbers from body in provided general
-#'   directory address entries.
-#'
-#' @format A character string vector.
-#'
-#' @seealso \code{\link{general$split_address_numbers_bodies}}
-globals_regex_split_address_body <- "^(?:[0-9,\\-\\s/]+?(?=[[:alpha:]]))?\\K.+"
+
+## globals_regex_split_address_body ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1953,11 +1991,26 @@ globals_regex_split_address_body <- "^(?:[0-9,\\-\\s/]+?(?=[[:alpha:]]))?\\K.+"
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{general$split_address_numbers_bodies}}
+#' @seealso \code{\link{general_split_address_numbers_bodies}}
+globals_regex_split_address_body <- "^(?:[0-9,\\-\\s/]+?(?=[[:alpha:]]))?\\K.+"
+
+
+## globals_regex_split_address_empty ####
+
+#' Regular expression for mutate operations in directory datasets
+#'
+#' Regular expression used to separate numbers from body in provided general
+#'   directory address entries.
+#'
+#' @format A character string vector.
+#'
+#' @seealso \code{\link{general_split_address_numbers_bodies}}
 globals_regex_split_address_empty <- "^$"
 
 
 # Clean entries ####
+
+## globals_regex_titles ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1971,15 +2024,7 @@ globals_regex_titles <- paste0(
 
 # Combine ####
 
-#' Regular expression for mutate operations in directory datasets
-#'
-#' Regular expression used in the making of the match.string that eventually
-#'   enables the matching of general and trades directory records.
-#'
-#' @format A character string vector.
-#'
-#' @seealso \code{\link{combine$label_failled_matches}}
-globals_regex_address_house_body_number <- "house.(?:body|number)"
+## globals_regex_address_house_body_number ####
 
 #' Regular expression for mutate operations in directory datasets
 #'
@@ -1988,5 +2033,18 @@ globals_regex_address_house_body_number <- "house.(?:body|number)"
 #'
 #' @format A character string vector.
 #'
-#' @seealso \code{\link{combine$get_address_house_type}}
+#' @seealso \code{\link{combine_label_failed_matches}}
+globals_regex_address_house_body_number <- "house.(?:body|number)"
+
+
+## globals_regex_get_address_house_type ####
+
+#' Regular expression for mutate operations in directory datasets
+#'
+#' Regular expression used in the making of the match.string that eventually
+#'   enables the matching of general and trades directory records.
+#'
+#' @format A character string vector.
+#'
+#' @seealso \code{\link{combine_get_address_house_type}}
 globals_regex_get_address_house_type <- "(?<=house\\.).+$"

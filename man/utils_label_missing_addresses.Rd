@@ -13,20 +13,24 @@ utils_label_missing_addresses(directory)
 }
 \value{
 A dataframe.
-directory <- data.frame(
-page = c("71", "71"),
-surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-occupation = c("Wine and spirit merchant", "Baker"),
-address.number = c(" -; 1820", ""),
-address.body = c(
-"London st. ; house, Mary hill.*",
-""
-),
-stringsAsFactors = FALSE
-)
-utils_label_missing_addresses(directory)
 }
 \description{
 Labels empty address bodies as "not house/trade address found" in the
 provided directory dataframe.
+}
+\examples{
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.number = c(" -; 1820", ""),
+    address.body = c(
+      "London st. ; house, Mary hill.*",
+      ""
+    ),
+    stringsAsFactors = FALSE
+  )
+  utils_label_missing_addresses(directory)
+}
 }

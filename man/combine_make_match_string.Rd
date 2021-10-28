@@ -27,16 +27,18 @@ below a specified threshold.
 }
 
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  address.trade = c("18, 20, London Road.", "No trade address found"),
-  stringsAsFactors = FALSE
-)
-combine_make_match_string(directory)
+\dontrun{
+  directory <- data.frame(
+    page = rep("71", 2L),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade = c("18, 20, London Road.", "No trade address found"),
+    stringsAsFactors = FALSE
+  )
+  combine_make_match_string(directory)
+}
 }
 \seealso{
-\code{\link{match_records}} for the matching of the general to
-trades directory.
+\code{\link{combine_match_general_to_trades}} for the matching of
+the general to trades directory.
 }

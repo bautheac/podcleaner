@@ -1,0 +1,97 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# podcleaner
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The Scottish Post Office directories are annual directories that provide an alphabetical list of a town’s or county’s inhabitants including their forename, surname, occupation and address(es); they provide a solid basis for researching Scotland's family, trade, and town history. A large number of these, covering most of Scotland and dating from 1773 to 1911, can be accessed in digitised form from the [National Library of Scotland](https://digital.nls.uk/directories/). `podcleaner` attempts to clean optical character recognition (OCR) errors in directory records after they've been parsed and saved to "csv" files using a third party tool^[See for example the python [podparser](https://pythonhosted.org/podparser/) library.]. The package further attempts to match records from trades and general directories. 
+
+
+## Load
+Load general and trades directory samples in memory from "csv" files:
+
+* **Globals**
+```{r globals}
+library(podcleaner)
+
+directories <- c("1861-1862")
+
+progress <- TRUE; verbose <- FALSE
+```
+
+* **General directories**
+```{r `load general`}
+path_directories <- utils_make_path("data", "general-directories")
+
+general_directory <- utils_load_directories_csv(
+  type = "general", directories, path_directories, verbose
+)
+
+print.data.frame(general_directory)
+```
+
+* **Trades directories**
+```{r `load trades`}
+path_directories <- utils_make_path("data", "trades-directories")
+
+trades_directory <- utils_load_directories_csv(
+  type = "trades", directories, path_directories, verbose
+)
+
+print.data.frame(trades_directory)
+```
+
+
+## Clean
+
+Clean records from both datasets:
+
+* **General directories**
+```{r `clean general`}
+general_directory <-
+  general_clean_directory(general_directory, progress, verbose)
+
+print.data.frame(general_directory)
+```
+
+* **Trades directories**
+```{r `clean trades`}
+trades_directory <-
+  trades_clean_directory(trades_directory, progress, verbose)
+
+print.data.frame(trades_directory)
+```
+
+
+## Match records
+
+Match general to trades directory records:
+
+```{r `match records`}
+directory <- combine_match_general_to_trades(
+  trades_directory, general_directory, progress, verbose,
+  method = "osa", max_dist = 5L
+)
+
+print.data.frame(directory)
+```
+
+Directory records are compared and eventually matched using a distance metric calculated with the method and corresponding parameters specified in arguments. Under the hood the [fuzzyjoin](https://www.rdocumentation.org/packages/fuzzyjoin/versions/0.1.6) package and the [stringdist_left_join](https://www.rdocumentation.org/packages/fuzzyjoin/versions/0.1.6/topics/stringdist_join) function in particular, help with the matching operations. 
+
+
+
+
+
+

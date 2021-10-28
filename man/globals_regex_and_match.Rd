@@ -15,6 +15,6 @@ Regular expression used to match the word "and" in a filtering operation part
 of a mutate operation in the general directory provided.
 }
 \seealso{
-\code{\link{general$split_trade_addresses}}
+\code{\link{general_split_trade_addresses}}
 }
 \keyword{datasets}

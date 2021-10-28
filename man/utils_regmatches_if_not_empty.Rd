@@ -33,8 +33,10 @@ searches for alternative pattern in an alternative character string and
 returns any match or an empty string if none.
 }
 \examples{
-utils_regmatches_if_not_empty(
-  c("glasgow-entrepreneurs", "", "aberdeen-entrepreneurs"),
-  "edinburgh-entrepreneurs" , "^edinburgh", TRUE
-)
+\dontrun{
+  utils_regmatches_if_not_empty(
+    c("glasgow-entrepreneurs", "", "aberdeen-entrepreneurs"),
+    "edinburgh-entrepreneurs" , "^edinburgh", TRUE
+  )
+}
 }

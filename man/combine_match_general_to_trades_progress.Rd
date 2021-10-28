@@ -35,29 +35,33 @@ from the two datasets using the distance metric specified. Shows a progress
 bar indicating function progression.
 }
 \examples{
-trades_directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby", "Blair"),
-  forename = c("William", "Alexander", "John Hugh"),
-  occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
-  address.trade.number = c("18, 20", "12", "280"),
-  address.trade.body = c("London Road", "Dixon Place", "High Street"),
-  stringsAsFactors = FALSE
-)
-general_directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  address.trade.number = c("18, 20", ""),
-  address.house.number = c("136", "29"),
-  address.trade.body = c("London Road", "Dixon Place"),
-  address.house.body = c("Queen Square", "Anderston Quay"),
-  stringsAsFactors = FALSE
-)
-combine_match_general_to_trades_plain(
- trades_directory, general_directory, verbose = FALSE,
- method = "osa", max_dist = 5
-)
+\dontrun{
+  trades_directory <- data.frame(
+    page = rep("71", 2L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street"),
+    stringsAsFactors = FALSE
+  )
+  general_directory <- data.frame(
+    page = rep("71", 2L),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade.number = c("18, 20", ""),
+    address.house.number = c("136", "29"),
+    address.trade.body = c("London Road", "Dixon Place"),
+    address.house.body = c("Queen Square", "Anderston Quay"),
+    stringsAsFactors = FALSE
+  )
+  combine_match_general_to_trades_plain(
+   trades_directory, general_directory, verbose = FALSE,
+   method = "osa", max_dist = 5
+  )
+}
 }
 \seealso{
 \code{\link{combine_match_general_to_trades}}.

@@ -22,15 +22,18 @@ in the occupation column as a result of parsing errors
 appropriate destination, the \code{addresses} column.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71", "71"),
-  surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-  occupation = c(
-    "Wine and spirit merchant; house", "Baker", "Victualer"
-  ),
-  addresses = c("1820 Mary hill", "", "280, High stret"),
-  stringsAsFactors = FALSE
-)
-regex <- globals_regex_house_to_address
-general_move_house_to_address(directory, regex)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71", "71"),
+    surname = c("ABOT", "ABRCROMBIE", "BLAI"),
+    forename = c("Wm.", "Alex", "Jn Huh"),
+    occupation = c(
+      "Wine and spirit merchant; house", "Baker", "Victualer"
+    ),
+    addresses = c("1820 Mary hill", "", "280, High stret"),
+    stringsAsFactors = FALSE
+  )
+  regex <- globals_regex_house_to_address
+  general_move_house_to_address(directory, regex)
+}
 }

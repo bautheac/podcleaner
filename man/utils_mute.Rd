@@ -19,5 +19,7 @@ Executes the function provided while silencing the potential messages related
 to its execution
 }
 \examples{
-utils_mute(message, "I'm not showing in console")
+\dontrun{
+  utils_mute(message, "I'm not showing in console")
+}
 }

@@ -23,15 +23,17 @@ attempt to separate multiple trade addresses, attempt to separate number from
 address body.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-  occupation = c("Wine and spirit merchant; house", ""),
-  addresses = c(
-    "18, 20 London Street",
-    "Baker; 12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-  ),
-  stringsAsFactors = FALSE
-)
-general_fix_structure(directory, verbose = FALSE)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant; house", ""),
+    addresses = c(
+      "18, 20 London Street",
+      "Baker; 12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
+    ),
+    stringsAsFactors = FALSE
+  )
+  general_fix_structure(directory, verbose = FALSE)
+}
 }

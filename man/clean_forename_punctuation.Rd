@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to standardise punctuation in provided name entries.
 }
 \examples{
-clean_forename_punctuation(c("William;", "Miss", "John,Hugh"))
+\dontrun{
+  clean_forename_punctuation(c("William;", "Miss", "John,Hugh"))
+}
 }

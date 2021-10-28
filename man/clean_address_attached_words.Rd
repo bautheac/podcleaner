@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_attached_words}
 \alias{clean_address_attached_words}
-\title{Clean ends in address entries}
+\title{Clean attached words in address entries}
 \usage{
 clean_address_attached_words(addresses)
 }
@@ -13,8 +13,10 @@ clean_address_attached_words(addresses)
 A vector of character strings.
 }
 \description{
-Attempts to clean ends in provided address entries.
+Attempts to separate attached words in provided address entries.
 }
 \examples{
-clean_address_attached_words(c("18, 20 LondonSt.", "12 Dixon.st."))
+\dontrun{
+  clean_address_attached_words(c("18, 20 LondonSt.", "12 Dixon.st."))
+}
 }

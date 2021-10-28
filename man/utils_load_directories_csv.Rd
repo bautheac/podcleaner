@@ -30,7 +30,7 @@ A dataframe.
 \description{
 Loads specified directory "csv" file(s) into memory. Stacks individual
 directories into a single dataframe and further passes the output down to
-\code{\link{format_directory_raw}} for initial formatting.
+\code{\link{utils_format_directory_raw}} for initial formatting.
 }
 \examples{
 \dontrun{

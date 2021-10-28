@@ -9,11 +9,14 @@ utils_IO_write(data, ...)
 \arguments{
 \item{data}{R object to save.}
 
-\item{...}{Destination parameters to be passed to \code{\link{IO_path}}.}
+\item{...}{Destination parameters to be passed to \code{\link{utils_IO_path}}.}
 }
 \description{
 Save the object provided to specified path as \code{.rds} file.
 }
 \examples{
-utils_IO_write(mtcars, "home/projects", "glasgow-entrepreneurs")
+\dontrun{
+  utils_IO_write(mtcars, "home/projects", "glasgow-entrepreneurs")
+}
+
 }

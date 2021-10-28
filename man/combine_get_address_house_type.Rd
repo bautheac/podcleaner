@@ -16,6 +16,8 @@ A length 1 character string vector: "number" or "body".
 Identifies the type of the house address column provided, number or body.
 }
 \examples{
-combine_get_address_house_type("address.house.number")
-combine_get_address_house_type("address.house.body")
+\dontrun{
+  combine_get_address_house_type("address.house.number")
+  combine_get_address_house_type("address.house.body")
+}
 }

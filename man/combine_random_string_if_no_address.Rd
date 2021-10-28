@@ -17,5 +17,9 @@ Returns a 22 character long random string if address provided is labeled as
 missing.
 }
 \examples{
-combine_random_string_if_no_address(c("18, 20 London Road", "No trade address found"))
+\dontrun{
+  combine_random_string_if_no_address(
+    c("18, 20 London Road", "No trade address found")
+  )
+}
 }

@@ -22,16 +22,18 @@ Attempts to separate trade and house addresses in the general directory datafram
 provided for entries for which both are provided.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  addresses = c(
-    "18, 20 London Street; ho. 136 Queen Street.",
-    "12 Dixon Street; res, 29 Anderston Quay."
-  ),
-  stringsAsFactors = FALSE
-)
-regex <- globals_regex_house_split_trade
-general_split_trade_house_addresses(directory, regex, verbose = FALSE)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    addresses = c(
+      "18, 20 London Street; ho. 136 Queen Street.",
+      "12 Dixon Street; res, 29 Anderston Quay."
+    ),
+    stringsAsFactors = FALSE
+  )
+  regex <- globals_regex_house_split_trade
+  general_split_trade_house_addresses(directory, regex, verbose = FALSE)
+}
 }

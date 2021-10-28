@@ -22,5 +22,7 @@ Executes the function provided. Execution can be silenced via the \code{verbose}
 parameter.
 }
 \examples{
-utils_execute(TRUE, message, "I'm showing in console")
+\dontrun{
+  utils_execute(TRUE, message, "I'm showing in console")
+}
 }

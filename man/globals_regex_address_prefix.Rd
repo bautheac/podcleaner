@@ -15,6 +15,6 @@ Regular expression used to remove undesired pre-fixes in general
 directory address records.
 }
 \seealso{
-\code{\link{utils$remove_address_prefix}}
+\code{\link{utils_remove_address_prefix}}
 }
 \keyword{datasets}

@@ -17,10 +17,10 @@ found".
 \section{Details}{
 
 The function is for primarily use in the
-\code{\link{label_missing_addresses}} function where it provides a vector
-of address bodies \code{utils_label_address_if_missing} creates an
+\code{\link{utils_label_missing_addresses}} function where it provides a
+vector of address bodies \code{utils_label_address_if_missing} creates an
 expression and further evaluates it one level up in the environment tree,
 in other words in the directory dataframe eventually passed down to
-\code{\link{label_missing_addresses}}.
+\code{\link{utils_label_missing_addresses}}.
 }
 

@@ -8,7 +8,7 @@ utils_format_directory_raw(df, name)
 }
 \arguments{
 \item{df}{A raw directory dataframe as output by
-\code{\link{load_directories_csv}}.}
+\code{\link{utils_load_directories_csv}}.}
 
 \item{name}{Directory name provided as a character string.}
 }
@@ -23,15 +23,17 @@ as integer, returns the output with the directory name column in first
 position.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT     ", " ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("wine and    spirit mercht", "    bkr"),
-  addresses = c(
-    "depot -; 1820 London    st. ; house, Mary hill.*",
-    "workshop,,12 &;Dixon st.; residence,    Craigrownie, Cove.$   "
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT     ", " ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("wine and    spirit mercht", "    bkr"),
+    addresses = c(
+      "depot -; 1820 London    st. ; house, Mary hill.*",
+      "workshop,,12 &;Dixon st.; residence,    Craigrownie, Cove.$   "
+    ),
+    stringsAsFactors = FALSE
   )
-  stringsAsFactors = FALSE
-)
-utils_format_directory_raw(directory, "1861-1862")
+  utils_format_directory_raw(directory, "1861-1862")
+}
 }

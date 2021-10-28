@@ -23,5 +23,7 @@ Split provided string according to specified pattern. Organise output as a
 \code{\link[tibble]{tibble}}.
 }
 \examples{
-utils_split_and_name("glasgow-entrepreneurs", "-", 2, c("location", "occupation"))
+\dontrun{
+  utils_split_and_name("glasgow-entrepreneurs", "-", 2, c("location", "occupation"))
+}
 }

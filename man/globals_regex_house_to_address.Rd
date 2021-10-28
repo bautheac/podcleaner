@@ -15,6 +15,6 @@ Regular expression used to move the word "house" from the occupation
 column to the addresses column in general directory.
 }
 \seealso{
-\code{\link{general$move_house_to_address}}
+\code{\link{general_move_house_to_address}}
 }
 \keyword{datasets}

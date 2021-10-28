@@ -3,7 +3,10 @@
 ignore_case <- TRUE
 perl <- TRUE
 
+
 # Fix structure ####
+
+## general_move_house_to_address ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -19,18 +22,22 @@ perl <- TRUE
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-#'   occupation = c(
-#'     "Wine and spirit merchant; house", "Baker", "Victualer"
-#'   ),
-#'   addresses = c("1820 Mary hill", "", "280, High stret"),
-#'   stringsAsFactors = FALSE
-#' )
-#' regex <- globals_regex_house_to_address
-#' general_move_house_to_address(directory, regex)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71", "71"),
+#'     surname = c("ABOT", "ABRCROMBIE", "BLAI"),
+#'     forename = c("Wm.", "Alex", "Jn Huh"),
+#'     occupation = c(
+#'       "Wine and spirit merchant; house", "Baker", "Victualer"
+#'     ),
+#'     addresses = c("1820 Mary hill", "", "280, High stret"),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   regex <- globals_regex_house_to_address
+#'   general_move_house_to_address(directory, regex)
+#' }
 general_move_house_to_address <- function(directory, regex){
+  addresses <- occupation <- NULL
   dplyr::mutate(
     directory,
     addresses = utils_paste_if_found(
@@ -41,6 +48,9 @@ general_move_house_to_address <- function(directory, regex){
     )
   ) %>% utils_clean_address(type = "ends")
 }
+
+
+## general_repatriate_occupation_from_address ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -57,18 +67,21 @@ general_move_house_to_address <- function(directory, regex){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-#'   occupation = c(
-#'     "", "Wine and spirit merchant", ""
-#'   ),
-#'   addresses = c("bkr; 1820, Mary hill", "", "Victualer; 280, High stret"),
-#'   stringsAsFactors = FALSE
-#' )
-#' regex <- globals_regex_occupation_from_address
-#' general_repatriate_occupation_from_address(directory, regex)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71", "71"),
+#'     surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
+#'     occupation = c(
+#'       "", "Wine and spirit merchant", ""
+#'     ),
+#'     addresses = c("bkr; 1820, Mary hill", "", "Victualer; 280, High stret"),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   regex <- globals_regex_occupation_from_address
+#'   general_repatriate_occupation_from_address(directory, regex)
+#' }
 general_repatriate_occupation_from_address <- function(directory, regex){
+  addresses <- occupation <- NULL
   dplyr::mutate(
     directory,
     occupation = utils_paste_if_found(
@@ -83,6 +96,9 @@ general_repatriate_occupation_from_address <- function(directory, regex){
   )
 }
 
+
+## general_split_trade_house_addresses ####
+
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
 #' Attempts to separate trade and house addresses in the general directory dataframe
@@ -96,21 +112,24 @@ general_repatriate_occupation_from_address <- function(directory, regex){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'   occupation = c("Wine and spirit merchant", "Baker"),
-#'   addresses = c(
-#'     "18, 20 London Street; ho. 136 Queen Street.",
-#'     "12 Dixon Street; res, 29 Anderston Quay."
-#'   ),
-#'   stringsAsFactors = FALSE
-#' )
-#' regex <- globals_regex_house_split_trade
-#' general_split_trade_house_addresses(directory, regex, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71"),
+#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+#'     occupation = c("Wine and spirit merchant", "Baker"),
+#'     addresses = c(
+#'       "18, 20 London Street; ho. 136 Queen Street.",
+#'       "12 Dixon Street; res, 29 Anderston Quay."
+#'     ),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   regex <- globals_regex_house_split_trade
+#'   general_split_trade_house_addresses(directory, regex, verbose = FALSE)
+#' }
 general_split_trade_house_addresses <- function(directory, regex, verbose){
 
   load <- function(...){
+    addresses <- address.house <- NULL
     dplyr::mutate(
       directory,
       addresses = utils_clean_address_number(addresses)
@@ -127,6 +146,9 @@ general_split_trade_house_addresses <- function(directory, regex, verbose){
 
   utils_execute(verbose, load, directory, regex)
 }
+
+
+## general_split_trade_addresses ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -149,29 +171,32 @@ general_split_trade_house_addresses <- function(directory, regex, verbose){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'   occupation = c("Wine and spirit merchant", "Baker"),
-#'   addresses.trade = c(
-#'     "18, 20 London Street, 136 Queen Street; 134, 136 South Portland Street",
-#'     "12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-#'   ),
-#'   stringsAsFactors = FALSE
-#' )
-#' regex_split <- globals_regex_split_trade_addresses
-#' regex_filter <- globals_regex_and_filter
-#' regex_match <- globals_regex_and_match
-#' general_split_trade_addresses(
-#'   directory, regex_split, regex_filter, regex_match,
-#'   ignore_case_split = FALSE, ignore_case_filter = TRUE, ignore_case_match = FALSE
-#' )
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71"),
+#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+#'     occupation = c("Wine and spirit merchant", "Baker"),
+#'     addresses.trade = c(
+#'       "18, 20 London Street, 136 Queen Street; 134, 136 South Portland Street",
+#'       "12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
+#'     ),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   regex_split <- globals_regex_split_trade_addresses
+#'   regex_filter <- globals_regex_and_filter
+#'   regex_match <- globals_regex_and_match
+#'   general_split_trade_addresses(
+#'     directory, regex_split, regex_filter, regex_match,
+#'     ignore_case_split = FALSE, ignore_case_filter = TRUE, ignore_case_match = FALSE
+#'   )
+#' }
 general_split_trade_addresses  <- function(
   directory,
   regex_split, ignore_case_split,
   regex_filter, ignore_case_filter,
   regex_match, ignore_case_match
 ){
+  address.trade <- addresses.trade <- NULL
   dplyr::mutate(
     directory,
     address.trade = utils_regmatches_if_not_empty(
@@ -187,6 +212,9 @@ general_split_trade_addresses  <- function(
     ) %>%
     utils_clean_address(type = "ends")
 }
+
+
+## general_split_address_numbers_bodies ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -208,25 +236,28 @@ general_split_trade_addresses  <- function(
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit merchant", "Baker"),
-#'   address.trade = c("18, 20 London Street", "12 Dixon Street"),
-#'   address.house = c("136 Queen Street", "265 Argyle Street"),
-#'   stringsAsFactors = FALSE
-#' )
-#' regex_split_address_numbers <- globals_regex_split_address_numbers
-#' regex_split_address_body <- globals_regex_split_address_body
-#' regex_split_address_empty <- globals_regex_split_address_empty
-#' general_split_address_numbers_bodies(
-#'   directory, regex_split_address_numbers, regex_split_address_body,
-#'   regex_split_address_empty, ignore_case_filter = TRUE, ignore_case_match = TRUE
-#' )
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71"),
+#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'     occupation = c("Wine and spirit merchant", "Baker"),
+#'     address.trade = c("18, 20 London Street", "12 Dixon Street"),
+#'     address.house = c("136 Queen Street", "265 Argyle Street"),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   regex_split_address_numbers <- globals_regex_split_address_numbers
+#'   regex_split_address_body <- globals_regex_split_address_body
+#'   regex_split_address_empty <- globals_regex_split_address_empty
+#'   general_split_address_numbers_bodies(
+#'     directory, regex_split_address_numbers, regex_split_address_body,
+#'     regex_split_address_empty, ignore_case_filter = TRUE, ignore_case_match = TRUE
+#'   )
+#' }
 general_split_address_numbers_bodies <- function(
   directory, regex_split_address_numbers, regex_split_address_body,
   regex_split_address_empty, ignore_case_filter, ignore_case_match
 ){
+  address.house <- address.trade <- NULL
   dplyr::mutate(
     directory,
     dplyr::across(
@@ -234,8 +265,7 @@ general_split_address_numbers_bodies <- function(
       ~ utils_regmatches_if_found(
         string_filter = .x, regex_filter = globals_regex_split_address_numbers,
         string_search = .x, regex_search = globals_regex_split_address_numbers,
-        default = "",
-        ignore_case_filter, ignore_case_match, not = FALSE
+        default = "", ignore_case_filter, ignore_case_match, not = FALSE
       ),
       .names = "{.col}.number"
     ),
@@ -244,8 +274,7 @@ general_split_address_numbers_bodies <- function(
       ~ utils_regmatches_if_found(
         string_filter = .x, regex_filter = globals_regex_split_address_empty,
         string_search = .x, regex_search = globals_regex_split_address_body,
-        default = "",
-        ignore_case, ignore_case_match, not = TRUE
+        default = "", ignore_case_filter, ignore_case_match, not = TRUE
       ),
       .names = "{.col}.body"
     )
@@ -253,6 +282,9 @@ general_split_address_numbers_bodies <- function(
     dplyr::select(-c(address.trade, address.house)) %>%
     utils_clean_address(type = "ends")
 }
+
+
+## general_fix_structure ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -269,54 +301,63 @@ general_split_address_numbers_bodies <- function(
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'   occupation = c("Wine and spirit merchant; house", ""),
-#'   addresses = c(
-#'     "18, 20 London Street",
-#'     "Baker; 12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-#'   ),
-#'   stringsAsFactors = FALSE
-#' )
-#' general_fix_structure(directory, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71"),
+#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+#'     occupation = c("Wine and spirit merchant; house", ""),
+#'     addresses = c(
+#'       "18, 20 London Street",
+#'       "Baker; 12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
+#'     ),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   general_fix_structure(directory, verbose = FALSE)
+#' }
 general_fix_structure <- function(directory, verbose){
 
   fix <- function(...){
     # Split trade and house addresses when both are provided ####
-    # If occupation terminates in "; house" or variant, delete and add "house, " to the beginning of addresses columns.
+    # If occupation terminates in "; house" or variant, delete and add "house, "
+    # to the beginning of addresses columns.
     general_move_house_to_address(directory, globals_regex_house_to_address) %>%
 
-      # Fix occupation in addresses column when possible: move back to occupation column ####
-    general_repatriate_occupation_from_address(globals_regex_occupation_from_address) %>%
+    # Fix occupation in addresses column when possible: move back to occupation column ####
+      general_repatriate_occupation_from_address(
+        globals_regex_occupation_from_address
+      ) %>%
 
-      # Get rid of "depot", "office", "store", "works" or "workshops" address prefix ####
-    utils_remove_address_prefix(globals_regex_address_prefix, ignore_case) %>%
+    # Get rid of "depot", "office", "store", "works" or "workshops" address prefix ####
+      utils_remove_address_prefix(globals_regex_address_prefix, ignore_case) %>%
 
-      # Create trade and house addresses by splitting raw addresses on "house" or variant ####
+    # Create trade and house addresses by splitting raw addresses on "house" or variant ####
     # If "residence" matches, don't match "house", otherwise match "house".
-    general_split_trade_house_addresses(globals_regex_house_split_trade, verbose = verbose) %>%
+      general_split_trade_house_addresses(
+        globals_regex_house_split_trade, verbose = verbose
+      ) %>%
 
-      # Split multiple trade addresses ####
-    general_split_trade_addresses(
-      regex_split = globals_regex_split_trade_addresses, ignore_case_split = FALSE,
-      regex_filter = globals_regex_and_filter, ignore_case_filter = TRUE,
-      regex_match = globals_regex_and_match, ignore_case_match = FALSE
-    ) %>%
+    # Split multiple trade addresses ####
+      general_split_trade_addresses(
+        regex_split = globals_regex_split_trade_addresses, ignore_case_split = FALSE,
+        regex_filter = globals_regex_and_filter, ignore_case_filter = TRUE,
+        regex_match = globals_regex_and_match, ignore_case_match = FALSE
+      ) %>%
 
-      # Split numbers and address bodies ####
-    general_split_address_numbers_bodies(
-      globals_regex_split_address_numbers, globals_regex_split_address_body,
-      globals_regex_split_address_empty, ignore_case = TRUE,
-      ignore_case_match = TRUE
-    )
+    # Split numbers and address bodies ####
+      general_split_address_numbers_bodies(
+        globals_regex_split_address_numbers, globals_regex_split_address_body,
+        globals_regex_split_address_empty, ignore_case_filter = TRUE,
+        ignore_case_match = TRUE
+      )
   }
 
-  utils_execute(verbose, fix, data = data, ignore_case = ignore_case)
+  utils_execute(verbose, fix, directory = directory, ignore_case = ignore_case)
 }
 
 
 # Clean ####
+
+## general_clean_entries ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -331,17 +372,19 @@ general_fix_structure <- function(directory, verbose){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-#'   address.trade.number = c("1S20", "I2"),
-#'   address.house.number = c("13<J", "2G5"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl"),
-#'   address.house.body = c("Queun sq", "Argul st"),
-#'   stringsAsFactors = FALSE
-#' )
-#' general_clean_entries(directory, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71"),
+#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
+#'     address.trade.number = c("1S20", "I2"),
+#'     address.house.number = c("13<J", "2G5"),
+#'     address.trade.body = c("Londn rd.", "Dixen pl"),
+#'     address.house.body = c("Queun sq", "Argul st"),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   general_clean_entries(directory, verbose = FALSE)
+#' }
 general_clean_entries <- function(directory, verbose){
 
   clean <- function(...){
@@ -362,6 +405,8 @@ general_clean_entries <- function(directory, verbose){
 }
 
 
+## general_clean_directory_plain ####
+
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
 #' Attempts to clean the provided general directory dataframe provided.
@@ -374,17 +419,19 @@ general_clean_entries <- function(directory, verbose){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-#'   addresses = c(
-#'     "1S20 Londn rd; ho. 13<J Queun sq",
-#'     "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-#'   ),
-#'   stringsAsFactors = FALSE
-#' )
-#' general_clean_entries(directory, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = rep("71", 2L),
+#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+#'     addresses = c(
+#'       "1S20 Londn rd; ho. 13<J Queun sq",
+#'       "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+#'     ),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   general_clean_entries(directory, verbose = FALSE)
+#' }
 general_clean_directory_plain <- function(directory, verbose){
 
   clean <- function(...){
@@ -392,11 +439,14 @@ general_clean_directory_plain <- function(directory, verbose){
     general_fix_structure(directory, verbose = verbose) %>%
 
     # Clean entries ####
-     general_clean_entries(verbose = verbose)
+      general_clean_entries(verbose = verbose)
   }
 
   utils_execute(verbose, clean, directory = directory)
 }
+
+
+## general_clean_directory_progress ####
 
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
@@ -411,17 +461,19 @@ general_clean_directory_plain <- function(directory, verbose){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-#'   addresses = c(
-#'     "1S20 Londn rd; ho. 13<J Queun sq",
-#'     "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-#'   ),
-#'   stringsAsFactors = FALSE
-#' )
-#' general_clean_entries(directory, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = c("71", "71"),
+#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+#'     addresses = c(
+#'       "1S20 Londn rd; ho. 13<J Queun sq",
+#'       "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+#'     ),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   general_clean_entries(directory, verbose = FALSE)
+#' }
 general_clean_directory_progress <- function(directory, verbose){
 
   directory_split <- split(directory, (1L:nrow(directory) %/% 500L))
@@ -436,34 +488,39 @@ general_clean_directory_progress <- function(directory, verbose){
   })
 }
 
+
+## general_clean_directory ####
+
 #' Mutate operation(s) in general directory dataframe column(s)
 #'
 #' Attempts to clean the provided general directory dataframe provided.
 #'
 #' @param directory A general directory dataframe. Columns must include `occupation`,
 #'   `forename`, `surname` and `addresses`.
+#' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
+#' @return A tibble
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
+#' directory <- tibble::tibble(
+#'   page = rep("71", 2L),
 #'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
 #'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
 #'   addresses = c(
 #'     "1S20 Londn rd; ho. 13<J Queun sq",
 #'     "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-#'   ),
-#'   stringsAsFactors = FALSE
+#'   )
 #' )
-#' general_clean_entries(directory, verbose = FALSE)
+#' general_clean_directory(directory, progress = TRUE, verbose = FALSE)
 #'
 #' @export
 general_clean_directory <- function(directory, progress = TRUE, verbose = FALSE){
 
-  if (progress) general_clean_directory_progress(directory, verbose)
+  out <- if (progress) general_clean_directory_progress(directory, verbose)
   else general_clean_directory_plain(directory, verbose)
+
+  tibble::tibble(out)
 }
 

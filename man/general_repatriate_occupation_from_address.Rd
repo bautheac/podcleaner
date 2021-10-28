@@ -23,15 +23,17 @@ attempts to move this information in the appropriate destination, the
 \code{occupation} column.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71", "71"),
-  surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-  occupation = c(
-    "", "Wine and spirit merchant", ""
-  ),
-  addresses = c("bkr; 1820, Mary hill", "", "Victualer; 280, High stret"),
-  stringsAsFactors = FALSE
-)
-regex <- globals_regex_occupation_from_address
-general_repatriate_occupation_from_address(directory, regex)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71", "71"),
+    surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
+    occupation = c(
+      "", "Wine and spirit merchant", ""
+    ),
+    addresses = c("bkr; 1820, Mary hill", "", "Victualer; 280, High stret"),
+    stringsAsFactors = FALSE
+  )
+  regex <- globals_regex_occupation_from_address
+  general_repatriate_occupation_from_address(directory, regex)
+}
 }

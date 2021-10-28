@@ -1,3 +1,7 @@
 ^podcleaner\.Rproj$
 ^\.Rproj\.user$
+^data$
 ^dev$
+^LICENSE\.md$
+^cran-comments\.md$
+^README\.Rmd$

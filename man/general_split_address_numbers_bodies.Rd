@@ -39,19 +39,21 @@ Attempts to separate number from body of address entries in general directory
 dataframe provided.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  address.trade = c("18, 20 London Street", "12 Dixon Street"),
-  address.house = c("136 Queen Street", "265 Argyle Street"),
-  stringsAsFactors = FALSE
-)
-regex_split_address_numbers <- globals_regex_split_address_numbers
-regex_split_address_body <- globals_regex_split_address_body
-regex_split_address_empty <- globals_regex_split_address_empty
-general_split_address_numbers_bodies(
-  directory, regex_split_address_numbers, regex_split_address_body,
-  regex_split_address_empty, ignore_case_filter = TRUE, ignore_case_match = TRUE
-)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade = c("18, 20 London Street", "12 Dixon Street"),
+    address.house = c("136 Queen Street", "265 Argyle Street"),
+    stringsAsFactors = FALSE
+  )
+  regex_split_address_numbers <- globals_regex_split_address_numbers
+  regex_split_address_body <- globals_regex_split_address_body
+  regex_split_address_empty <- globals_regex_split_address_empty
+  general_split_address_numbers_bodies(
+    directory, regex_split_address_numbers, regex_split_address_body,
+    regex_split_address_empty, ignore_case_filter = TRUE, ignore_case_match = TRUE
+  )
+}
 }

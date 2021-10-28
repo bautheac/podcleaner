@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to separate double-barrelled forenames in provided name entries.
 }
 \examples{
-clean_forename_separate_words(c("William", "Alexander", "JohnHugh"))
+\dontrun{
+  clean_forename_separate_words(c("William", "Alexander", "JohnHugh"))
+}
 }

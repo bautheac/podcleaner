@@ -1,25 +1,30 @@
 Package: podcleaner
 Title: Legacy Scottish Post Office Directories Cleaner
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
-    person(
-        "Olivier", "Bauthéac", , "olivier.bautheac@strath.ac.uk",
-        role = c("aut", "cre")
+    c(
+        person(
+            "Olivier", "Bautheac", , "olivier.bautheac@strath.ac.uk",
+            role = c("aut", "cre")
+        ),
+        person(given = "University of Strathclyde", role = c("cph", "fnd"))
     )
-Description: Attemps to clean OCR errors in legacy Scottish Post Office Directories.
+Description: Attempts to clean OCR errors in legacy Scottish Post Office 
+  Directories. Further attempts to match records from trades and general 
+  directories.  
 Imports: 
     dplyr,
     fuzzyjoin,
-    here,
     magrittr,
     progress,
     purrr,
+    readr,
     rlang,
     stringi,
     stringr,
+    tibble,
     tidyr
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

@@ -20,6 +20,8 @@ Search for specified pattern in provided string, if found returns a 22
 character long random string.
 }
 \examples{
-combine_random_string_if_pattern("random string", "random")
-combine_random_string_if_pattern("random string", "original")
+\dontrun{
+  combine_random_string_if_pattern("random string", "random")
+  combine_random_string_if_pattern("random string", "original")
+}
 }

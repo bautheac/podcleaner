@@ -16,5 +16,7 @@ A vector of character strings.
 Performs pre-cleaning operations on provided address entries.
 }
 \examples{
-clean_address_pre_clean(c(": 1S20 Lond■n st.   -", "13<J st enoch sq,;"))
+\dontrun{
+  clean_address_pre_clean(c(": 1S20 Londun st.   -", "13<J st enoch sq,;"))
+}
 }

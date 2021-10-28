@@ -21,15 +21,17 @@ Attempts to clean the provided general directory dataframe provided. Shows a
 progress bar indication the progression of the function.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-  addresses = c(
-    "1S20 Londn rd; ho. 13<J Queun sq",
-    "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-  ),
-  stringsAsFactors = FALSE
-)
-general_clean_entries(directory, verbose = FALSE)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
+    addresses = c(
+      "1S20 Londn rd; ho. 13<J Queun sq",
+      "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+    ),
+    stringsAsFactors = FALSE
+  )
+  general_clean_entries(directory, verbose = FALSE)
+}
 }

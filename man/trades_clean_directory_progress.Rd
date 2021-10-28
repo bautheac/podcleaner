@@ -21,13 +21,19 @@ Attempts to clean the provided trades directory dataframe provided. Shows a
 progress bar indicating function progression.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-  address.trade.number = c("1S20", "I2"),
-  address.trade.body = c("Londn rd.", "Dixen pl"),
-  stringsAsFactors = FALSE
-)
-trades_clean_directory(directory, verbose = FALSE)
+\dontrun{
+  directory <- data.frame(
+    page = rep("71", 2L),
+    rank = c("135", "326"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c(
+      "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
+    ),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("1S20", "I2"),
+    address.trade.body = c("Londn rd.", "Dixen pl"),
+    stringsAsFactors = FALSE
+  )
+  trades_clean_directory(directory, verbose = FALSE)
+}
 }

@@ -4,7 +4,7 @@
 \alias{clean_address_number}
 \title{Clean address entry numbers}
 \usage{
-clean_address_number(address)
+clean_address_number(addresses)
 }
 \arguments{
 \item{addresses}{A character string vector of address(es).}
@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean number of address entries provided.
 }
 \examples{
-clean_address_number(c("1S20 Londun st.", "13<J Dixon rd"))
+\dontrun{
+  clean_address_number(c("1S20 Londun st.", "13<J Dixon rd"))
+}
 }

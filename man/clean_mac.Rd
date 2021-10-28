@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to standardise "Mac" prefix in provided name entries.
 }
 \examples{
-clean_mac("McWilliam")
+\dontrun{
+  clean_mac("McWilliam")
+}
 }

@@ -13,16 +13,20 @@ utils_clean_addresses(directory)
 }
 \value{
 A dataframe.
-directory <- data.frame(
-page = c("71", "71", "71"),
-surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-occupation = c("Wine and spirit merchant", "Baker", "Victualer"),
-address.trade.number = c(" -; 1820", "", "280"),
-address.trade.body = c("London st. ; house, Mary hill.*", "", "High stret"),
-stringsAsFactors = FALSE
-)
-utils_clean_addresses(directory)
 }
 \description{
 Clean all address records in provided directory dataframe.
+}
+\examples{
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71", "71"),
+    surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualer"),
+    address.trade.number = c(" -; 1820", "", "280"),
+    address.trade.body = c("London st. ; house, Mary hill.*", "", "High stret"),
+    stringsAsFactors = FALSE
+  )
+  utils_clean_addresses(directory)
+}
 }

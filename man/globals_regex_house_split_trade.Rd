@@ -15,6 +15,6 @@ Regular expression used to separate trades from house addresses in general
 directory.
 }
 \seealso{
-\code{\link{general$split_trade_house_addresses}}
+\code{\link{general_split_trade_house_addresses}}
 }
 \keyword{datasets}

@@ -7,7 +7,7 @@
 clean_title(titles)
 }
 \arguments{
-\item{addresses}{A character string vector of title(s).}
+\item{titles}{A character string vector of title(s).}
 }
 \value{
 A vector of character strings.
@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean titles attached to names provided: Captain, Major, etc.
 }
 \examples{
-clean_title(c("  Capt Wm. ABOT", "?-Rev Alex ABRCROMBIE"))
+\dontrun{
+  clean_title(c("  Capt Wm. ABOT", "?-Rev Alex ABRCROMBIE"))
+}
 }

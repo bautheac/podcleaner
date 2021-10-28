@@ -10,26 +10,27 @@ general_clean_directory(directory, progress = TRUE, verbose = FALSE)
 \item{directory}{A general directory dataframe. Columns must include \code{occupation},
 \code{forename}, \code{surname} and \code{addresses}.}
 
+\item{progress}{Whether progress should be shown (\code{TRUE}) or not (\code{FALSE}).}
+
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A tibble
 }
 \description{
 Attempts to clean the provided general directory dataframe provided.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
+directory <- tibble::tibble(
+  page = rep("71", 2L),
   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
   addresses = c(
     "1S20 Londn rd; ho. 13<J Queun sq",
     "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-  ),
-  stringsAsFactors = FALSE
+  )
 )
-general_clean_entries(directory, verbose = FALSE)
+general_clean_directory(directory, progress = TRUE, verbose = FALSE)
 
 }

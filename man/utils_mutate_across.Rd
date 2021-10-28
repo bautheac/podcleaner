@@ -23,6 +23,11 @@ A dataframe.
 Applies provided function across specified column(s) in provided dataframe.
 }
 \examples{
-df <- data.frame(location = "glasgow", occupation = "wine merchant")
-utils_mutate_across(df, c("location", "occupation"), paste0, "!")
+\dontrun{
+  df <- data.frame(
+    location = "glasgow", occupation = "wine merchant",
+    stringsAsFactors = FALSE
+  )
+  utils_mutate_across(df, c("location", "occupation"), paste0, "!")
+}
 }

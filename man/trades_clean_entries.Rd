@@ -20,13 +20,21 @@ A dataframe.
 Attempts to clean entries of the provided trades directory dataframe provided.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-  address.trade.number = c("1S20", "I2"),
-  address.trade.body = c("Londn rd.", "Dixen pl"),
-  stringsAsFactors = FALSE
-)
-trades_clean_entries(directory, verbose = FALSE)
+\dontrun{
+  directory <- data.frame(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("ABOT", "ABRCROMBIE", "BLAI"),
+    forename = c("Wm.", "Alex", "Jhn Hug"),
+    occupation = c(
+      "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr",
+      "Victualer"
+    ),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("1S20", "I2", "2S0"),
+    address.trade.body = c("Londn rd.", "Dixen pl", "High St."),
+    stringsAsFactors = FALSE
+  )
+  trades_clean_entries(directory, verbose = FALSE)
+}
 }

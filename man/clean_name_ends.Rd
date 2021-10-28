@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean ends in provided name entries.
 }
 \examples{
-clean_name_ends(c("William-", "$Alexander", "John Hugh   "))
+\dontrun{
+  clean_name_ends(c("William-", "$Alexander", "John Hugh   "))
+}
 }

@@ -29,7 +29,7 @@ not (\code{TRUE}).}
 \code{\link[fuzzyjoin]{stringdist_left_join}}.}
 }
 \value{
-A dataframe.
+A tibble
 }
 \description{
 Attempts to complement trades directory dataframe with house address
@@ -37,27 +37,27 @@ information from the general directory dataframe provided by matching records
 from the two datasets using the distance metric specified.
 }
 \examples{
-trades_directory <- data.frame(
-  page = c("71", "71"),
+trades_directory <- tibble::tibble(
+  page = rep("71", 3L),
+  rank = c("135", "326", "586"),
   surname = c("Abbott", "Abercromby", "Blair"),
   forename = c("William", "Alexander", "John Hugh"),
   occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+  type = rep("OWN ACCOUNT", 3L),
   address.trade.number = c("18, 20", "12", "280"),
-  address.trade.body = c("London Road", "Dixon Place", "High Street"),
-  stringsAsFactors = FALSE
+  address.trade.body = c("London Road", "Dixon Place", "High Street")
 )
-general_directory <- data.frame(
-  page = c("71", "71"),
+general_directory <- tibble::tibble(
+  page = rep("71", 2L),
   surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
   occupation = c("Wine and spirit merchant", "Baker"),
   address.trade.number = c("18, 20", ""),
   address.house.number = c("136", "29"),
   address.trade.body = c("London Road", "Dixon Place"),
-  address.house.body = c("Queen Square", "Anderston Quay"),
-  stringsAsFactors = FALSE
+  address.house.body = c("Queen Square", "Anderston Quay")
 )
 combine_match_general_to_trades(
- trades_directory, general_directory, progres = TRUE, verbose = FALSE,
+ trades_directory, general_directory, progress = TRUE, verbose = FALSE,
  method = "osa", max_dist = 5
 )
 

@@ -6,7 +6,8 @@ perl <- TRUE
 
 # Functions ####
 
-## clean_entries ####
+## trades_clean_entries ####
+
 #' Mutate operation(s) in trades directory dataframe column(s)
 #'
 #' Attempts to clean entries of the provided trades directory dataframe provided.
@@ -19,15 +20,23 @@ perl <- TRUE
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-#'   address.trade.number = c("1S20", "I2"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl"),
-#'   stringsAsFactors = FALSE
-#' )
-#' trades_clean_entries(directory, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = rep("71", 3L),
+#'     rank = c("135", "326", "586"),
+#'     surname = c("ABOT", "ABRCROMBIE", "BLAI"),
+#'     forename = c("Wm.", "Alex", "Jhn Hug"),
+#'     occupation = c(
+#'       "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr",
+#'       "Victualer"
+#'     ),
+#'     type = rep("OWN ACCOUNT", 3L),
+#'     address.trade.number = c("1S20", "I2", "2S0"),
+#'     address.trade.body = c("Londn rd.", "Dixen pl", "High St."),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   trades_clean_entries(directory, verbose = FALSE)
+#' }
 trades_clean_entries <- function(directory, verbose){
 
   clean <- function(...){
@@ -51,6 +60,7 @@ trades_clean_entries <- function(directory, verbose){
 }
 
 
+## trades_clean_directory_plain ####
 
 #' Mutate operation(s) in trades directory dataframe column(s)
 #'
@@ -64,15 +74,21 @@ trades_clean_entries <- function(directory, verbose){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-#'   address.trade.number = c("1S20", "I2"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl"),
-#'   stringsAsFactors = FALSE
-#' )
-#' trades_clean_directory(directory, verbose = FALSE)
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = rep("71", 2L),
+#'     rank = c("135", "326"),
+#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'     occupation = c(
+#'       "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
+#'     ),
+#'     type = rep("OWN ACCOUNT", 3L),
+#'     address.trade.number = c("1S20", "I2"),
+#'     address.trade.body = c("Londn rd.", "Dixen pl"),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   trades_clean_directory(directory, verbose = FALSE)
+#' }
 trades_clean_directory_plain <- function(directory, verbose){
 
   clean <- function(...){
@@ -82,6 +98,9 @@ trades_clean_directory_plain <- function(directory, verbose){
 
   utils_execute(verbose, clean, directory = directory)
 }
+
+
+## trades_clean_directory_progress ####
 
 #' Mutate operation(s) in trades directory dataframe column(s)
 #'
@@ -96,16 +115,21 @@ trades_clean_directory_plain <- function(directory, verbose){
 #' @return A dataframe.
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-#'   address.trade.number = c("1S20", "I2"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl"),
-#'   stringsAsFactors = FALSE
-#' )
-#' trades_clean_directory(directory, verbose = FALSE)
-
+#' \dontrun{
+#'   directory <- data.frame(
+#'     page = rep("71", 2L),
+#'     rank = c("135", "326"),
+#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+#'     occupation = c(
+#'       "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
+#'     ),
+#'     type = rep("OWN ACCOUNT", 3L),
+#'     address.trade.number = c("1S20", "I2"),
+#'     address.trade.body = c("Londn rd.", "Dixen pl"),
+#'     stringsAsFactors = FALSE
+#'   )
+#'   trades_clean_directory(directory, verbose = FALSE)
+#' }
 trades_clean_directory_progress <- function(directory, verbose){
 
   directory_split <- split(directory, (1L:nrow(directory) %/% 500L))
@@ -121,6 +145,7 @@ trades_clean_directory_progress <- function(directory, verbose){
 }
 
 
+## trades_clean_directory ####
 
 #' Mutate operation(s) in trades directory dataframe column(s)
 #'
@@ -128,60 +153,31 @@ trades_clean_directory_progress <- function(directory, verbose){
 #'
 #' @param directory A trades directory dataframe. Columns must include `occupation`,
 #'   `forename`, `surname` and `address.trade.number`, `address.trade.body`.
+#' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
+#' @return A tibble
 #'
 #' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
+#' directory <- tibble::tibble(
+#'   page = rep("71", 2L),
+#'   rank = c("135", "326"),
 #'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
+#'   occupation = c(
+#'     "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
+#'   ),
+#'   type = rep("OWN ACCOUNT", 2L),
 #'   address.trade.number = c("1S20", "I2"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl"),
-#'   stringsAsFactors = FALSE
+#'   address.trade.body = c("Londn rd.", "Dixen pl")
 #' )
-#' trades_clean_directory(directory, verbose = FALSE)
+#' trades_clean_directory(directory, progress = TRUE, verbose = FALSE)
 #'
 #' @export
 trades_clean_directory <- function(directory, progress = TRUE, verbose = FALSE){
 
-  if (progress) trades_clean_directory_progress(directory, verbose)
+  out <- if (progress) trades_clean_directory_progress(directory, verbose)
   else trades_clean_directory_plain(directory, verbose)
+
+  tibble::tibble(out)
 }
-
-
-
-#' Mutate operation(s) in trades directory dataframe column(s)
-#'
-#' Attempts to clean the provided trades directory dataframe provided.
-#'
-#' @param directory A trades directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `address.trade.number`, `address.trade.body`.
-#' @param verbose Whether the function should be executed silently (`FALSE`) or
-#'   not (`TRUE`).
-#'
-#' @return A dataframe.
-#'
-#' @examples
-#' directory <- data.frame(
-#'   page = c("71", "71"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-#'   address.trade.number = c("1S20", "I2"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl"),
-#'   stringsAsFactors = FALSE
-#' )
-#' trades_clean_directory(directory, verbose = FALSE)
-#'
-#' @export
-# trades_clean_directory <- function(data, verbose){
-#
-#   clean <- function(...){
-#     ## Clean entries ####
-#     trades_clean_entries(data, verbose = verbose)
-#   }
-#
-#   utils_execute(verbose, clean, data = data)
-# }

@@ -22,5 +22,7 @@ A character string.
 Clears the provided string of the content specified as a regex.
 }
 \examples{
-utils_clear_content("glasgow-entrepreneurs", "^.+-", TRUE)
+\dontrun{
+  utils_clear_content("glasgow-entrepreneurs", "^.+-", TRUE)
+}
 }

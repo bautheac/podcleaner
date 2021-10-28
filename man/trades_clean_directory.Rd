@@ -10,24 +10,29 @@ trades_clean_directory(directory, progress = TRUE, verbose = FALSE)
 \item{directory}{A trades directory dataframe. Columns must include \code{occupation},
 \code{forename}, \code{surname} and \code{address.trade.number}, \code{address.trade.body}.}
 
+\item{progress}{Whether progress should be shown (\code{TRUE}) or not (\code{FALSE}).}
+
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A tibble
 }
 \description{
 Attempts to clean the provided trades directory dataframe provided.
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
+directory <- tibble::tibble(
+  page = rep("71", 2L),
+  rank = c("135", "326"),
   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
+  occupation = c(
+    "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
+  ),
+  type = rep("OWN ACCOUNT", 2L),
   address.trade.number = c("1S20", "I2"),
-  address.trade.body = c("Londn rd.", "Dixen pl"),
-  stringsAsFactors = FALSE
+  address.trade.body = c("Londn rd.", "Dixen pl")
 )
-trades_clean_directory(directory, verbose = FALSE)
+trades_clean_directory(directory, progress = TRUE, verbose = FALSE)
 
 }

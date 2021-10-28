@@ -23,16 +23,20 @@ test_that("combine_random_string_if_no_address works for various patterns", {
 # no_trade_address_to_randon_string ####
 test_that("combine_no_trade_address_to_randon_string works in general", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
+    rank = c("135", "326"),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
+    type = rep("OWN ACCOUNT", 2L),
     address.trade = c("18, 20, London Road.", "No trade address found")
   )
   set.seed(1)
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
+    rank = c("135", "326"),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
+    type = rep("OWN ACCOUNT", 2L),
     address.trade = c("18, 20, London Road.", "GNZuCtwed3CAgNlUizNmvD"),
   )
   expect_equal(combine_no_trade_address_to_randon_string(directory), out)
@@ -41,43 +45,47 @@ test_that("combine_no_trade_address_to_randon_string works in general", {
 # make_match_string ####
 test_that("combine_make_match_string works for various entries", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
+    rank = c("135", "326"),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
+    type = rep("OWN ACCOUNT", 2L),
     address.trade = c("18, 20, London Road.", "No trade address found")
   )
   set.seed(1)
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
+    rank = c("135", "326"),
     match.string = c(
       "Abbott William - 18, 20, London Road",
       "Abercromby Alexander - GNZuCtwed3CAgNlUizNmvD"
     ),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant", "Baker")
+    occupation = c("Wine and spirit merchant", "Baker"),
+    type = rep("OWN ACCOUNT", 2L),
   )
   expect_equal(combine_make_match_string(directory), out)
 })
 
-# has_match_failled ####
-test_that("combine_has_match_failled works in general", {
+# has_match_failed ####
+test_that("combine_has_match_failed works in general", {
   numbers <- c("18, 20", NA)
   bodies <- c("London Road.", NA)
-  expect_equal(combine_has_match_failled(numbers, bodies), c(FALSE, TRUE))
+  expect_equal(combine_has_match_failed(numbers, bodies), c(FALSE, TRUE))
 })
 
-# label_if_match_failled ####
-test_that("combine_label_if_match_failled works for both number and address body", {
+# label_if_match_failed ####
+test_that("combine_label_if_match_failed works for both number and address body", {
   numbers <- c("18, 20", NA)
   bodies <- c("London Road.", NA)
-  combine_label_if_match_failled("number", number = numbers, body = bodies)
+  combine_label_if_match_failed("number", number = numbers, body = bodies)
   expect_equal(
-    combine_label_if_match_failled("number", number = numbers, body = bodies),
+    combine_label_if_match_failed("number", number = numbers, body = bodies),
     c("18, 20", "")
   )
   expect_equal(
-    combine_label_if_match_failled("body", number = numbers, body = bodies),
-    c("London Road.", "Failled to match with general directory")
+    combine_label_if_match_failed("body", number = numbers, body = bodies),
+    c("London Road.", "Failed to match with general directory")
   )
 })
 
@@ -88,10 +96,10 @@ test_that("combine_get_address_house_type works for body number and address hous
   expect_equal(combine_get_address_house_type("address.house.body"), "body")
 })
 
-# label_failled_matches ####
-test_that("combine_label_failled_matches works for various entries", {
+# label_failed_matches ####
+test_that("combine_label_failed_matches works for various entries", {
   directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c("18, 20", "12"),
@@ -100,15 +108,15 @@ test_that("combine_label_failled_matches works for various entries", {
     address.house.body = c("Queen Square", NA)
   )
   out <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c("18, 20", "12"),
     address.house.number = c("136", ""),
     address.trade.body = c("London Road", "Dixon Place"),
-    address.house.body = c("Queen Square", "Failled to match with general directory")
+    address.house.body = c("Queen Square", "Failed to match with general directory")
   )
-  expect_equal(combine_label_failled_matches(directory), out)
+  expect_equal(combine_label_failed_matches(directory), out)
 })
 
 
@@ -116,9 +124,11 @@ test_that("combine_label_failled_matches works for various entries", {
 test_that("combine_match_general_to_trades_plain works in general", {
   trades_directory <- tibble::tibble(
     page = rep("71", 3L),
+    rank = c("135", "326", "586"),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
     address.trade.number = c("18, 20", "12", "280"),
     address.trade.body = c("London Road", "Dixon Place", "High Street")
   )
@@ -133,14 +143,16 @@ test_that("combine_match_general_to_trades_plain works in general", {
   )
   out <- tibble::tibble(
     page = rep("71", 3L),
+    rank = c("135", "326", "586"),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
     address.trade.number = c("18, 20", "12", "280"),
     address.trade.body = c("London Road", "Dixon Place", "High Street"),
     address.house.number = c("136", "29", ""),
     address.house.body = c(
-      "Queen Square", "Anderston Quay", "Failled to match with general directory"
+      "Queen Square", "Anderston Quay", "Failed to match with general directory"
     )
   )
   expect_equal(
@@ -156,9 +168,11 @@ test_that("combine_match_general_to_trades_plain works in general", {
 test_that("combine_match_general_to_trades_progress works in general", {
   trades_directory <- tibble::tibble(
     page = rep("71", 3L),
+    rank = c("135", "326", "586"),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
     address.trade.number = c("18, 20", "12", "280"),
     address.trade.body = c("London Road", "Dixon Place", "High Street")
   )
@@ -173,14 +187,16 @@ test_that("combine_match_general_to_trades_progress works in general", {
   )
   out <- tibble::tibble(
     page = rep("71", 3L),
+    rank = c("135", "326", "586"),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
     address.trade.number = c("18, 20", "12", "280"),
     address.trade.body = c("London Road", "Dixon Place", "High Street"),
     address.house.number = c("136", "29", ""),
     address.house.body = c(
-      "Queen Square", "Anderston Quay", "Failled to match with general directory"
+      "Queen Square", "Anderston Quay", "Failed to match with general directory"
     )
   )
   expect_equal(
@@ -195,15 +211,17 @@ test_that("combine_match_general_to_trades_progress works in general", {
 # match_general_to_trades ####
 test_that("combine_match_general_to_trades works in general", {
   trades_directory <- tibble::tibble(
-    page = c("71", "71", "71"),
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
     address.trade.number = c("18, 20", "12", "280"),
     address.trade.body = c("London Road", "Dixon Place", "High Street")
   )
   general_directory <- tibble::tibble(
-    page = c("71", "71"),
+    page = rep("71", 2L),
     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
     occupation = c("Wine and spirit merchant", "Baker"),
     address.trade.number = c("18, 20", ""),
@@ -213,14 +231,16 @@ test_that("combine_match_general_to_trades works in general", {
   )
   out <- tibble::tibble(
     page = rep("71", 3L),
+    rank = c("135", "326", "586"),
     surname = c("Abbott", "Abercromby", "Blair"),
     forename = c("William", "Alexander", "John Hugh"),
     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
     address.trade.number = c("18, 20", "12", "280"),
     address.trade.body = c("London Road", "Dixon Place", "High Street"),
     address.house.number = c("136", "29", ""),
     address.house.body = c(
-      "Queen Square", "Anderston Quay", "Failled to match with general directory"
+      "Queen Square", "Anderston Quay", "Failed to match with general directory"
     )
   )
   expect_equal(

@@ -24,12 +24,16 @@ missing would be otherwise matched.
 }
 
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  address.trade = c("18, 20, London Road.", "No trade address found"),
-  stringsAsFactors = FALSE
-)
-combine_no_trade_address_to_randon_string(directory)
+\dontrun{
+  directory <- data.frame(
+    page = rep("71", 2L),
+    rank = c("135", "326"),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade = c("18, 20, London Road.", "No trade address found"),
+    stringsAsFactors = FALSE
+  )
+  combine_no_trade_address_to_randon_string(directory)
+}
 }

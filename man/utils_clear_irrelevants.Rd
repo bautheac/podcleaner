@@ -9,7 +9,7 @@ utils_clear_irrelevants(directory, ...)
 \arguments{
 \item{directory}{A directory dataframe.}
 
-\item{...}{Further arguments to be passed down to \code{\link{clear_content}}.}
+\item{...}{Further arguments to be passed down to \code{\link{utils_clear_content}}.}
 }
 \value{
 A dataframe.
@@ -19,15 +19,17 @@ Attempts to get rid of irrelevant information in all columns of the provided
 directory dataframe provided
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit merchant — See Advertisement in Appendix.", "Baker"),
-  address.trade.number = c("18, 20", "12"),
-  address.house.number = c("136", "265"),
-  address.trade.body = c("London Street.", "Dixon Street."),
-  address.house.body = c("Queen Street.", "Argyle Street"),
-  stringsAsFactors = FALSE
-)
-utils_clear_irrelevants(directory, globals_regex_irrelevants, ignore_case = TRUE)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit merchant — See Advertisement in Appendix.", "Baker"),
+    address.trade.number = c("18, 20", "12"),
+    address.house.number = c("136", "265"),
+    address.trade.body = c("London Street.", "Dixon Street."),
+    address.house.body = c("Queen Street.", "Argyle Street"),
+    stringsAsFactors = FALSE
+  )
+  utils_clear_irrelevants(directory, globals_regex_irrelevants, ignore_case = TRUE)
+}
 }

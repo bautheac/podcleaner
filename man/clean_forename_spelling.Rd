@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean spelling in provided name entries.
 }
 \examples{
-clean_forename_spelling(c("Wm.", "A.", "Jn Huh"))
+\dontrun{
+  clean_forename_spelling(c("Wm.", "A.", "Jn Huh"))
+}
 }

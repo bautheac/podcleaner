@@ -16,5 +16,7 @@ A vector of character strings.
 Attempts to clean "Saint" prefix in provided address entries.
 }
 \examples{
-clean_address_saints(c("St Georges st.", "St Enoch sq"))
+\dontrun{
+  clean_address_saints(c("St Georges st.", "St Enoch sq"))
+}
 }

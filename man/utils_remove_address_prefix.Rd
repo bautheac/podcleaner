@@ -23,16 +23,18 @@ Clear address entries in the provided directory dataframe of undesired
 prefixes such as "depot", "office", "store", "works" or "workshops".
 }
 \examples{
-directory <- data.frame(
-  page = c("71", "71"),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit merchant", "Baker"),
-  addresses = c(
-    "depot -; 1820 London    st. ; house, Mary hill.*",
-    "workshop,,12 &;Dixon st.; residence,    Craigrownie, Cove.$   "
-  ),
-  stringsAsFactors = FALSE
-)
-regex <- globals_regex_address_prefix
-utils_remove_address_prefix(directory, regex, TRUE)
+\dontrun{
+  directory <- data.frame(
+    page = c("71", "71"),
+    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    addresses = c(
+      "depot -; 1820 London    st. ; house, Mary hill.*",
+      "workshop,,12 &;Dixon st.; residence,    Craigrownie, Cove.$   "
+    ),
+    stringsAsFactors = FALSE
+  )
+  regex <- globals_regex_address_prefix
+  utils_remove_address_prefix(directory, regex, TRUE)
+}
 }

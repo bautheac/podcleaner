@@ -30,8 +30,10 @@ provided character string(s) if found or provided default character string
 if not.
 }
 \examples{
-utils_paste_if_found(
-  "^glasgow", c("glasgow-entrepreneurs", "aberdeen-entrepreneurs"),
-  "pattern not found", TRUE, "pattern", "found"
-)
+\dontrun{
+  utils_paste_if_found(
+    "^glasgow", c("glasgow-entrepreneurs", "aberdeen-entrepreneurs"),
+    "pattern not found", TRUE, "pattern", "found"
+  )
+}
 }

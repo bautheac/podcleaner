@@ -23,5 +23,7 @@ B. -> Bernard, C. -> Colin, D. -> David, etc.
 }
 
 \examples{
-clean_forename(c("McWm.", "Jas."))
+\dontrun{
+  clean_forename(c("McWm.", "Jas."))
+}
 }

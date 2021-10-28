@@ -16,5 +16,7 @@ A vector of character strings.
 Clean number record of provided address(es).
 }
 \examples{
-utils_clean_address_number(c(" -; 1820", ",,12"))
+\dontrun{
+  utils_clean_address_number(c(" -; 1820", ",,12"))
+}
 }

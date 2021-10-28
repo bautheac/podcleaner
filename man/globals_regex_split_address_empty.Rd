@@ -15,6 +15,6 @@ Regular expression used to separate numbers from body in provided general
 directory address entries.
 }
 \seealso{
-\code{\link{general$split_address_numbers_bodies}}
+\code{\link{general_split_address_numbers_bodies}}
 }
 \keyword{datasets}
