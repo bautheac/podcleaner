@@ -13,7 +13,7 @@ utils_split_and_name(string, pattern, num_col, colnames)
 
 \item{num_col}{Number of parts to split the string into as integer.}
 
-\item{colnames}{Column names for the outcoming tibble.}
+\item{colnames}{Column names for the output tibble.}
 }
 \value{
 A \code{\link[tibble]{tibble}}

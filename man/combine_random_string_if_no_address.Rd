@@ -13,7 +13,7 @@ combine_random_string_if_no_address(address)
 A length 1 character string vector.
 }
 \description{
-Returns a 22 character long random string if address provided is labeled as
+Returns a 22 character long random string if address provided is labelled as
 missing.
 }
 \examples{

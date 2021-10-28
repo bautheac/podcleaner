@@ -22,7 +22,7 @@ and number are filled/not empty.
 The function is for primarily use in the
 \code{\link{utils_label_address_if_missing}} function called by
 \code{\link{utils_label_missing_addresses}} where it provides a filtering
-vector used for labeling missing addresses. \code{utils_is_address_missing} creates
+vector used for labelling missing addresses. \code{utils_is_address_missing} creates
 an expression and further evaluates it two levels up in the environment tree,
 in other words in the directory dataframe eventually passed down to
 \code{\link{utils_label_missing_addresses}}.

@@ -1687,7 +1687,7 @@ globals_and_single_quote <- c(
 #' @format A character string vector.
 #'
 #' @section Details:
-#'   Some regexes contain the doulbe quote character: '"'.
+#'   Some regexes contain the double quote character: '"'.
 globals_and_double_quote <- c('<J\\"', 'cj\\"')
 
 

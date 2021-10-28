@@ -19,7 +19,7 @@ random string. Random string only shows in body of trade address entries.
 \section{Details}{
 
 Prevents unwarranted matches when matching general to trades directory.
-Unrelated records with similar name and trade address entry labeled as
+Unrelated records with similar name and trade address entry labelled as
 missing would be otherwise matched.
 }
 

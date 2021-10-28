@@ -388,7 +388,7 @@ utils_clean_address <- function(directory, type = c("body", "number", "ends")){
 #' The function is for primarily use in the
 #'   \code{\link{utils_label_address_if_missing}} function called by
 #'   \code{\link{utils_label_missing_addresses}} where it provides a filtering
-#'   vector used for labeling missing addresses. `utils_is_address_missing` creates
+#'   vector used for labelling missing addresses. `utils_is_address_missing` creates
 #'   an expression and further evaluates it two levels up in the environment tree,
 #'   in other words in the directory dataframe eventually passed down to
 #'   \code{\link{utils_label_missing_addresses}}.
@@ -411,7 +411,7 @@ utils_is_address_missing <- function(type){
 #'
 #'
 #' @return A character string vector of address bodies, unchanged if provided,
-#'   labeled as missing otherwise.
+#'   labelled as missing otherwise.
 #'
 #' @section Details:
 #' The function is for primarily use in the
@@ -654,7 +654,7 @@ utils_IO_load <- function(...){
 #' @param string Character string to be split.
 #' @param pattern Pattern to split on as character string (can be a regex).
 #' @param num_col Number of parts to split the string into as integer.
-#' @param colnames Column names for the outcoming tibble.
+#' @param colnames Column names for the output tibble.
 #'
 #' @return A \code{\link[tibble]{tibble}}
 #'

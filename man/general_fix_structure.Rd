@@ -18,7 +18,7 @@ A dataframe.
 \description{
 Attempts to fix the structure of the raw general directory dataframe provided.
 For each entry, attempts to fix parsing errors by moving pieces if information
-provided in the right columns, attempts to separate trade fron house address,
+provided in the right columns, attempts to separate trade from house address,
 attempt to separate multiple trade addresses, attempt to separate number from
 address body.
 }

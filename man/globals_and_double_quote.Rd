@@ -16,7 +16,7 @@ reading the ampersand character: "&" in directory entries.
 }
 \section{Details}{
 
-Some regexes contain the doulbe quote character: '"'.
+Some regexes contain the double quote character: '"'.
 }
 
 \keyword{datasets}

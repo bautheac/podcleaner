@@ -8,7 +8,7 @@ utils_label_address_if_missing()
 }
 \value{
 A character string vector of address bodies, unchanged if provided,
-labeled as missing otherwise.
+labelled as missing otherwise.
 }
 \description{
 If address is empty label body accordingly: "no house/trade address

@@ -34,7 +34,7 @@ combine_random_string_if_pattern <- function(string, regex){
 
 #' Conditionally return a random string
 #'
-#' Returns a 22 character long random string if address provided is labeled as
+#' Returns a 22 character long random string if address provided is labelled as
 #'   missing.
 #'
 #' @param address A character string..
@@ -66,7 +66,7 @@ combine_random_string_if_no_address <- function(address){
 #'
 #' @section Details:
 #' Prevents unwarranted matches when matching general to trades directory.
-#'   Unrelated records with similar name and trade address entry labeled as
+#'   Unrelated records with similar name and trade address entry labelled as
 #'   missing would be otherwise matched.
 #'
 #' @examples
