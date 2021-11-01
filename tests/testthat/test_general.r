@@ -1,7 +1,7 @@
 # move_house_to_address ####
 test_that("general_move_house_to_address works in general", {
   directory <- tibble::tibble(
-    page = c("71", "71", "71"),
+    page = rep("71", 3L),
     surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
     occupation = c(
       "Wine and spirit merchant; house", "Baker", "Victualer"

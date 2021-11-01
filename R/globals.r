@@ -1838,7 +1838,7 @@ globals_union_colnames <- c(
 #' @format A character string vector.
 #'
 #' @seealso \code{\link{general_move_house_to_address}}
-globals_regex_house_to_address <- ";\\s\\b(?:[bh][op](?:use)?|res(?:idence)?)\\b\\.?.+"
+globals_regex_house_to_address <- ";\\s\\b(?:[bh][op](?:use)?|res(?:idence)?)\\b\\.?.*"
 
 
 ## globals_regex_house_split_trade ####
@@ -1852,14 +1852,14 @@ globals_regex_house_to_address <- ";\\s\\b(?:[bh][op](?:use)?|res(?:idence)?)\\b
 #'
 #' @seealso \code{\link{general_split_trade_house_addresses}}
 globals_regex_house_split_trade <- paste0(
-  "(?:^|[;,„\\s]*)",
-  "(?<![\\-])",
+  "(?:^|[;,\u201e\\s]*)",
+  "(?<![\\-])?",
   "\\b(?:",
-  "res(?:id)?(?:ence)",
+  "res(?:id)?(?:ence)?",
   "|",
   "(?:(?:[bdht]|li|jh)[aop])(?:[ui\\/]se)?s?",
   ")\\b",
-  "[.,„\\s]+"
+  "[.,\u201e\\s]+"
 )
 
 ## globals_regex_occupation_from_address ####
