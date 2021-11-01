@@ -521,6 +521,6 @@ general_clean_directory <- function(directory, progress = TRUE, verbose = FALSE)
   out <- if (progress) general_clean_directory_progress(directory, verbose)
   else general_clean_directory_plain(directory, verbose)
 
-  tibble::tibble(out)
+  dplyr::distinct(tibble::tibble(out))
 }
 

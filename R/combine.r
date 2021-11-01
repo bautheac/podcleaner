@@ -459,7 +459,7 @@ combine_match_general_to_trades <- function(
       trades_directory, general_directory, verbose, ...
     )
 
-  tibble::as_tibble(out)
+  dplyr::distinct(tibble::tibble(out))
 }
 
 

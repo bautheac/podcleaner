@@ -1838,7 +1838,7 @@ globals_union_colnames <- c(
 #' @format A character string vector.
 #'
 #' @seealso \code{\link{general_move_house_to_address}}
-globals_regex_house_to_address <- ";\\s[bh][op](?:use|-)$"
+globals_regex_house_to_address <- ";\\s\\b(?:[bh][op](?:use)?|res(?:idence)?)\\b\\.?.+"
 
 
 ## globals_regex_house_split_trade ####
@@ -1852,12 +1852,15 @@ globals_regex_house_to_address <- ";\\s[bh][op](?:use|-)$"
 #'
 #' @seealso \code{\link{general_split_trade_house_addresses}}
 globals_regex_house_split_trade <- paste0(
-  "(?:^|[;,\u201e\\s]*)",
-  "\\b(res(?:id)?(?:ence)?)?",
-  "(?(1)()|((?:(?:[bht]|li|jh)[aop])(?:[ui\\/]se)?s?))\\b",
-  "[.,\u201e\\s]+"
+  "(?:^|[;,„\\s]*)",
+  "(?<![\\-])",
+  "\\b(?:",
+  "res(?:id)?(?:ence)",
+  "|",
+  "(?:(?:[bdht]|li|jh)[aop])(?:[ui\\/]se)?s?",
+  ")\\b",
+  "[.,„\\s]+"
 )
-
 
 ## globals_regex_occupation_from_address ####
 
@@ -1966,7 +1969,7 @@ globals_regex_and_match <- "^and\\s\\K.+"
 #' @format A character string vector.
 #'
 #' @seealso \code{\link{utils_clear_irrelevants}}
-globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s\u2014 See.+|Appendix.+)"
+globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s?[\u2014(]\\s?See.+|Appendix.+)"
 
 
 ## globals_regex_split_address_numbers ####
