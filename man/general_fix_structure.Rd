@@ -2,38 +2,34 @@
 % Please edit documentation in R/general.r
 \name{general_fix_structure}
 \alias{general_fix_structure}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_fix_structure(directory, verbose)
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{addresses}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{occupation}, \code{addresses}.}
 
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{occupation}, \code{address.trade.number},
+\code{address.trade.body}, \code{address.house.number} and \code{address.house.body}.
+"house" suffix in \code{occupation} column is move to \code{addresses}, occupation
+information is repatriated from \code{addresses} to \code{occupation} column;
+\code{addresses} is split into trade and house address columns; additional
+records are created for each extra trade address identified.
 }
 \description{
-Attempts to fix the structure of the raw general directory dataframe provided.
-For each entry, attempts to fix parsing errors by moving pieces if information
-provided in the right columns, attempts to separate trade from house address,
-attempt to separate multiple trade addresses, attempt to separate number from
+Attempts to fix the structure of the raw Scottish post office general
+directory data.frame provided. For each entry, \code{general_fix_structure}
+attempts to fix parsing errors by moving pieces of information provided to
+the right columns; further attempts to separate trade from house address,
+separate multiple trade addresses as well as separate number from
 address body.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71"),
-    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant; house", ""),
-    addresses = c(
-      "18, 20 London Street",
-      "Baker; 12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-    ),
-    stringsAsFactors = FALSE
-  )
-  general_fix_structure(directory, verbose = FALSE)
-}
 }

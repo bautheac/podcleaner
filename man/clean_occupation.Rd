@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_occupation}
 \alias{clean_occupation}
-\title{Clean entries occupation}
+\title{Clean entry(/ies) occupation}
 \usage{
 clean_occupation(occupations)
 }
@@ -10,13 +10,8 @@ clean_occupation(occupations)
 \item{occupations}{A character string vector of occupation(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of cleaned occupation(s).
 }
 \description{
-Attempts to clean provided occupation
-}
-\examples{
-\dontrun{
-  clean_occupation(c("Wine and spirit mercht", "Bkr"))
-}
+Attempts to clean provided occupation.
 }

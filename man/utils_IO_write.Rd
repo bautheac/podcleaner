@@ -11,12 +11,15 @@ utils_IO_write(data, ...)
 
 \item{...}{Destination parameters to be passed to \code{\link{utils_IO_path}}.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Save the object provided to specified path as \code{.rds} file.
 }
 \examples{
 \dontrun{
-  utils_IO_write(mtcars, "home/projects", "glasgow-entrepreneurs")
+  utils_IO_write(mtcars, "home/projects", "mtcars")
 }
 
 }

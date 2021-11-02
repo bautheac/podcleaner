@@ -8,20 +8,15 @@ perl <- TRUE
 
 #' Conditionally return a random string
 #'
-#' Search for specified pattern in provided string, if found returns a 22
-#'   character long random string.
+#' Search for specified pattern in provided string; if found returns a 22
+#'   character long random string otherwise return original string.
 #'
-#' @param string A character string..
+#' @param string A character string.
 #' @param regex Character string regex specifying the pattern to look for in
 #'   `string`.
 #'
-#' @return A length 1 character string vector.
-#'
-#' @examples
-#' \dontrun{
-#'   combine_random_string_if_pattern("random string", "random")
-#'   combine_random_string_if_pattern("random string", "original")
-#' }
+#' @return A length 1 character string vector: 22 character long random string
+#'   if `regex` found in `string`, `string` otherwise.
 combine_random_string_if_pattern <- function(string, regex){
   ifelse(
     grepl(regex, string, ignore_case, perl),
@@ -35,54 +30,39 @@ combine_random_string_if_pattern <- function(string, regex){
 #' Conditionally return a random string
 #'
 #' Returns a 22 character long random string if address provided is labelled as
-#'   missing.
+#'   missing ("No trade/house address found").
 #'
-#' @param address A character string..
+#' @param address A character string.
 #'
-#' @return A length 1 character string vector.
-#'
-#' @examples
-#' \dontrun{
-#'   combine_random_string_if_no_address(
-#'     c("18, 20 London Road", "No trade address found")
-#'   )
-#' }
+#' @return A length 1 character string vector: 22 character long random string
+#'   if `address` labelled as missing ("No trade/house address found"),
+#'   `address` otherwise.
 combine_random_string_if_no_address <- function(address){
   regex <- "^No.+address\\sfound$"
   combine_random_string_if_pattern(address, regex)
 }
 
 
-# combine_no_trade_address_to_randon_string ####
+# combine_no_trade_address_to_random_string ####
 
-#' Mutate operation(s) in directory dataframe trade address
+#' Mutate operation(s) in directory data.frame address.trade column.
 #'
-#' Replaces missing trade addresses in the provided directory dataframe with
-#'   random string. Random string only shows in body of trade address entries.
+#' Replaces missing trade address(es) in the provided Scottish post office
+#'   directory data.frame with random string(s). Random string(s) only show(s)
+#'   in body of trade address entry(/ies).
 #'
-#' @param directory A directory dataframe. Columns must include `address.trade`,
+#' @param directory A Scottish post office directory in the form of a data.frame
+#'   or other object that inherits from the data.frame class such as a
+#'   \code{\link[tibble]{tibble}}. Columns must at least include `address.trade`.
 #'
-#' @return A dataframe.
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `address.trade`.
 #'
 #' @section Details:
 #' Prevents unwarranted matches when matching general to trades directory.
 #'   Unrelated records with similar name and trade address entry labelled as
 #'   missing would be otherwise matched.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     rank = c("135", "326"),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     type = rep("OWN ACCOUNT", 3L),
-#'     address.trade = c("18, 20, London Road.", "No trade address found"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   combine_no_trade_address_to_randon_string(directory)
-#' }
-combine_no_trade_address_to_randon_string <- function(directory){
+combine_no_trade_address_to_random_string <- function(directory){
   address.trade <- NULL
 
   dplyr::mutate(
@@ -96,16 +76,21 @@ combine_no_trade_address_to_randon_string <- function(directory){
 
 # combine_make_match_string ####
 
-#' Mutate operation(s) in directory dataframe trade address
+#' Mutate operation(s) in directory data.frame trade address column
 #'
-#' Creates a 'match.string' column in the provided directory dataframe composed
-#'   of entries full name and trade address pasted together.
-#'   Missing trade address entries are replaced with a random generated string.
+#' Creates a 'match.string' column in the provided Scottish post office
+#'   directory data.frame composed of entry(/ies) full name and trade address
+#'   pasted together. Missing trade address entry(/ies) are replaced with a
+#'   random generated string.
 #'
-#' @param directory A directory dataframe. Columns must include `forename`,
-#'   `surname`, `occupation`, `address.trade.number`, `address.trade.body`.
+#' @param directory A Scottish post office directory in the form of a data.frame
+#'   or other object that inherits from the data.frame class such as a
+#'   \code{\link[tibble]{tibble}}. Columns must at least include `forename`,
+#'   `surname`, `address.trade.number`, `address.trade.body`.
 #'
-#' @return A dataframe.
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `forename`, `surname`, `address.trade.number`,
+#'   `address.trade.body`, `match.string`.
 #'
 #' @section Details:
 #' The purpose of the 'match.string' column is to facilitates the matching of
@@ -115,18 +100,6 @@ combine_no_trade_address_to_randon_string <- function(directory){
 #'
 #' @seealso \code{\link{combine_match_general_to_trades}} for the matching of
 #'   the general to trades directory.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     address.trade = c("18, 20, London Road.", "No trade address found"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   combine_make_match_string(directory)
-#' }
 combine_make_match_string <- function(directory){
   address.trade <- name <- NULL
 
@@ -139,7 +112,7 @@ combine_make_match_string <- function(directory){
       "name", dplyr::matches("name$"), sep = " ", remove = FALSE, na.rm = TRUE
     ) %>%
     utils_clean_ends(name, address.trade) %>%
-    combine_no_trade_address_to_randon_string() %>%
+    combine_no_trade_address_to_random_string() %>%
     tidyr::unite(
       "match.string", c(dplyr::matches("^name"), "address.trade"), sep = " - ",
       remove = FALSE, na.rm = TRUE
@@ -155,18 +128,14 @@ combine_make_match_string <- function(directory){
 #' Provided with two equal length vectors, returns TRUE for indexes where both
 #'   entries are "NA" and FALSE otherwise.
 #'
-#' @param number A vector of address numbers. Integer or character string.
-#' @param body A character string vector of address bodies.
+#' @param number A vector of address number(s). Integer or character string.
+#' @param body A character string vector of address body(/ies).
 #'
-#' @return A boolean vector.
-#'
-#' @examples
-#' \dontrun{
-#'   numbers <- c("18, 20", NA)
-#'   bodies <- c("London Road.", NA)
-#'   combine_has_match_failed(numbers, bodies)
-#' }
-combine_has_match_failed <- function(number, body){ (is.na(number) & is.na(body)) }
+#' @return A boolean vector: `TRUE` for indexes where both
+#'   `number` and `body` are "NA", `FALSE` otherwise.
+combine_has_match_failed <- function(number, body){
+  (is.na(number) & is.na(body))
+}
 
 
 # combine_label_if_match_failed ####
@@ -175,22 +144,18 @@ combine_has_match_failed <- function(number, body){ (is.na(number) & is.na(body)
 #'
 #' Labels failed matches as such.
 #'
-#' @param type A Character string: "number", "body". Type of column to label.
+#' @param type A Character string, one of: "number" or "body". Type of column to
+#'   label.
 #' @param ... Further arguments to be passed down to
 #'   \code{\link{combine_has_match_failed}}
 #'
-#' @return A character string vector.
-#'
-#'
-#' @examples
-#' \dontrun{
-#'   numbers <- c("18, 20", NA)
-#'   bodies <- c("London Road.", NA)
-#'   combine_label_if_match_failed("number", number = numbers, body = bodies)
-#'   combine_label_if_match_failed("body", number = numbers, body = bodies)
-#' }
+#' @return A character string vector: address(es) "number" or "body" as
+#'   specified in `type` if match succeeded, "" (type = "number") or
+#'   "Failed to match with general directory" (type = "body") otherwise.
 combine_label_if_match_failed <- function(type = c("number", "body"), ...){
-  txt <- switch(type, "number" = "", "body" = "Failed to match with general directory")
+  txt <- switch(
+    type, "number" = "", "body" = "Failed to match with general directory"
+  )
   args <- list(...)
   dplyr::if_else(combine_has_match_failed(...), txt, args[[type]])
 }
@@ -200,19 +165,15 @@ combine_label_if_match_failed <- function(type = c("number", "body"), ...){
 
 #' Get house address column type
 #'
-#' Identifies the type of the house address column provided, number or body.
+#' Identifies the type of the house address column provided: number or body.
 #'
 #' @param column A Character string: ends in "house.number" or "house.body".
 #'
-#' @return A length 1 character string vector: "number" or "body".
-#'
-#' @examples
-#' \dontrun{
-#'   combine_get_address_house_type("address.house.number")
-#'   combine_get_address_house_type("address.house.body")
-#' }
+#' @return A Character string: "number" or "body".
 combine_get_address_house_type <- function(column){
-  regmatches(column, regexpr(globals_regex_get_address_house_type, column, perl = perl))
+  regmatches(
+    column, regexpr(globals_regex_get_address_house_type, column, perl = perl)
+  )
 }
 
 
@@ -220,27 +181,19 @@ combine_get_address_house_type <- function(column){
 
 #' Label failed matches
 #'
-#' Labels failed matches as such in the provided directory dataframe.
+#' Labels failed matches as such in the provided Scottish post office directory
+#'   data.frame.
 #'
-#' @param directory A directory dataframe. Columns must include `address.house.number`,
-#'   `address.house.body`.
+#' @param directory A Scottish post office directory in the form of a data.frame
+#'   or other object that inherits from the data.frame class such as a
+#'   \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `address.house.number`, `address.house.body`.
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     address.trade.number = c("18, 20", "12"),
-#'     address.house.number = c("136", NA),
-#'     address.trade.body = c("London Road", "Dixon Place"),
-#'     address.house.body = c("Queen Square", NA),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   combine_label_failed_matches(directory)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`.
+#'   Columns include `address.house.number`, `address.house.body`. For entries
+#'   for which both `address.house.number` and `address.house.body` are `NA`,
+#'   `address.house.number` and `address.house.body` are labelled as "" and
+#'   "Failed to match with general directory" respectively.
 combine_label_failed_matches <- function(directory){
   dplyr::mutate(
     directory,
@@ -259,13 +212,18 @@ combine_label_failed_matches <- function(directory){
 
 #' Match general to trades directory records
 #'
-#' Attempts to complement trades directory dataframe with house address
-#'   information from the general directory dataframe provided by matching records
-#'   from the two datasets using the distance metric specified.
+#' Attempts to complement Scottish post office trades directory data.frame with
+#'   house address information from the Scottish post office general directory
+#'   data.frame provided by matching records from the two datasets using the
+#'   distance metric specified.
 #'
-#' @param trades_directory A trades directory dataframe. Columns must include
+#' @param trades_directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`.
-#' @param general_directory A general directory dataframe. Columns must include
+#' @param general_directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
 #'   `address.house.number`, `address.house.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
@@ -273,38 +231,17 @@ combine_label_failed_matches <- function(directory){
 #' @param ... Further arguments to be passed down to
 #'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
 #'
-#' @return A dataframe.
+#' @return A data.frame of the same class as that of the one provided in
+#'   `trades_directory` and/or `general_directory`. Should `trades_directory` and
+#'   `general_directory`be provided as objects of different classes, the class of
+#'   the return data.frame will be that of the parent class. i.e. if
+#'   `trades_directory` and `general_directory` are provided as a pure data.frame
+#'   and a \code{\link[tibble]{tibble}} respectively, a pure data.frame is
+#'   returned. Columns include at least `surname`, `forename`,
+#'   `address.trade.number`, `address.trade.body`, `address.house.number`,
+#'   `address.house.body`.
 #'
 #' @seealso \code{\link{combine_match_general_to_trades}}.
-#'
-#' @examples
-#' \dontrun{
-#'   trades_directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     rank = c("135", "326", "586"),
-#'     surname = c("Abbott", "Abercromby", "Blair"),
-#'     forename = c("William", "Alexander", "John Hugh"),
-#'     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
-#'     type = rep("OWN ACCOUNT", 3L),
-#'     address.trade.number = c("18, 20", "12", "280"),
-#'     address.trade.body = c("London Road", "Dixon Place", "High Street"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   general_directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     address.trade.number = c("18, 20", ""),
-#'     address.house.number = c("136", "29"),
-#'     address.trade.body = c("London Road", "Dixon Place"),
-#'     address.house.body = c("Queen Square", "Anderston Quay"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   combine_match_general_to_trades_plain(
-#'    trades_directory, general_directory, verbose = FALSE,
-#'    method = "osa", max_dist = 5
-#'   )
-#' }
 combine_match_general_to_trades_plain <- function(
   trades_directory, general_directory, verbose, ...
 ) {
@@ -332,14 +269,19 @@ combine_match_general_to_trades_plain <- function(
 
 #' Match general to trades directory records
 #'
-#' Attempts to complement trades directory dataframe with house address
-#'   information from the general directory dataframe provided by matching records
-#'   from the two datasets using the distance metric specified. Shows a progress
-#'   bar indicating function progression.
+#' Attempts to complement Scottish post office trades directory data.frame with
+#'   house address information from the Scottish post office general directory
+#'   data.frame provided by matching records from the two datasets using the
+#'   distance metric specified. Shows a progress bar indicating function
+#'   progression.
 #'
-#' @param trades_directory A trades directory dataframe. Columns must include
+#' @param trades_directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`.
-#' @param general_directory A general directory dataframe. Columns must include
+#' @param general_directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
 #'   `address.house.number`, `address.house.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
@@ -347,38 +289,17 @@ combine_match_general_to_trades_plain <- function(
 #' @param ... Further arguments to be passed down to
 #'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
 #'
-#' @return A dataframe.
+#' @return A data.frame of the same class as that of the one provided in
+#'   `trades_directory` and/or `general_directory`. Should `trades_directory` and
+#'   `general_directory`be provided as objects of different classes, the class of
+#'   the return data.frame will be that of the parent class. i.e. if
+#'   `trades_directory` and `general_directory` are provided as a pure data.frame
+#'   and a \code{\link[tibble]{tibble}} respectively, a pure data.frame is
+#'   returned. Columns include at least `surname`, `forename`,
+#'   `address.trade.number`, `address.trade.body`, `address.house.number`,
+#'   `address.house.body`.
 #'
 #' @seealso \code{\link{combine_match_general_to_trades}}.
-#'
-#' @examples
-#' \dontrun{
-#'   trades_directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     rank = c("135", "326", "586"),
-#'     surname = c("Abbott", "Abercromby", "Blair"),
-#'     forename = c("William", "Alexander", "John Hugh"),
-#'     occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
-#'     type = rep("OWN ACCOUNT", 3L),
-#'     address.trade.number = c("18, 20", "12", "280"),
-#'     address.trade.body = c("London Road", "Dixon Place", "High Street"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   general_directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     address.trade.number = c("18, 20", ""),
-#'     address.house.number = c("136", "29"),
-#'     address.trade.body = c("London Road", "Dixon Place"),
-#'     address.house.body = c("Queen Square", "Anderston Quay"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   combine_match_general_to_trades_plain(
-#'    trades_directory, general_directory, verbose = FALSE,
-#'    method = "osa", max_dist = 5
-#'   )
-#' }
 combine_match_general_to_trades_progress <- function(
   trades_directory, general_directory, verbose, ...
 ) {
@@ -403,13 +324,18 @@ combine_match_general_to_trades_progress <- function(
 
 #' Match general to trades directory records
 #'
-#' Attempts to complement trades directory dataframe with house address
-#'   information from the general directory dataframe provided by matching records
-#'   from the two datasets using the distance metric specified.
+#' Attempts to complement Scottish post office trades directory data.frame with
+#'   house address information from the Scottish post office general directory
+#'   data.frame provided by matching records from the two datasets using the
+#'   distance metric specified.
 #'
-#' @param trades_directory A trades directory dataframe. Columns must include
+#' @param trades_directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`.
-#' @param general_directory A general directory dataframe. Columns must include
+#' @param general_directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
 #'   `address.house.number`, `address.house.body`.
 #' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
@@ -418,7 +344,9 @@ combine_match_general_to_trades_progress <- function(
 #' @param ... Further arguments to be passed down to
 #'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
 #'
-#' @return A tibble
+#' @return A \code{\link[tibble]{tibble}}; columns include at least `surname`,
+#'   `forename`, `address.trade.number`, `address.trade.body`,
+#'   `address.house.number`, `address.house.body`.
 #'
 #' @examples
 #' trades_directory <- tibble::tibble(

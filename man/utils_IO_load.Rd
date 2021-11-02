@@ -13,7 +13,7 @@ utils_IO_load(...)
 R object from destination \code{.rds} file.
 }
 \description{
-Load saved object as \code{.rds} file. back into memory.
+Load saved object as \code{.rds} file back into memory.
 }
 \examples{
 \dontrun{

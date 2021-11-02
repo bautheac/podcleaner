@@ -2,7 +2,8 @@
 % Please edit documentation in R/general.r
 \name{general_split_address_numbers_bodies}
 \alias{general_split_address_numbers_bodies}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_split_address_numbers_bodies(
   directory,
@@ -14,7 +15,9 @@ general_split_address_numbers_bodies(
 )
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
 \code{address.trade} and \code{address.house}.}
 
 \item{regex_split_address_numbers}{Regex to use to match address number(s).}
@@ -32,28 +35,11 @@ regex in \code{\link{utils_regmatches_if_found}}.}
 regex in \code{\link{utils_regmatches_if_found}}.}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{address.trade.number}, \code{address.trade.body},
+\code{address.house.number} and \code{address.house.body}.
 }
 \description{
-Attempts to separate number from body of address entries in general directory
-dataframe provided.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71"),
-    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-    occupation = c("Wine and spirit merchant", "Baker"),
-    address.trade = c("18, 20 London Street", "12 Dixon Street"),
-    address.house = c("136 Queen Street", "265 Argyle Street"),
-    stringsAsFactors = FALSE
-  )
-  regex_split_address_numbers <- globals_regex_split_address_numbers
-  regex_split_address_body <- globals_regex_split_address_body
-  regex_split_address_empty <- globals_regex_split_address_empty
-  general_split_address_numbers_bodies(
-    directory, regex_split_address_numbers, regex_split_address_body,
-    regex_split_address_empty, ignore_case_filter = TRUE, ignore_case_match = TRUE
-  )
-}
+Attempts to separate number from body of address entries in the Scottish
+post office general directory data.frame provided
 }

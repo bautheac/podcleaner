@@ -2,21 +2,17 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_pre_clean}
 \alias{clean_address_pre_clean}
-\title{Pre-cleaning operation for address entries}
+\title{Pre-cleaning operation for address entry(/ies)}
 \usage{
 clean_address_pre_clean(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector with address(es) cleaner than the one
+provided in \code{addresses}.
 }
 \description{
-Performs pre-cleaning operations on provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_pre_clean(c(": 1S20 Londun st.   -", "13<J st enoch sq,;"))
-}
+Performs pre-cleaning operations on provided address entry(/ies).
 }

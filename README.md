@@ -17,7 +17,8 @@ Scotland](https://digital.nls.uk/directories/). `podcleaner` attempts to
 clean optical character recognition (OCR) errors in directory records
 after they’ve been parsed and saved to “csv” files using a third party
 tool\[1\]. The package further attempts to match records from trades and
-general directories.
+general directories. See the tests folder for examples running
+unexported functions.
 
 ## Load
 
@@ -126,7 +127,7 @@ print.data.frame(trades_directory)
 #> 3                  280       High Street.
 ```
 
-## Match records
+## Match
 
 Match general to trades directory records:
 
@@ -158,6 +159,12 @@ in arguments. Under the hood the
 package and the
 [stringdist\_left\_join](https://www.rdocumentation.org/packages/fuzzyjoin/versions/0.1.6/topics/stringdist_join)
 function in particular, help with the matching operations.
+
+## Save
+
+``` r
+utils_IO_write(directory, "dev", "post-office-directory")
+```
 
 1.  See for example the python
     [podparser](https://pythonhosted.org/podparser/) library.

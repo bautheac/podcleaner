@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_attached_words}
 \alias{clean_address_attached_words}
-\title{Clean attached words in address entries}
+\title{Clean attached words in address entry(/ies)}
 \usage{
 clean_address_attached_words(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) cleaned of attached words.
 }
 \description{
-Attempts to separate attached words in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_attached_words(c("18, 20 LondonSt.", "12 Dixon.st."))
-}
+Attempts to separate attached words in provided address entry(/ies).
 }

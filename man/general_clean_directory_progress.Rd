@@ -2,36 +2,32 @@
 % Please edit documentation in R/general.r
 \name{general_clean_directory_progress}
 \alias{general_clean_directory_progress}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_clean_directory_progress(directory, verbose)
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{occupation},
-\code{forename}, \code{surname} and \code{addresses}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{forename}, \code{surname}, \code{occupation} and \code{addresses}.}
 
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{forename}, \code{surname}, \code{occupation},
+\code{address.trade.number}, \code{address.trade.body}, \code{address.house.number} and
+\code{address.house.body}. "house" suffix in \code{occupation} column is move to
+\code{addresses}, occupation information is repatriated from \code{addresses} to
+\code{occupation} column; \code{addresses} is split into trade and house address
+column; additional records are created for each extra trade address
+identified. Entries are further cleaned of optical character recognition
+(OCR) errors and subject to a number of standardisation operations.
 }
 \description{
-Attempts to clean the provided general directory dataframe provided. Shows a
-progress bar indication the progression of the function.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71"),
-    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-    occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-    addresses = c(
-      "1S20 Londn rd; ho. 13<J Queun sq",
-      "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-    ),
-    stringsAsFactors = FALSE
-  )
-  general_clean_entries(directory, verbose = FALSE)
-}
+Attempts to clean the provided Scottish post office general directory
+data.frame. Shows a progress bar indication the progression of the function.
 }

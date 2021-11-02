@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_possessives}
 \alias{clean_address_possessives}
-\title{Standardise possessives in address entries}
+\title{Standardise possessives in address entry(/ies)}
 \usage{
 clean_address_possessives(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with clean possessive(s).
 }
 \description{
-Attempts to standardise possessives in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_possessives(c("Adam's Court", "Aird's Lane"))
-}
+Attempts to standardise possessives in provided address entry(/ies).
 }

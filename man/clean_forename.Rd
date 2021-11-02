@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_forename}
 \alias{clean_forename}
-\title{Clean entries forename}
+\title{Clean entry(/ies) forename}
 \usage{
 clean_forename(names)
 }
@@ -10,7 +10,7 @@ clean_forename(names)
 \item{names}{A character string vector of forename(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of cleaned forename(s).
 }
 \description{
 Attempts to clean provided forename.
@@ -22,8 +22,3 @@ letter occurring the most frequently in the dataset. i.e A. -> Alexander,
 B. -> Bernard, C. -> Colin, D. -> David, etc.
 }
 
-\examples{
-\dontrun{
-  clean_forename(c("McWm.", "Jas."))
-}
-}

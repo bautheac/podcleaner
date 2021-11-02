@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_parentheses}
 \alias{clean_parentheses}
-\title{Clean entries of in brackets information}
+\title{Clean entry(/ies) of in brackets information}
 \usage{
 clean_parentheses(x)
 }
@@ -10,13 +10,8 @@ clean_parentheses(x)
 \item{x}{A character string vector.}
 }
 \value{
-A vector of character strings.
+A character string vector with within brackets content removed.
 }
 \description{
-Attempts to clean entries of unwanted information displayed in brackets.
-}
-\examples{
-\dontrun{
-  clean_parentheses("Miller street. (Agents).")
-}
+Attempts to clean entry(/ies) of unwanted information displayed in brackets.
 }

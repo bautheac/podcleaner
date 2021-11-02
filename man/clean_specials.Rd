@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_specials}
 \alias{clean_specials}
-\title{Clean entries special characters}
+\title{Clean entry(/ies) special characters}
 \usage{
 clean_specials(x)
 }
@@ -10,13 +10,8 @@ clean_specials(x)
 \item{x}{A character string vector.}
 }
 \value{
-A vector of character strings.
+A character string vector with special character(s) removed.
 }
 \description{
-Attempts to clean entries of unwanted special characters
-}
-\examples{
-\dontrun{
-  clean_specials(c("Wine and spirit \u00bbmerchant", "Mac\u00bb William"))
-}
+Attempts to clean entry(/ies) of unwanted special character(s).
 }

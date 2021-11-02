@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_surname}
 \alias{clean_surname}
-\title{Clean entries surname}
+\title{Clean entry(/ies) surname}
 \usage{
 clean_surname(names)
 }
@@ -10,7 +10,7 @@ clean_surname(names)
 \item{names}{A character string vector of surname(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of cleaned surname(s).
 }
 \description{
 Attempts to clean provided surname.
@@ -22,8 +22,3 @@ in the general directory. i.e. Abercrombie, Abercromby -> Abercromby;
 Bayne, Baynes -> Bayne; Beattie, Beatty -> Beatty; etc.
 }
 
-\examples{
-\dontrun{
-  clean_surname(c("ABOT", "ABRCROMBIE"))
-}
-}

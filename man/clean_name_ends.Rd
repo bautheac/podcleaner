@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_name_ends}
 \alias{clean_name_ends}
-\title{Clean ends in entries names}
+\title{Clean ends in entry(/ies) names}
 \usage{
 clean_name_ends(names)
 }
 \arguments{
-\item{names}{A character string vector of addresses.}
+\item{names}{A character string vector of names}
 }
 \value{
-A vector of character strings.
+A character string vector of names with clean ends.
 }
 \description{
-Attempts to clean ends in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_name_ends(c("William-", "$Alexander", "John Hugh   "))
-}
+Attempts to clean ends in provided name entry(/ies).
 }

@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_title}
 \alias{clean_title}
-\title{Clean entries name title}
+\title{Clean entry(/ies) name title}
 \usage{
-clean_title(titles)
+clean_title(names)
 }
 \arguments{
-\item{titles}{A character string vector of title(s).}
+\item{names}{A character string vector of name(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of name(s) with cleaned title(s).
 }
 \description{
 Attempts to clean titles attached to names provided: Captain, Major, etc.
-}
-\examples{
-\dontrun{
-  clean_title(c("  Capt Wm. ABOT", "?-Rev Alex ABRCROMBIE"))
-}
 }

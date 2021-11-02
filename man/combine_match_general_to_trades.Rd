@@ -13,10 +13,14 @@ combine_match_general_to_trades(
 )
 }
 \arguments{
-\item{trades_directory}{A trades directory dataframe. Columns must include
+\item{trades_directory}{A Scottish post office trades directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
 \code{surname}, \code{forename}, \code{address.trade.number}, \code{address.trade.body}.}
 
-\item{general_directory}{A general directory dataframe. Columns must include
+\item{general_directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
 \code{surname}, \code{forename}, \code{address.trade.number}, \code{address.trade.body},
 \code{address.house.number}, \code{address.house.body}.}
 
@@ -29,12 +33,15 @@ not (\code{TRUE}).}
 \code{\link[fuzzyjoin]{stringdist_left_join}}.}
 }
 \value{
-A tibble
+A \code{\link[tibble]{tibble}}; columns include at least \code{surname},
+\code{forename}, \code{address.trade.number}, \code{address.trade.body},
+\code{address.house.number}, \code{address.house.body}.
 }
 \description{
-Attempts to complement trades directory dataframe with house address
-information from the general directory dataframe provided by matching records
-from the two datasets using the distance metric specified.
+Attempts to complement Scottish post office trades directory data.frame with
+house address information from the Scottish post office general directory
+data.frame provided by matching records from the two datasets using the
+distance metric specified.
 }
 \examples{
 trades_directory <- tibble::tibble(

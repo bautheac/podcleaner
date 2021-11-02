@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_worksites}
 \alias{clean_address_worksites}
-\title{Clean worksites in address entries}
+\title{Clean worksites in address entry(/ies)}
 \usage{
 clean_address_worksites(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with clean worksite name(s).
 }
 \description{
-Attempts to clean worksites in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_worksites("Woodyd")
-}
+Attempts to clean worksites in provided address entry(/ies).
 }

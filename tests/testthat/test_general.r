@@ -10,7 +10,7 @@ test_that("general_move_house_to_address works in general", {
   )
   regex <- globals_regex_house_to_address
   out <- tibble::tibble(
-    page = c("71", "71", "71"),
+    page = rep("71", 3L),
     surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
     occupation = c(
       "Wine and spirit merchant", "Baker", "Victualer"
@@ -23,14 +23,14 @@ test_that("general_move_house_to_address works in general", {
 # repatriate_occupation_from_address ####
 test_that("general_repatriate_occupation_from_address works for various occupations", {
   directory <- tibble::tibble(
-    page = c("71", "71", "71"),
+    page = rep("71", 3L),
     surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
     occupation = c("", "Wine and spirit merchant", ""),
     addresses = c("bkr; 1820, Mary hill", "", "Victualer; 280, High stret")
   )
   regex <- globals_regex_occupation_from_address
   out <- tibble::tibble(
-    page = c("71", "71", "71"),
+    page = rep("71", 3L),
     surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
     occupation = c("bkr", "Wine and spirit merchant", "Victualer"),
     addresses = c("1820, Mary hill", "", "280, High stret")

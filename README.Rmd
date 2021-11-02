@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The Scottish Post Office directories are annual directories that provide an alphabetical list of a town’s or county’s inhabitants including their forename, surname, occupation and address(es); they provide a solid basis for researching Scotland's family, trade, and town history. A large number of these, covering most of Scotland and dating from 1773 to 1911, can be accessed in digitised form from the [National Library of Scotland](https://digital.nls.uk/directories/). `podcleaner` attempts to clean optical character recognition (OCR) errors in directory records after they've been parsed and saved to "csv" files using a third party tool^[See for example the python [podparser](https://pythonhosted.org/podparser/) library.]. The package further attempts to match records from trades and general directories. 
+The Scottish Post Office directories are annual directories that provide an alphabetical list of a town’s or county’s inhabitants including their forename, surname, occupation and address(es); they provide a solid basis for researching Scotland's family, trade, and town history. A large number of these, covering most of Scotland and dating from 1773 to 1911, can be accessed in digitised form from the [National Library of Scotland](https://digital.nls.uk/directories/). `podcleaner` attempts to clean optical character recognition (OCR) errors in directory records after they've been parsed and saved to "csv" files using a third party tool^[See for example the python [podparser](https://pythonhosted.org/podparser/) library.]. The package further attempts to match records from trades and general directories. See the tests folder for examples running unexported functions. 
 
 
 ## Load
@@ -75,7 +75,7 @@ print.data.frame(trades_directory)
 ```
 
 
-## Match records
+## Match
 
 Match general to trades directory records:
 
@@ -91,7 +91,11 @@ print.data.frame(directory)
 Directory records are compared and eventually matched using a distance metric calculated with the method and corresponding parameters specified in arguments. Under the hood the [fuzzyjoin](https://www.rdocumentation.org/packages/fuzzyjoin/versions/0.1.6) package and the [stringdist_left_join](https://www.rdocumentation.org/packages/fuzzyjoin/versions/0.1.6/topics/stringdist_join) function in particular, help with the matching operations. 
 
 
+## Save
 
+```{r save, eval = FALSE}
+utils_IO_write(directory, "dev", "post-office-directory")
 
+```
 
 

@@ -2,13 +2,16 @@
 % Please edit documentation in R/general.r
 \name{general_clean_directory}
 \alias{general_clean_directory}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_clean_directory(directory, progress = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{occupation},
-\code{forename}, \code{surname} and \code{addresses}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{forename}, \code{surname}, \code{occupation} and \code{addresses}.}
 
 \item{progress}{Whether progress should be shown (\code{TRUE}) or not (\code{FALSE}).}
 
@@ -16,10 +19,19 @@ general_clean_directory(directory, progress = TRUE, verbose = FALSE)
 not (\code{TRUE}).}
 }
 \value{
-A tibble
+A \code{\link[tibble]{tibble}}; columns include at least
+\code{forename}, \code{surname}, \code{occupation}, \code{address.trade.number},
+\code{address.trade.body}, \code{address.house.number} and \code{address.house.body}.
+"house" suffix in \code{occupation} column is move to \code{addresses}, occupation
+information is repatriated from \code{addresses} to \code{occupation} column;
+\code{addresses} is split into trade and house address columns; additional
+records are created for each extra trade address identified. Entries are
+further cleaned of optical character recognition (OCR) errors and subject
+to a number of standardisation operations.
 }
 \description{
-Attempts to clean the provided general directory dataframe provided.
+Attempts to clean the provided Scottish post office general directory
+data.frame.
 }
 \examples{
 directory <- tibble::tibble(

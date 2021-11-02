@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_forename_punctuation}
 \alias{clean_forename_punctuation}
-\title{Standardise punctuation in forenames}
+\title{Standardise punctuation in forename(s)}
 \usage{
-clean_forename_punctuation(names)
+clean_forename_punctuation(forenames)
 }
 \arguments{
-\item{names}{A character string vector of names.}
+\item{forenames}{A character string vector of forename(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of forename(s) with clean punctuation.
 }
 \description{
-Attempts to standardise punctuation in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_forename_punctuation(c("William;", "Miss", "John,Hugh"))
-}
+Attempts to standardise punctuation in provided forename entry(/ies).
 }

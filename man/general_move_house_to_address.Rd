@@ -2,38 +2,29 @@
 % Please edit documentation in R/general.r
 \name{general_move_house_to_address}
 \alias{general_move_house_to_address}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_move_house_to_address(directory, regex)
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{occupation}
-and  \code{addresses}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{occupation} and  \code{addresses}.}
 
 \item{regex}{Regex to use for the task provided as a character string.}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{occupation} and  \code{addresses}. Entries in the
+\code{occupation} column are cleaned of "house" suffix; entries showing "house"
+suffix in \code{occupation} column see "house, " pasted as prefix to
+corresponding \code{addresses} column content.
 }
 \description{
-For some raw general directory entries 'house' referring to address type lives
-in the occupation column as a result of parsing errors
-\code{general_move_house_to_address} attempts to move this information in the
-appropriate destination, the \code{addresses} column.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71", "71"),
-    surname = c("ABOT", "ABRCROMBIE", "BLAI"),
-    forename = c("Wm.", "Alex", "Jn Huh"),
-    occupation = c(
-      "Wine and spirit merchant; house", "Baker", "Victualer"
-    ),
-    addresses = c("1820 Mary hill", "", "280, High stret"),
-    stringsAsFactors = FALSE
-  )
-  regex <- globals_regex_house_to_address
-  general_move_house_to_address(directory, regex)
-}
+For some raw Scottish post office general directory entries, the word "house"
+referring to address type lives in the occupation column as a result of
+parsing errors. \code{general_move_house_to_address} attempts to move this
+information to the appropriate destination: the \code{addresses} column.
 }

@@ -7,22 +7,17 @@
 combine_label_if_match_failed(type = c("number", "body"), ...)
 }
 \arguments{
-\item{type}{A Character string: "number", "body". Type of column to label.}
+\item{type}{A Character string, one of: "number" or "body". Type of column to
+label.}
 
 \item{...}{Further arguments to be passed down to
 \code{\link{combine_has_match_failed}}}
 }
 \value{
-A character string vector.
+A character string vector: address(es) "number" or "body" as
+specified in \code{type} if match succeeded, "" (type = "number") or
+"Failed to match with general directory" (type = "body") otherwise.
 }
 \description{
 Labels failed matches as such.
-}
-\examples{
-\dontrun{
-  numbers <- c("18, 20", NA)
-  bodies <- c("London Road.", NA)
-  combine_label_if_match_failed("number", number = numbers, body = bodies)
-  combine_label_if_match_failed("body", number = numbers, body = bodies)
-}
 }

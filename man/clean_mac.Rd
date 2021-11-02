@@ -7,16 +7,11 @@
 clean_mac(names)
 }
 \arguments{
-\item{names}{A character string vector of names.}
+\item{names}{A character string vector of name(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of name(s) with clean "Mac" prefix(es).
 }
 \description{
-Attempts to standardise "Mac" prefix in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_mac("McWilliam")
-}
+Attempts to standardise "Mac" prefix in provided name entry(/ies).
 }

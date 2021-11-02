@@ -7,19 +7,14 @@
 combine_random_string_if_no_address(address)
 }
 \arguments{
-\item{address}{A character string..}
+\item{address}{A character string.}
 }
 \value{
-A length 1 character string vector.
+A length 1 character string vector: 22 character long random string
+if \code{address} labelled as missing ("No trade/house address found"),
+\code{address} otherwise.
 }
 \description{
 Returns a 22 character long random string if address provided is labelled as
-missing.
-}
-\examples{
-\dontrun{
-  combine_random_string_if_no_address(
-    c("18, 20 London Road", "No trade address found")
-  )
-}
+missing ("No trade/house address found").
 }

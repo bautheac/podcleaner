@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_surname_punctuation}
 \alias{clean_surname_punctuation}
-\title{Standardise punctuation in forenames}
+\title{Standardise punctuation in surname(s)}
 \usage{
-clean_surname_punctuation(names)
+clean_surname_punctuation(surnames)
 }
 \arguments{
-\item{names}{A character string vector of names.}
+\item{surnames}{A character string vector of surname(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of surname(s) with clean punctuation.
 }
 \description{
-Attempts to standardise punctuation in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_surname_punctuation(c("Abbott*", "*Abercromby", "Blair"))
-}
+Attempts to standardise punctuation in provided surname entry(/ies).
 }

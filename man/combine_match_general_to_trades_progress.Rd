@@ -12,10 +12,14 @@ combine_match_general_to_trades_progress(
 )
 }
 \arguments{
-\item{trades_directory}{A trades directory dataframe. Columns must include
+\item{trades_directory}{A Scottish post office trades directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
 \code{surname}, \code{forename}, \code{address.trade.number}, \code{address.trade.body}.}
 
-\item{general_directory}{A general directory dataframe. Columns must include
+\item{general_directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
 \code{surname}, \code{forename}, \code{address.trade.number}, \code{address.trade.body},
 \code{address.house.number}, \code{address.house.body}.}
 
@@ -26,42 +30,22 @@ not (\code{TRUE}).}
 \code{\link[fuzzyjoin]{stringdist_left_join}}.}
 }
 \value{
-A dataframe.
+A data.frame of the same class as that of the one provided in
+\code{trades_directory} and/or \code{general_directory}. Should \code{trades_directory} and
+\code{general_directory}be provided as objects of different classes, the class of
+the return data.frame will be that of the parent class. i.e. if
+\code{trades_directory} and \code{general_directory} are provided as a pure data.frame
+and a \code{\link[tibble]{tibble}} respectively, a pure data.frame is
+returned. Columns include at least \code{surname}, \code{forename},
+\code{address.trade.number}, \code{address.trade.body}, \code{address.house.number},
+\code{address.house.body}.
 }
 \description{
-Attempts to complement trades directory dataframe with house address
-information from the general directory dataframe provided by matching records
-from the two datasets using the distance metric specified. Shows a progress
-bar indicating function progression.
-}
-\examples{
-\dontrun{
-  trades_directory <- data.frame(
-    page = rep("71", 2L),
-    rank = c("135", "326", "586"),
-    surname = c("Abbott", "Abercromby", "Blair"),
-    forename = c("William", "Alexander", "John Hugh"),
-    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
-    type = rep("OWN ACCOUNT", 3L),
-    address.trade.number = c("18, 20", "12", "280"),
-    address.trade.body = c("London Road", "Dixon Place", "High Street"),
-    stringsAsFactors = FALSE
-  )
-  general_directory <- data.frame(
-    page = rep("71", 2L),
-    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant", "Baker"),
-    address.trade.number = c("18, 20", ""),
-    address.house.number = c("136", "29"),
-    address.trade.body = c("London Road", "Dixon Place"),
-    address.house.body = c("Queen Square", "Anderston Quay"),
-    stringsAsFactors = FALSE
-  )
-  combine_match_general_to_trades_plain(
-   trades_directory, general_directory, verbose = FALSE,
-   method = "osa", max_dist = 5
-  )
-}
+Attempts to complement Scottish post office trades directory data.frame with
+house address information from the Scottish post office general directory
+data.frame provided by matching records from the two datasets using the
+distance metric specified. Shows a progress bar indicating function
+progression.
 }
 \seealso{
 \code{\link{combine_match_general_to_trades}}.

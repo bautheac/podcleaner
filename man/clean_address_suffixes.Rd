@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_suffixes}
 \alias{clean_address_suffixes}
-\title{Clean unwanted suffixes in address entries}
+\title{Clean unwanted suffixes in address entry(/ies)}
 \usage{
 clean_address_suffixes(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with unwanted suffix(es) removed.
 }
 \description{
-Attempts to clean unwanted suffixes in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_suffixes("36 Rose street so")
-}
+Attempts to clean unwanted suffixes in provided address entry(/ies).
 }

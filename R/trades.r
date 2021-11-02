@@ -8,35 +8,24 @@ perl <- TRUE
 
 ## trades_clean_entries ####
 
-#' Mutate operation(s) in trades directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office trades directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean entries of the provided trades directory dataframe provided.
+#' Attempts to clean entries of the provided Scottish post office trades
+#'   directory data.frame.
 #'
-#' @param directory A trades directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname`, `address.trade.number`, `address.trade.body`.
+#' @param directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation`, `address.trade.number`,
+#'   `address.trade.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 3L),
-#'     rank = c("135", "326", "586"),
-#'     surname = c("ABOT", "ABRCROMBIE", "BLAI"),
-#'     forename = c("Wm.", "Alex", "Jhn Hug"),
-#'     occupation = c(
-#'       "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr",
-#'       "Victualer"
-#'     ),
-#'     type = rep("OWN ACCOUNT", 3L),
-#'     address.trade.number = c("1S20", "I2", "2S0"),
-#'     address.trade.body = c("Londn rd.", "Dixen pl", "High St."),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   trades_clean_entries(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include the same as those in the data.frame provided in
+#'   `directory`. Entries are cleaned of optical character recognition (OCR)
+#'   errors and subject to a number of standardisation operations.
 trades_clean_entries <- function(directory, verbose){
 
   clean <- function(...){
@@ -62,33 +51,25 @@ trades_clean_entries <- function(directory, verbose){
 
 ## trades_clean_directory_plain ####
 
-#' Mutate operation(s) in trades directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office trades directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean the provided trades directory dataframe provided.
+#' Attempts to clean the provided Scottish post office trades directory
+#'   data.frame.
 #'
-#' @param directory A trades directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `address.trade.number`, `address.trade.body`.
+#' @param directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation``address.trade.number` and
+#'   `address.trade.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     rank = c("135", "326"),
-#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'     occupation = c(
-#'       "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
-#'     ),
-#'     type = rep("OWN ACCOUNT", 3L),
-#'     address.trade.number = c("1S20", "I2"),
-#'     address.trade.body = c("Londn rd.", "Dixen pl"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   trades_clean_directory(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `forename`, `surname`, `occupation`,
+#'   `address.trade.number` and `address.trade.body`. Entries are cleaned of
+#'   optical character recognition (OCR) errors and subject to a number of
+#'   standardisation operations.
 trades_clean_directory_plain <- function(directory, verbose){
 
   clean <- function(...){
@@ -102,34 +83,25 @@ trades_clean_directory_plain <- function(directory, verbose){
 
 ## trades_clean_directory_progress ####
 
-#' Mutate operation(s) in trades directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office trades directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean the provided trades directory dataframe provided. Shows a
-#'   progress bar indicating function progression.
+#' Attempts to clean the provided Scottish post office trades directory
+#'   data.frame. Shows a progress bar indicating function progression.
 #'
-#' @param directory A trades directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `address.trade.number`, `address.trade.body`.
+#' @param directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation``address.trade.number` and
+#'   `address.trade.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     rank = c("135", "326"),
-#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'     occupation = c(
-#'       "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
-#'     ),
-#'     type = rep("OWN ACCOUNT", 3L),
-#'     address.trade.number = c("1S20", "I2"),
-#'     address.trade.body = c("Londn rd.", "Dixen pl"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   trades_clean_directory(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `forename`, `surname`, `occupation`,
+#'   `address.trade.number` and `address.trade.body`. Entries are cleaned of
+#'   optical character recognition (OCR) errors and subject to a number of
+#'   standardisation operations.
 trades_clean_directory_progress <- function(directory, verbose){
 
   directory_split <- split(directory, (1L:nrow(directory) %/% 500L))
@@ -147,17 +119,26 @@ trades_clean_directory_progress <- function(directory, verbose){
 
 ## trades_clean_directory ####
 
-#' Mutate operation(s) in trades directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office trades directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean the provided trades directory dataframe provided.
+#' Attempts to clean the provided Scottish post office trades directory
+#'   data.frame.
 #'
-#' @param directory A trades directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `address.trade.number`, `address.trade.body`.
+#' @param directory A Scottish post office trades directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation``address.trade.number` and
+#'   `address.trade.body`.
 #' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A tibble
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `forename`, `surname`, `occupation`,
+#'   `address.trade.number` and `address.trade.body`. Entries are cleaned of
+#'   optical character recognition (OCR) errors and subject to a number of
+#'   standardisation operations.
 #'
 #' @examples
 #' directory <- tibble::tibble(

@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_surname_spelling}
 \alias{clean_surname_spelling}
-\title{Clean surnames spelling}
+\title{Clean surname(s) spelling}
 \usage{
-clean_surname_spelling(names)
+clean_surname_spelling(surnames)
 }
 \arguments{
-\item{names}{A character string vector of names.}
+\item{surnames}{A character string vector of surnames.}
 }
 \value{
-A vector of character strings.
+A character string vector of surnames with clean spelling.
 }
 \description{
-Attempts to clean spelling in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_surname_spelling(c("ABOT junior", "ABRCROMBIE", "BLAI senior"))
-}
+Attempts to clean spelling in provided surname entry(/ies).
 }

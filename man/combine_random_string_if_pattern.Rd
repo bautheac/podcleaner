@@ -7,21 +7,16 @@
 combine_random_string_if_pattern(string, regex)
 }
 \arguments{
-\item{string}{A character string..}
+\item{string}{A character string.}
 
 \item{regex}{Character string regex specifying the pattern to look for in
 \code{string}.}
 }
 \value{
-A length 1 character string vector.
+A length 1 character string vector: 22 character long random string
+if \code{regex} found in \code{string}, \code{string} otherwise.
 }
 \description{
-Search for specified pattern in provided string, if found returns a 22
-character long random string.
-}
-\examples{
-\dontrun{
-  combine_random_string_if_pattern("random string", "random")
-  combine_random_string_if_pattern("random string", "original")
-}
+Search for specified pattern in provided string; if found returns a 22
+character long random string otherwise return original string.
 }

@@ -12,7 +12,7 @@ utils_mute(fun, ...)
 \item{...}{Argument(s) to be passed to the function above for execution.}
 }
 \value{
-Whatever to provided function returns.
+Whatever the provided function in \code{fun} returns.
 }
 \description{
 Executes the function provided while silencing the potential messages related

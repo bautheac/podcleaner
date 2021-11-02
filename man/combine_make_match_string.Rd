@@ -2,21 +2,26 @@
 % Please edit documentation in R/combine.r
 \name{combine_make_match_string}
 \alias{combine_make_match_string}
-\title{Mutate operation(s) in directory dataframe trade address}
+\title{Mutate operation(s) in directory data.frame trade address column}
 \usage{
 combine_make_match_string(directory)
 }
 \arguments{
-\item{directory}{A directory dataframe. Columns must include \code{forename},
-\code{surname}, \code{occupation}, \code{address.trade.number}, \code{address.trade.body}.}
+\item{directory}{A Scottish post office directory in the form of a data.frame
+or other object that inherits from the data.frame class such as a
+\code{\link[tibble]{tibble}}. Columns must at least include \code{forename},
+\code{surname}, \code{address.trade.number}, \code{address.trade.body}.}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{forename}, \code{surname}, \code{address.trade.number},
+\code{address.trade.body}, \code{match.string}.
 }
 \description{
-Creates a 'match.string' column in the provided directory dataframe composed
-of entries full name and trade address pasted together.
-Missing trade address entries are replaced with a random generated string.
+Creates a 'match.string' column in the provided Scottish post office
+directory data.frame composed of entry(/ies) full name and trade address
+pasted together. Missing trade address entry(/ies) are replaced with a
+random generated string.
 }
 \section{Details}{
 
@@ -26,18 +31,6 @@ string distance metric between each pair of entries and match those falling
 below a specified threshold.
 }
 
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = rep("71", 2L),
-    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant", "Baker"),
-    address.trade = c("18, 20, London Road.", "No trade address found"),
-    stringsAsFactors = FALSE
-  )
-  combine_make_match_string(directory)
-}
-}
 \seealso{
 \code{\link{combine_match_general_to_trades}} for the matching of
 the general to trades directory.

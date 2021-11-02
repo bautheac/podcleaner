@@ -2,37 +2,29 @@
 % Please edit documentation in R/trades.r
 \name{trades_clean_directory_plain}
 \alias{trades_clean_directory_plain}
-\title{Mutate operation(s) in trades directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office trades directory data.frame
+column(s)}
 \usage{
 trades_clean_directory_plain(directory, verbose)
 }
 \arguments{
-\item{directory}{A trades directory dataframe. Columns must include \code{occupation},
-\code{forename}, \code{surname} and \code{address.trade.number}, \code{address.trade.body}.}
+\item{directory}{A Scottish post office trades directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{forename}, \code{surname}, \verb{occupation``address.trade.number} and
+\code{address.trade.body}.}
 
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{forename}, \code{surname}, \code{occupation},
+\code{address.trade.number} and \code{address.trade.body}. Entries are cleaned of
+optical character recognition (OCR) errors and subject to a number of
+standardisation operations.
 }
 \description{
-Attempts to clean the provided trades directory dataframe provided.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = rep("71", 2L),
-    rank = c("135", "326"),
-    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-    occupation = c(
-      "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
-    ),
-    type = rep("OWN ACCOUNT", 3L),
-    address.trade.number = c("1S20", "I2"),
-    address.trade.body = c("Londn rd.", "Dixen pl"),
-    stringsAsFactors = FALSE
-  )
-  trades_clean_directory(directory, verbose = FALSE)
-}
+Attempts to clean the provided Scottish post office trades directory
+data.frame.
 }

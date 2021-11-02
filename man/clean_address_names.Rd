@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_names}
 \alias{clean_address_names}
-\title{Clean place names in address entries}
+\title{Clean place name(s) in address entry(/ies)}
 \usage{
 clean_address_names(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with clean name(s).
 }
 \description{
-Attempts to clean place names in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_names(c("18, 20 Londun Street", "136 Dixn Road"))
-}
+Attempts to clean place names in provided address entry(/ies).
 }

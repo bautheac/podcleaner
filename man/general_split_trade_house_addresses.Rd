@@ -2,12 +2,16 @@
 % Please edit documentation in R/general.r
 \name{general_split_trade_house_addresses}
 \alias{general_split_trade_house_addresses}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_split_trade_house_addresses(directory, regex, verbose)
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{addresses}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{addresses}.}
 
 \item{regex}{Regex to use for the task provided as a character string.}
 
@@ -15,25 +19,13 @@ general_split_trade_house_addresses(directory, regex, verbose)
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{addresses.trade} and \code{address.house}. Trade
+addresses are separated from house address for entries for which a house
+address is provided along trade address(es).
 }
 \description{
-Attempts to separate trade and house addresses in the general directory dataframe
-provided for entries for which both are provided.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71"),
-    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant", "Baker"),
-    addresses = c(
-      "18, 20 London Street; ho. 136 Queen Street.",
-      "12 Dixon Street; res, 29 Anderston Quay."
-    ),
-    stringsAsFactors = FALSE
-  )
-  regex <- globals_regex_house_split_trade
-  general_split_trade_house_addresses(directory, regex, verbose = FALSE)
-}
+Attempts to separate house address from trade address(es) in the Scottish
+post office general directory data.frame provided for entries for which a
+house address is provided along trade address(es).
 }

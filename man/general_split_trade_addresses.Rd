@@ -2,7 +2,8 @@
 % Please edit documentation in R/general.r
 \name{general_split_trade_addresses}
 \alias{general_split_trade_addresses}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_split_trade_addresses(
   directory,
@@ -15,7 +16,10 @@ general_split_trade_addresses(
 )
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{addresses.trade}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{addresses.trade}.}
 
 \item{regex_split}{Regex to use to split addresses.}
 
@@ -35,30 +39,14 @@ undesired leftovers.}
 (\code{TRUE}) or not (\code{FALSE}) for \code{regex_match} above.}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include at least \code{address.trade}. Multiple trade addresses are
+separated for entries for which more than one are provided. Each trade
+address identified lives on an individual row with information in the other
+columns duplicated.
 }
 \description{
-Attempts to separate multiple trade addresses in the general directory dataframe
-provided for entries for which more than one are provided.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71"),
-    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant", "Baker"),
-    addresses.trade = c(
-      "18, 20 London Street, 136 Queen Street; 134, 136 South Portland Street",
-      "12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-    ),
-    stringsAsFactors = FALSE
-  )
-  regex_split <- globals_regex_split_trade_addresses
-  regex_filter <- globals_regex_and_filter
-  regex_match <- globals_regex_and_match
-  general_split_trade_addresses(
-    directory, regex_split, regex_filter, regex_match,
-    ignore_case_split = FALSE, ignore_case_filter = TRUE, ignore_case_match = FALSE
-  )
-}
+Attempts to separate multiple trade addresses in the Scottish
+post office general directory data.frame provided for entries for which
+more than one are provided.
 }

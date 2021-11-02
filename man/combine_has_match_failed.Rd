@@ -7,21 +7,15 @@
 combine_has_match_failed(number, body)
 }
 \arguments{
-\item{number}{A vector of address numbers. Integer or character string.}
+\item{number}{A vector of address number(s). Integer or character string.}
 
-\item{body}{A character string vector of address bodies.}
+\item{body}{A character string vector of address body(/ies).}
 }
 \value{
-A boolean vector.
+A boolean vector: \code{TRUE} for indexes where both
+\code{number} and \code{body} are "NA", \code{FALSE} otherwise.
 }
 \description{
 Provided with two equal length vectors, returns TRUE for indexes where both
 entries are "NA" and FALSE otherwise.
-}
-\examples{
-\dontrun{
-  numbers <- c("18, 20", NA)
-  bodies <- c("London Road.", NA)
-  combine_has_match_failed(numbers, bodies)
-}
 }

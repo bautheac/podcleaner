@@ -2,21 +2,17 @@
 % Please edit documentation in R/clean.r
 \name{clean_forename_separate_words}
 \alias{clean_forename_separate_words}
-\title{Separate double-barrelled forenames}
+\title{Separate double-barrelled forename(s)}
 \usage{
-clean_forename_separate_words(names)
+clean_forename_separate_words(forenames)
 }
 \arguments{
-\item{names}{A character string vector of addresses.}
+\item{forenames}{A character string vector of forename(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of forename(s) with clean double-barrelled
+forename(s).
 }
 \description{
-Attempts to separate double-barrelled forenames in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_forename_separate_words(c("William", "Alexander", "JohnHugh"))
-}
+Attempts to separate double-barrelled forename(s) in provided forename entry(/ies).
 }

@@ -610,9 +610,11 @@ utils_IO_path <- function(directory_path, ..., extension){
 #' @param data R object to save.
 #' @param ... Destination parameters to be passed to \code{\link{utils_IO_path}}.
 #'
+#' @return No return value, called for side effects.
+#'
 #' @examples
 #' \dontrun{
-#'   utils_IO_write(mtcars, "home/projects", "glasgow-entrepreneurs")
+#'   utils_IO_write(mtcars, "home/projects", "mtcars")
 #' }
 #'
 #' @export
@@ -627,7 +629,7 @@ utils_IO_write <- function(data, ...){
 
 #' Load object into memory
 #'
-#' Load saved object as `.rds` file. back into memory.
+#' Load saved object as `.rds` file back into memory.
 #'
 #' @param ... Destination parameters to be passed to \code{\link{utils_IO_path}}.
 #'
@@ -726,17 +728,16 @@ utils_clear_content <- function(string_search, regex_content, ignore_case){
 #' @param fun Function to execute as an expression.
 #' @param ... Argument(s) to be passed to the function above for execution.
 #'
-#' @return Whatever to provided function returns.
+#' @return Whatever the provided function in `fun` returns.
 #'
 #' @examples
 #' \dontrun{
 #'   utils_mute(message, "I'm not showing in console")
 #' }
 utils_mute <- function(fun, ...){
-  default <- getOption("warn")
-  options(warn = -1)
-  out <- suppressMessages(fun(...))
-  options(warn = default)
+
+  out <- suppressWarnings(fun(...))
+
   if (!is.null(out)) return(out)
 }
 

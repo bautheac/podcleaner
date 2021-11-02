@@ -10,13 +10,8 @@ clean_string_ends(strings)
 \item{strings}{A character string vector.}
 }
 \value{
-A vector of character strings.
+A character string vector with clean entry(/ies) ends.
 }
 \description{
-Attempts to clean ends of strings provided
-}
-\examples{
-\dontrun{
-  clean_string_ends(c(" -; 18, 20 Mary hill.*", ",,12 Dixon Street^"))
-}
+Attempts to clean ends of strings provided.
 }

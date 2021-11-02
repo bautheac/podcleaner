@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_mac}
 \alias{clean_address_mac}
-\title{Standardise "Mac" prefix in address entries}
+\title{Standardise "Mac" prefix in address entry(/ies)}
 \usage{
 clean_address_mac(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of addresses with clean "Mac" prefix(es).
 }
 \description{
-Attempts to standardise "Mac" prefix in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_mac(c("McWilliam", "M'Donald", "M c Fyfe"))
-}
+Attempts to standardise "Mac" prefix in provided address entry(/ies).
 }

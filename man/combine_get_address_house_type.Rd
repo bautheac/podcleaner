@@ -10,14 +10,8 @@ combine_get_address_house_type(column)
 \item{column}{A Character string: ends in "house.number" or "house.body".}
 }
 \value{
-A length 1 character string vector: "number" or "body".
+A Character string: "number" or "body".
 }
 \description{
-Identifies the type of the house address column provided, number or body.
-}
-\examples{
-\dontrun{
-  combine_get_address_house_type("address.house.number")
-  combine_get_address_house_type("address.house.body")
-}
+Identifies the type of the house address column provided: number or body.
 }

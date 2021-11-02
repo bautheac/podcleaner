@@ -10,13 +10,8 @@ clean_address_number(addresses)
 \item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with cleaned numbers.
 }
 \description{
-Attempts to clean number of address entries provided.
-}
-\examples{
-\dontrun{
-  clean_address_number(c("1S20 Londun st.", "13<J Dixon rd"))
-}
+Attempts to clean number of address entry(/ies) provided.
 }

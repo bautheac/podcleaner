@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_others}
 \alias{clean_address_others}
-\title{Miscellaneous cleaning operations in address entries}
+\title{Miscellaneous cleaning operations in address entry(/ies)}
 \usage{
 clean_address_others(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of clean address(es).
 }
 \description{
-Carries out miscellaneous cleaning operations in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_others(c("18, 20 London. Street, Agents", "136 Dixon Road d"))
-}
+Carries out miscellaneous cleaning operations in provided address entry(/ies).
 }

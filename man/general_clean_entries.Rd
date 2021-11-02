@@ -2,36 +2,28 @@
 % Please edit documentation in R/general.r
 \name{general_clean_entries}
 \alias{general_clean_entries}
-\title{Mutate operation(s) in general directory dataframe column(s)}
+\title{Mutate operation(s) in Scottish post office general directory data.frame
+column(s)}
 \usage{
 general_clean_entries(directory, verbose)
 }
 \arguments{
-\item{directory}{A general directory dataframe. Columns must include \code{occupation},
-\code{forename}, \code{surname}, \code{address.house.number}, \code{address.house.body} and/or
-\code{address.trade.number}, \code{address.trade.body}.}
+\item{directory}{A Scottish post office general directory in the form
+of a data.frame or other object that inherits from the data.frame class
+such as a \code{\link[tibble]{tibble}}. Columns must at least include
+\code{forename}, \code{surname}, \code{occupation}, \code{address.trade.number},
+\code{address.trade.body} and/or \code{address.house.number}, \code{address.house.body}.}
 
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory};
+columns include the same as those in the data.frame provided in
+\code{directory}. Entries are cleaned of optical character recognition (OCR)
+errors and subject to a number of standardisation operations.
 }
 \description{
-Attempts to clean entries of the provided general directory dataframe provided.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = c("71", "71"),
-    surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-    occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-    address.trade.number = c("1S20", "I2"),
-    address.house.number = c("13<J", "2G5"),
-    address.trade.body = c("Londn rd.", "Dixen pl"),
-    address.house.body = c("Queun sq", "Argul st"),
-    stringsAsFactors = FALSE
-  )
-  general_clean_entries(directory, verbose = FALSE)
-}
+Attempts to clean entries of the provided Scottish post office general
+directory data.frame provided.
 }

@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_forename_spelling}
 \alias{clean_forename_spelling}
-\title{Clean forenames spelling}
+\title{Clean forename(s) spelling}
 \usage{
-clean_forename_spelling(names)
+clean_forename_spelling(forenames)
 }
 \arguments{
-\item{names}{A character string vector of names.}
+\item{forenames}{A character string vector of forename(s).}
 }
 \value{
-A vector of character strings.
+A character string vector of forename(s) with clean forename(s) spelling.
 }
 \description{
-Attempts to clean spelling in provided name entries.
-}
-\examples{
-\dontrun{
-  clean_forename_spelling(c("Wm.", "A.", "Jn Huh"))
-}
+Attempts to clean spelling in provided forename entry(/ies).
 }

@@ -7,27 +7,19 @@
 combine_label_failed_matches(directory)
 }
 \arguments{
-\item{directory}{A directory dataframe. Columns must include \code{address.house.number},
-\code{address.house.body}.}
+\item{directory}{A Scottish post office directory in the form of a data.frame
+or other object that inherits from the data.frame class such as a
+\code{\link[tibble]{tibble}}. Columns must at least include
+\code{address.house.number}, \code{address.house.body}.}
 }
 \value{
-A dataframe.
+A data.frame of the same class as the one provided in \code{directory}.
+Columns include \code{address.house.number}, \code{address.house.body}. For entries
+for which both \code{address.house.number} and \code{address.house.body} are \code{NA},
+\code{address.house.number} and \code{address.house.body} are labelled as "" and
+"Failed to match with general directory" respectively.
 }
 \description{
-Labels failed matches as such in the provided directory dataframe.
-}
-\examples{
-\dontrun{
-  directory <- data.frame(
-    page = rep("71", 2L),
-    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-    occupation = c("Wine and spirit merchant", "Baker"),
-    address.trade.number = c("18, 20", "12"),
-    address.house.number = c("136", NA),
-    address.trade.body = c("London Road", "Dixon Place"),
-    address.house.body = c("Queen Square", NA),
-    stringsAsFactors = FALSE
-  )
-  combine_label_failed_matches(directory)
-}
+Labels failed matches as such in the provided Scottish post office directory
+data.frame.
 }

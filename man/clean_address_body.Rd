@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_body}
 \alias{clean_address_body}
-\title{Clean address entries body}
+\title{Clean address entry(/ies) body}
 \usage{
 clean_address_body(addresses)
 }
@@ -10,13 +10,8 @@ clean_address_body(addresses)
 \item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with cleaned bodies.
 }
 \description{
-Attempts to clean body of address entries provided.
-}
-\examples{
-\dontrun{
-  clean_address_body(c("1S20 Londun st.", "13<J Dixon rd"))
-}
+Attempts to clean body of address entry(/ies) provided.
 }

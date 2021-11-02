@@ -2,21 +2,16 @@
 % Please edit documentation in R/clean.r
 \name{clean_address_saints}
 \alias{clean_address_saints}
-\title{Clean "Saint" prefix in address entries}
+\title{Clean "Saint" prefix in address entry(/ies)}
 \usage{
 clean_address_saints(addresses)
 }
 \arguments{
-\item{addresses}{A character string vector of addresses.}
+\item{addresses}{A character string vector of address(es).}
 }
 \value{
-A vector of character strings.
+A character string vector of address(es) with clean "Saint" prefix(es).
 }
 \description{
-Attempts to clean "Saint" prefix in provided address entries.
-}
-\examples{
-\dontrun{
-  clean_address_saints(c("St Georges st.", "St Enoch sq"))
-}
+Attempts to clean "Saint" prefix in provided address entry(/ies).
 }

@@ -8,34 +8,25 @@ perl <- TRUE
 
 ## general_move_house_to_address ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' For some raw general directory entries 'house' referring to address type lives
-#'   in the occupation column as a result of parsing errors
-#'   `general_move_house_to_address` attempts to move this information in the
-#'   appropriate destination, the `addresses` column.
+#' For some raw Scottish post office general directory entries, the word "house"
+#'   referring to address type lives in the occupation column as a result of
+#'   parsing errors. `general_move_house_to_address` attempts to move this
+#'   information to the appropriate destination: the `addresses` column.
 #'
-#' @param directory A general directory dataframe. Columns must include `occupation`
-#'   and  `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `occupation` and  `addresses`.
 #' @param regex Regex to use for the task provided as a character string.
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71", "71"),
-#'     surname = c("ABOT", "ABRCROMBIE", "BLAI"),
-#'     forename = c("Wm.", "Alex", "Jn Huh"),
-#'     occupation = c(
-#'       "Wine and spirit merchant; house", "Baker", "Victualer"
-#'     ),
-#'     addresses = c("1820 Mary hill", "", "280, High stret"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   regex <- globals_regex_house_to_address
-#'   general_move_house_to_address(directory, regex)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `occupation` and  `addresses`. Entries in the
+#'   `occupation` column are cleaned of "house" suffix; entries showing "house"
+#'   suffix in `occupation` column see "house, " pasted as prefix to
+#'   corresponding `addresses` column content.
 general_move_house_to_address <- function(directory, regex){
   addresses <- occupation <- NULL
   dplyr::mutate(
@@ -52,41 +43,31 @@ general_move_house_to_address <- function(directory, regex){
 
 ## general_repatriate_occupation_from_address ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' For some raw general directory entries occupation information lives in the
-#'   addresses column as a result of parsing errors
-#'   `general_repatriate_occupation_from_address`
-#'   attempts to move this information in the appropriate destination, the
-#'   `occupation` column.
+#' For some raw Scottish post office general directory entries occupation
+#'   information lives in the `addresses` column as a result of parsing errors.
+#'   `general_repatriate_occupation_from_address` attempts to move this
+#'   information to the appropriate destination: the `occupation` column.
 #'
-#' @param directory A general directory dataframe. Columns must include `occupation` and
-#'   `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `occupation` and `addresses`.
 #' @param regex Regex to use for the task provided as a character string.
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71", "71"),
-#'     surname = c("ABOT", "ABRCROMBIE", "BLAI"), forename = c("Wm.", "Alex", "Jn Huh"),
-#'     occupation = c(
-#'       "", "Wine and spirit merchant", ""
-#'     ),
-#'     addresses = c("bkr; 1820, Mary hill", "", "Victualer; 280, High stret"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   regex <- globals_regex_occupation_from_address
-#'   general_repatriate_occupation_from_address(directory, regex)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `occupation` and `addresses`.
 general_repatriate_occupation_from_address <- function(directory, regex){
   addresses <- occupation <- NULL
   dplyr::mutate(
     directory,
     occupation = utils_paste_if_found(
       regex, addresses, occupation, ignore_case, occupation,
-      regmatches(addresses, gregexpr(regex, addresses, ignore.case = TRUE, perl)),
+      regmatches(
+        addresses, gregexpr(regex, addresses, ignore.case = TRUE, perl)
+      ),
       sep = " "
     ),
     addresses = utils_gsub_if_found(
@@ -99,33 +80,25 @@ general_repatriate_occupation_from_address <- function(directory, regex){
 
 ## general_split_trade_house_addresses ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to separate trade and house addresses in the general directory dataframe
-#'   provided for entries for which both are provided.
+#' Attempts to separate house address from trade address(es) in the Scottish
+#'   post office general directory data.frame provided for entries for which a
+#'   house address is provided along trade address(es).
 #'
-#' @param directory A general directory dataframe. Columns must include `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `addresses`.
 #' @param regex Regex to use for the task provided as a character string.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71"),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     addresses = c(
-#'       "18, 20 London Street; ho. 136 Queen Street.",
-#'       "12 Dixon Street; res, 29 Anderston Quay."
-#'     ),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   regex <- globals_regex_house_split_trade
-#'   general_split_trade_house_addresses(directory, regex, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `addresses.trade` and `address.house`. Trade
+#'   addresses are separated from house address for entries for which a house
+#'   address is provided along trade address(es).
 general_split_trade_house_addresses <- function(directory, regex, verbose){
 
   load <- function(...){
@@ -150,12 +123,17 @@ general_split_trade_house_addresses <- function(directory, regex, verbose){
 
 ## general_split_trade_addresses ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to separate multiple trade addresses in the general directory dataframe
-#'   provided for entries for which more than one are provided.
+#' Attempts to separate multiple trade addresses in the Scottish
+#'   post office general directory data.frame provided for entries for which
+#'   more than one are provided.
 #'
-#' @param directory A general directory dataframe. Columns must include `addresses.trade`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `addresses.trade`.
 #' @param regex_split Regex to use to split addresses.
 #' @param ignore_case_split Boolean specifying whether case should be ignored
 #'   (`TRUE`) or not (`FALSE`) for `regex_split` above.
@@ -168,28 +146,11 @@ general_split_trade_house_addresses <- function(directory, regex, verbose){
 #' @param ignore_case_match Boolean specifying whether case should be ignored
 #'   (`TRUE`) or not (`FALSE`) for `regex_match` above.
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71"),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     addresses.trade = c(
-#'       "18, 20 London Street, 136 Queen Street; 134, 136 South Portland Street",
-#'       "12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-#'     ),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   regex_split <- globals_regex_split_trade_addresses
-#'   regex_filter <- globals_regex_and_filter
-#'   regex_match <- globals_regex_and_match
-#'   general_split_trade_addresses(
-#'     directory, regex_split, regex_filter, regex_match,
-#'     ignore_case_split = FALSE, ignore_case_filter = TRUE, ignore_case_match = FALSE
-#'   )
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `address.trade`. Multiple trade addresses are
+#'   separated for entries for which more than one are provided. Each trade
+#'   address identified lives on an individual row with information in the other
+#'   columns duplicated.
 general_split_trade_addresses  <- function(
   directory,
   regex_split, ignore_case_split,
@@ -216,12 +177,15 @@ general_split_trade_addresses  <- function(
 
 ## general_split_address_numbers_bodies ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to separate number from body of address entries in general directory
-#'   dataframe provided.
+#' Attempts to separate number from body of address entries in the Scottish
+#'   post office general directory data.frame provided
 #'
-#' @param directory A general directory dataframe. Columns must include
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `address.trade` and `address.house`.
 #' @param regex_split_address_numbers Regex to use to match address number(s).
 #' @param regex_split_address_body Regex to use to match address body(/ies).
@@ -233,26 +197,9 @@ general_split_trade_addresses  <- function(
 #'   (`TRUE`) or not (`FALSE`) for using one of the regexes above as matching
 #'   regex in \code{\link{utils_regmatches_if_found}}.
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71"),
-#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'     occupation = c("Wine and spirit merchant", "Baker"),
-#'     address.trade = c("18, 20 London Street", "12 Dixon Street"),
-#'     address.house = c("136 Queen Street", "265 Argyle Street"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   regex_split_address_numbers <- globals_regex_split_address_numbers
-#'   regex_split_address_body <- globals_regex_split_address_body
-#'   regex_split_address_empty <- globals_regex_split_address_empty
-#'   general_split_address_numbers_bodies(
-#'     directory, regex_split_address_numbers, regex_split_address_body,
-#'     regex_split_address_empty, ignore_case_filter = TRUE, ignore_case_match = TRUE
-#'   )
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `address.trade.number`, `address.trade.body`,
+#'   `address.house.number` and `address.house.body`.
 general_split_address_numbers_bodies <- function(
   directory, regex_split_address_numbers, regex_split_address_body,
   regex_split_address_empty, ignore_case_filter, ignore_case_match
@@ -286,34 +233,30 @@ general_split_address_numbers_bodies <- function(
 
 ## general_fix_structure ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to fix the structure of the raw general directory dataframe provided.
-#'   For each entry, attempts to fix parsing errors by moving pieces if information
-#'   provided in the right columns, attempts to separate trade from house address,
-#'   attempt to separate multiple trade addresses, attempt to separate number from
+#' Attempts to fix the structure of the raw Scottish post office general
+#'   directory data.frame provided. For each entry, `general_fix_structure`
+#'   attempts to fix parsing errors by moving pieces of information provided to
+#'   the right columns; further attempts to separate trade from house address,
+#'   separate multiple trade addresses as well as separate number from
 #'   address body.
 #'
-#' @param directory A general directory dataframe. Columns must include `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `occupation`, `addresses`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71"),
-#'     surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
-#'     occupation = c("Wine and spirit merchant; house", ""),
-#'     addresses = c(
-#'       "18, 20 London Street",
-#'       "Baker; 12 Dixon Street, & 29 Anderston Quay; and 265 Argyle Street."
-#'     ),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   general_fix_structure(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `occupation`, `address.trade.number`,
+#'   `address.trade.body`, `address.house.number` and `address.house.body`.
+#'   "house" suffix in `occupation` column is move to `addresses`, occupation
+#'   information is repatriated from `addresses` to `occupation` column;
+#'   `addresses` is split into trade and house address columns; additional
+#'   records are created for each extra trade address identified.
 general_fix_structure <- function(directory, verbose){
 
   fix <- function(...){
@@ -322,31 +265,40 @@ general_fix_structure <- function(directory, verbose){
     # to the beginning of addresses columns.
     general_move_house_to_address(directory, globals_regex_house_to_address) %>%
 
-    # Fix occupation in addresses column when possible: move back to occupation column ####
+    # Fix occupation in addresses column ####
+    # when possible, move back to occupation column
       general_repatriate_occupation_from_address(
         globals_regex_occupation_from_address
       ) %>%
 
-    # Get rid of "depot", "office", "store", "works" or "workshops" address prefix ####
+    # Get rid of address prefix ####
+    # Address entries are cleared of "depot", "office", "store", "works" or
+    # "workshops" prefixes.
       utils_remove_address_prefix(globals_regex_address_prefix, ignore_case) %>%
 
-    # Create trade and house addresses by splitting raw addresses on "house" or variant ####
-    # If "residence" matches, don't match "house", otherwise match "house".
+    # Create trade and house addresses ####
+    # Splitting raw addresses on "house" or variant. If "residence" matches,
+    # don't match "house", otherwise match "house".
       general_split_trade_house_addresses(
         globals_regex_house_split_trade, verbose = verbose
       ) %>%
 
     # Split multiple trade addresses ####
       general_split_trade_addresses(
-        regex_split = globals_regex_split_trade_addresses, ignore_case_split = FALSE,
-        regex_filter = globals_regex_and_filter, ignore_case_filter = TRUE,
-        regex_match = globals_regex_and_match, ignore_case_match = FALSE
+        regex_split = globals_regex_split_trade_addresses,
+        ignore_case_split = FALSE,
+        regex_filter = globals_regex_and_filter,
+        ignore_case_filter = TRUE,
+        regex_match = globals_regex_and_match,
+        ignore_case_match = FALSE
       ) %>%
 
     # Split numbers and address bodies ####
       general_split_address_numbers_bodies(
-        globals_regex_split_address_numbers, globals_regex_split_address_body,
-        globals_regex_split_address_empty, ignore_case_filter = TRUE,
+        globals_regex_split_address_numbers,
+        globals_regex_split_address_body,
+        globals_regex_split_address_empty,
+        ignore_case_filter = TRUE,
         ignore_case_match = TRUE
       )
   }
@@ -359,32 +311,24 @@ general_fix_structure <- function(directory, verbose){
 
 ## general_clean_entries ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean entries of the provided general directory dataframe provided.
+#' Attempts to clean entries of the provided Scottish post office general
+#'   directory data.frame provided.
 #'
-#' @param directory A general directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname`, `address.house.number`, `address.house.body` and/or
-#'   `address.trade.number`, `address.trade.body`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation`, `address.trade.number`,
+#'   `address.trade.body` and/or `address.house.number`, `address.house.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71"),
-#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"),
-#'     address.trade.number = c("1S20", "I2"),
-#'     address.house.number = c("13<J", "2G5"),
-#'     address.trade.body = c("Londn rd.", "Dixen pl"),
-#'     address.house.body = c("Queun sq", "Argul st"),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   general_clean_entries(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include the same as those in the data.frame provided in
+#'   `directory`. Entries are cleaned of optical character recognition (OCR)
+#'   errors and subject to a number of standardisation operations.
 general_clean_entries <- function(directory, verbose){
 
   clean <- function(...){
@@ -407,31 +351,28 @@ general_clean_entries <- function(directory, verbose){
 
 ## general_clean_directory_plain ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean the provided general directory dataframe provided.
+#' Attempts to clean the provided Scottish post office general directory
+#'   data.frame.
 #'
-#' @param directory A general directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation` and `addresses`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = rep("71", 2L),
-#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-#'     addresses = c(
-#'       "1S20 Londn rd; ho. 13<J Queun sq",
-#'       "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-#'     ),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   general_clean_entries(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `forename`, `surname`, `occupation`,
+#'   `address.trade.number`, `address.trade.body`, `address.house.number` and
+#'   `address.house.body`. "house" suffix in `occupation` column is move to
+#'   `addresses`, occupation information is repatriated from `addresses` to
+#'   `occupation` column; `addresses` is split into trade and house address
+#'   column; additional records are created for each extra trade address
+#'   identified. Entries are further cleaned of optical character recognition
+#'   (OCR) errors and subject to a number of standardisation operations.
 general_clean_directory_plain <- function(directory, verbose){
 
   clean <- function(...){
@@ -448,32 +389,28 @@ general_clean_directory_plain <- function(directory, verbose){
 
 ## general_clean_directory_progress ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean the provided general directory dataframe provided. Shows a
-#'   progress bar indication the progression of the function.
+#' Attempts to clean the provided Scottish post office general directory
+#'   data.frame. Shows a progress bar indication the progression of the function.
 #'
-#' @param directory A general directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation` and `addresses`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A dataframe.
-#'
-#' @examples
-#' \dontrun{
-#'   directory <- data.frame(
-#'     page = c("71", "71"),
-#'     surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'     occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-#'     addresses = c(
-#'       "1S20 Londn rd; ho. 13<J Queun sq",
-#'       "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-#'     ),
-#'     stringsAsFactors = FALSE
-#'   )
-#'   general_clean_entries(directory, verbose = FALSE)
-#' }
+#' @return A data.frame of the same class as the one provided in `directory`;
+#'   columns include at least `forename`, `surname`, `occupation`,
+#'   `address.trade.number`, `address.trade.body`, `address.house.number` and
+#'   `address.house.body`. "house" suffix in `occupation` column is move to
+#'   `addresses`, occupation information is repatriated from `addresses` to
+#'   `occupation` column; `addresses` is split into trade and house address
+#'   column; additional records are created for each extra trade address
+#'   identified. Entries are further cleaned of optical character recognition
+#'   (OCR) errors and subject to a number of standardisation operations.
 general_clean_directory_progress <- function(directory, verbose){
 
   directory_split <- split(directory, (1L:nrow(directory) %/% 500L))
@@ -491,17 +428,29 @@ general_clean_directory_progress <- function(directory, verbose){
 
 ## general_clean_directory ####
 
-#' Mutate operation(s) in general directory dataframe column(s)
+#' Mutate operation(s) in Scottish post office general directory data.frame
+#'   column(s)
 #'
-#' Attempts to clean the provided general directory dataframe provided.
+#' Attempts to clean the provided Scottish post office general directory
+#'   data.frame.
 #'
-#' @param directory A general directory dataframe. Columns must include `occupation`,
-#'   `forename`, `surname` and `addresses`.
+#' @param directory A Scottish post office general directory in the form
+#'   of a data.frame or other object that inherits from the data.frame class
+#'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
+#'   `forename`, `surname`, `occupation` and `addresses`.
 #' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #'
-#' @return A tibble
+#' @return A \code{\link[tibble]{tibble}}; columns include at least
+#'   `forename`, `surname`, `occupation`, `address.trade.number`,
+#'   `address.trade.body`, `address.house.number` and `address.house.body`.
+#'   "house" suffix in `occupation` column is move to `addresses`, occupation
+#'   information is repatriated from `addresses` to `occupation` column;
+#'   `addresses` is split into trade and house address columns; additional
+#'   records are created for each extra trade address identified. Entries are
+#'   further cleaned of optical character recognition (OCR) errors and subject
+#'   to a number of standardisation operations.
 #'
 #' @examples
 #' directory <- tibble::tibble(

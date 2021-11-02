@@ -21,7 +21,7 @@ test_that("combine_random_string_if_no_address works for various patterns", {
 })
 
 # no_trade_address_to_randon_string ####
-test_that("combine_no_trade_address_to_randon_string works in general", {
+test_that("combine_no_trade_address_to_random_string works in general", {
   directory <- tibble::tibble(
     page = rep("71", 2L),
     rank = c("135", "326"),
@@ -39,7 +39,7 @@ test_that("combine_no_trade_address_to_randon_string works in general", {
     type = rep("OWN ACCOUNT", 2L),
     address.trade = c("18, 20, London Road.", "GNZuCtwed3CAgNlUizNmvD"),
   )
-  expect_equal(combine_no_trade_address_to_randon_string(directory), out)
+  expect_equal(combine_no_trade_address_to_random_string(directory), out)
 })
 
 # make_match_string ####
