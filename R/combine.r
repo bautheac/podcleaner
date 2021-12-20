@@ -341,6 +341,9 @@ combine_match_general_to_trades_progress <- function(
 #' @param progress Whether progress should be shown (`TRUE`) or not (`FALSE`).
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
+#' @param distance Whether (`TRUE`) or not (`FALSE`) a column 'distance' showing
+#' the string distance between records used for their matching and calculated
+#' using the method specified below should be added to the output dataset.
 #' @param ... Further arguments to be passed down to
 #'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
 #'
@@ -370,21 +373,24 @@ combine_match_general_to_trades_progress <- function(
 #' )
 #' combine_match_general_to_trades(
 #'  trades_directory, general_directory, progress = TRUE, verbose = FALSE,
-#'  method = "osa", max_dist = 5
+#'  distance = TRUE, method = "osa", max_dist = 5
 #' )
 #'
 #' @export
 combine_match_general_to_trades <- function(
-  trades_directory, general_directory, progress = TRUE, verbose = FALSE, ...
+  trades_directory, general_directory, progress = TRUE, verbose = FALSE,
+  distance = TRUE, ...
 ){
 
   out <- if (progress)
     combine_match_general_to_trades_progress(
-      trades_directory, general_directory, verbose, ...
+      trades_directory, general_directory, verbose,
+      distance_col = ifelse(distance, 'distance', NULL), ...
     )
   else
     combine_match_general_to_trades_plain(
-      trades_directory, general_directory, verbose, ...
+      trades_directory, general_directory, verbose,
+      distance_col = ifelse(distance, 'distance', NULL), ...
     )
 
   dplyr::distinct(tibble::tibble(out))

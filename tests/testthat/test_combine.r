@@ -241,7 +241,8 @@ test_that("combine_match_general_to_trades works in general", {
     address.house.number = c("136", "29", ""),
     address.house.body = c(
       "Queen Square", "Anderston Quay", "Failed to match with general directory"
-    )
+    ),
+    distance = c(0L, 4L, NA)
   )
   expect_equal(
     combine_match_general_to_trades(

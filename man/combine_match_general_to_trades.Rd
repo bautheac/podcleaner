@@ -9,6 +9,7 @@ combine_match_general_to_trades(
   general_directory,
   progress = TRUE,
   verbose = FALSE,
+  distance = TRUE,
   ...
 )
 }
@@ -28,6 +29,10 @@ such as a \code{\link[tibble]{tibble}}. Columns must at least include
 
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
+
+\item{distance}{Whether (\code{TRUE}) or not (\code{FALSE}) a column 'distance' showing
+the string distance between records used for their matching and calculated
+using the method specified below should be added to the output dataset.}
 
 \item{...}{Further arguments to be passed down to
 \code{\link[fuzzyjoin]{stringdist_left_join}}.}
@@ -65,7 +70,7 @@ general_directory <- tibble::tibble(
 )
 combine_match_general_to_trades(
  trades_directory, general_directory, progress = TRUE, verbose = FALSE,
- method = "osa", max_dist = 5
+ distance = TRUE, method = "osa", max_dist = 5
 )
 
 }

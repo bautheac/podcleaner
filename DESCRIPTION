@@ -2,13 +2,12 @@ Package: podcleaner
 Title: Legacy Scottish Post Office Directories Cleaner
 Version: 0.1.1
 Authors@R: 
-    c(
-        person(
-            "Olivier", "Bautheac", , "olivier.bautheac@strath.ac.uk",
-            role = c("aut", "cre")
-        ),
-        person(given = "University of Strathclyde", role = c("cph", "fnd"))
-    )
+    c(person(given = "Olivier",
+             family = "Bautheac",
+             role = c("aut", "cre"),
+             email = "olivier.bautheac@strath.ac.uk"),
+      person(given = "University of Strathclyde",
+             role = c("cph", "fnd")))
 Description: Attempts to clean optical character recognition (OCR) errors in 
   legacy Scottish Post Office Directories. Further attempts to match records from 
   trades and general directories.  
