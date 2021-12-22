@@ -132,8 +132,10 @@ print.data.frame(trades_directory)
 Match general to trades directory records:
 
 ``` r
+distance <- TRUE; matches <- TRUE
+
 directory <- combine_match_general_to_trades(
-  trades_directory, general_directory, progress, verbose,
+  trades_directory, general_directory, progress, verbose, distance, matches,
   method = "osa", max_dist = 5L
 )
 
@@ -146,10 +148,14 @@ print.data.frame(directory)
 #> 1               18, 20       London Road.                  136
 #> 2                   12       Dixon Place.                  265
 #> 3                  280       High Street.                     
-#>                       address.house.body
-#> 1                          Queen Square.
-#> 2                         Argyle Street.
-#> 3 Failed to match with general directory
+#>                       address.house.body distance
+#> 1                          Queen Square.        0
+#> 2                         Argyle Street.        5
+#> 3 Failed to match with general directory       NA
+#>                                     match
+#> 1    Abbott William - 18, 20, London Road
+#> 2 Abercromby Alexander - 12, Dixon Street
+#> 3                                    <NA>
 ```
 
 Directory records are compared and eventually matched using a distance

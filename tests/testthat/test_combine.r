@@ -157,7 +157,7 @@ test_that("combine_match_general_to_trades_plain works in general", {
   )
   expect_equal(
     combine_match_general_to_trades_plain(
-      trades_directory, general_directory, verbose = FALSE,
+      trades_directory, general_directory, verbose = FALSE, matches = FALSE,
       method = "osa", max_dist = 5
     ),
     out
@@ -201,7 +201,7 @@ test_that("combine_match_general_to_trades_progress works in general", {
   )
   expect_equal(
     combine_match_general_to_trades_progress(
-      trades_directory, general_directory, verbose = FALSE,
+      trades_directory, general_directory, verbose = FALSE, matches = FALSE,
       method = "osa", max_dist = 5
     ),
     out
@@ -209,7 +209,53 @@ test_that("combine_match_general_to_trades_progress works in general", {
 })
 
 # match_general_to_trades ####
-test_that("combine_match_general_to_trades works in general", {
+
+## plain ####
+test_that("combine_match_general_to_trades works (plain)", {
+  trades_directory <- tibble::tibble(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street")
+  )
+  general_directory <- tibble::tibble(
+    page = rep("71", 2L),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade.number = c("18, 20", ""),
+    address.house.number = c("136", "29"),
+    address.trade.body = c("London Road", "Dixon Place"),
+    address.house.body = c("Queen Square", "Anderston Quay")
+  )
+  out <- tibble::tibble(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street"),
+    address.house.number = c("136", "29", ""),
+    address.house.body = c(
+      "Queen Square", "Anderston Quay", "Failed to match with general directory"
+    )
+  )
+  expect_equal(
+    combine_match_general_to_trades(
+      trades_directory, general_directory, progress = TRUE, verbose = FALSE,
+      distance = FALSE, matches = FALSE, method = "osa", max_dist = 5
+    ),
+    out
+  )
+})
+
+## distance ####
+test_that("combine_match_general_to_trades works (distance)", {
   trades_directory <- tibble::tibble(
     page = rep("71", 3L),
     rank = c("135", "326", "586"),
@@ -247,9 +293,103 @@ test_that("combine_match_general_to_trades works in general", {
   expect_equal(
     combine_match_general_to_trades(
       trades_directory, general_directory, progress = TRUE, verbose = FALSE,
-      method = "osa", max_dist = 5
+      distance = TRUE, matches = FALSE, method = "osa", max_dist = 5
     ),
     out
   )
 })
 
+## matches ####
+test_that("combine_match_general_to_trades works (matches)", {
+  trades_directory <- tibble::tibble(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street")
+  )
+  general_directory <- tibble::tibble(
+    page = rep("71", 2L),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade.number = c("18, 20", ""),
+    address.house.number = c("136", "29"),
+    address.trade.body = c("London Road", "Dixon Place"),
+    address.house.body = c("Queen Square", "Anderston Quay")
+  )
+  out <- tibble::tibble(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street"),
+    address.house.number = c("136", "29", ""),
+    address.house.body = c(
+      "Queen Square", "Anderston Quay", "Failed to match with general directory"
+    ),
+    match = c(
+      "Abbott William - 18, 20, London Road", "Abercromby Alexander - Dixon Place", NA
+    )
+  )
+  expect_equal(
+    combine_match_general_to_trades(
+      trades_directory, general_directory, progress = TRUE, verbose = FALSE,
+      distance = FALSE, matches = TRUE, method = "osa", max_dist = 5
+    ),
+    out
+  )
+})
+
+## distance & matches ####
+test_that("combine_match_general_to_trades works (distance & matches)", {
+  trades_directory <- tibble::tibble(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street")
+  )
+  general_directory <- tibble::tibble(
+    page = rep("71", 2L),
+    surname = c("Abbott", "Abercromby"), forename = c("William", "Alexander"),
+    occupation = c("Wine and spirit merchant", "Baker"),
+    address.trade.number = c("18, 20", ""),
+    address.house.number = c("136", "29"),
+    address.trade.body = c("London Road", "Dixon Place"),
+    address.house.body = c("Queen Square", "Anderston Quay")
+  )
+  out <- tibble::tibble(
+    page = rep("71", 3L),
+    rank = c("135", "326", "586"),
+    surname = c("Abbott", "Abercromby", "Blair"),
+    forename = c("William", "Alexander", "John Hugh"),
+    occupation = c("Wine and spirit merchant", "Baker", "Victualler"),
+    type = rep("OWN ACCOUNT", 3L),
+    address.trade.number = c("18, 20", "12", "280"),
+    address.trade.body = c("London Road", "Dixon Place", "High Street"),
+    address.house.number = c("136", "29", ""),
+    address.house.body = c(
+      "Queen Square", "Anderston Quay", "Failed to match with general directory"
+    ),
+    distance = c(0L, 4L, NA),
+    match = c(
+      "Abbott William - 18, 20, London Road", "Abercromby Alexander - Dixon Place", NA
+    )
+  )
+  expect_equal(
+    combine_match_general_to_trades(
+      trades_directory, general_directory, progress = TRUE, verbose = FALSE,
+      distance = TRUE, matches = TRUE, method = "osa", max_dist = 5
+    ),
+    out
+  )
+})

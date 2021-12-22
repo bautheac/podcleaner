@@ -10,6 +10,7 @@ combine_match_general_to_trades(
   progress = TRUE,
   verbose = FALSE,
   distance = TRUE,
+  matches = TRUE,
   ...
 )
 }
@@ -33,6 +34,10 @@ not (\code{TRUE}).}
 \item{distance}{Whether (\code{TRUE}) or not (\code{FALSE}) a column 'distance' showing
 the string distance between records used for their matching and calculated
 using the method specified below should be added to the output dataset.}
+
+\item{matches}{Whether (\code{TRUE}) or not (\code{FALSE}) a column 'match' showing
+general directory matches' name and address(es) should be added to the
+output dataset.}
 
 \item{...}{Further arguments to be passed down to
 \code{\link[fuzzyjoin]{stringdist_left_join}}.}

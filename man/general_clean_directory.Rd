@@ -34,14 +34,17 @@ Attempts to clean the provided Scottish post office general directory
 data.frame.
 }
 \examples{
+pages <- rep("71", 2L)
+surnames <- c("ABOT", "ABRCROMBIE")
+forenames <- c("Wm.", "Alex")
+occupations <- c("Wine and spirit mercht - See Advertisement in Appendix.", "")
+addresses = c(
+  "1S20 Londn rd; ho. 13<J Queun sq",
+  "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
+)
 directory <- tibble::tibble(
-  page = rep("71", 2L),
-  surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-  occupation = c("Wine and spirit mercht — See Advertisement in Appendix.", ""),
-  addresses = c(
-    "1S20 Londn rd; ho. 13<J Queun sq",
-    "Bkr; I2 Dixon Street, & 29 Auderstn Qu.; res 2G5 Argul st."
-  )
+  page = pages, surname = surnames, forename = forenames,
+  occupation = occupations, addresses = addresses
 )
 general_clean_directory(directory, progress = TRUE, verbose = FALSE)
 

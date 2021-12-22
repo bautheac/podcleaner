@@ -1969,7 +1969,7 @@ globals_regex_and_match <- "^and\\s\\K.+"
 #' @format A character string vector.
 #'
 #' @seealso \code{\link{utils_clear_irrelevants}}
-globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s?[\u2014(]\\s?See.+|Appendix.+)"
+globals_regex_irrelevants <- "(?:character\\(0\\)?\\.?|\\s?[\u2014\\-(]\\s?See.+|Appendix.+)"
 
 
 ## globals_regex_split_address_numbers ####

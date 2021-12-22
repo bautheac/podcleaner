@@ -226,6 +226,9 @@ combine_label_failed_matches <- function(directory){
 #'   such as a \code{\link[tibble]{tibble}}. Columns must at least include
 #'   `surname`, `forename`, `address.trade.number`, `address.trade.body`,
 #'   `address.house.number`, `address.house.body`.
+#' @param matches Whether (`TRUE`) or not (`FALSE`) a column 'match' showing
+#'   general directory matches' name and address(es) should be added to the
+#'   output dataset.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #' @param ... Further arguments to be passed down to
@@ -243,10 +246,10 @@ combine_label_failed_matches <- function(directory){
 #'
 #' @seealso \code{\link{combine_match_general_to_trades}}.
 combine_match_general_to_trades_plain <- function(
-  trades_directory, general_directory, verbose, ...
+  trades_directory, general_directory, verbose, matches, ...
 ) {
 
-  fun <- function(trades_directory, general_directory, ...) {
+  fun <- function(trades_directory, general_directory, matches, ...) {
     match.string <- NULL
 
     trades_directory <- combine_make_match_string(trades_directory)
@@ -257,11 +260,18 @@ combine_match_general_to_trades_plain <- function(
       x = trades_directory, y = general_directory, by = "match.string", ...
     )
 
-    dplyr::select(combined, -dplyr::matches("match")) %>%
-      combine_label_failed_matches()
+    combined <- if (matches){
+      dplyr::select(
+        combined, -dplyr::matches("match.string.x"), match = dplyr::matches("match.string.y")
+      ) %>%
+        dplyr::relocate(match, .after = dplyr::last_col())
+    } else { dplyr::select(combined, -dplyr::matches("match.string")) }
+
+    combine_label_failed_matches(combined)
+
   }
 
-  utils_execute(verbose, fun, trades_directory, general_directory, ...)
+  utils_execute(verbose, fun, trades_directory, general_directory, matches, ...)
 }
 
 
@@ -286,6 +296,9 @@ combine_match_general_to_trades_plain <- function(
 #'   `address.house.number`, `address.house.body`.
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
+#' @param matches Whether (`TRUE`) or not (`FALSE`) a column 'match' showing
+#'   general directory matches' name and address(es) should be added to the
+#'   output dataset.
 #' @param ... Further arguments to be passed down to
 #'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
 #'
@@ -301,7 +314,7 @@ combine_match_general_to_trades_plain <- function(
 #'
 #' @seealso \code{\link{combine_match_general_to_trades}}.
 combine_match_general_to_trades_progress <- function(
-  trades_directory, general_directory, verbose, ...
+  trades_directory, general_directory, verbose, matches, ...
 ) {
 
   trades_directory_split <- split(
@@ -315,7 +328,7 @@ combine_match_general_to_trades_progress <- function(
 
   purrr::map_dfr(trades_directory_split, function(df) {
     pb$tick()
-    combine_match_general_to_trades_plain(df, general_directory, verbose, ...)
+    combine_match_general_to_trades_plain(df, general_directory, verbose, matches, ...)
   })
 }
 
@@ -342,8 +355,11 @@ combine_match_general_to_trades_progress <- function(
 #' @param verbose Whether the function should be executed silently (`FALSE`) or
 #'   not (`TRUE`).
 #' @param distance Whether (`TRUE`) or not (`FALSE`) a column 'distance' showing
-#' the string distance between records used for their matching and calculated
-#' using the method specified below should be added to the output dataset.
+#'   the string distance between records used for their matching and calculated
+#'   using the method specified below should be added to the output dataset.
+#' @param matches Whether (`TRUE`) or not (`FALSE`) a column 'match' showing
+#'   general directory matches' name and address(es) should be added to the
+#'   output dataset.
 #' @param ... Further arguments to be passed down to
 #'   \code{\link[fuzzyjoin]{stringdist_left_join}}.
 #'
@@ -379,21 +395,23 @@ combine_match_general_to_trades_progress <- function(
 #' @export
 combine_match_general_to_trades <- function(
   trades_directory, general_directory, progress = TRUE, verbose = FALSE,
-  distance = TRUE, ...
+  distance = TRUE, matches = TRUE, ...
 ){
 
-  out <- if (progress)
+  combined <- if (progress)
     combine_match_general_to_trades_progress(
-      trades_directory, general_directory, verbose,
-      distance_col = ifelse(distance, 'distance', NULL), ...
+      trades_directory, general_directory, verbose, matches,
+      distance_col = "distance", ...
     )
   else
     combine_match_general_to_trades_plain(
-      trades_directory, general_directory, verbose,
-      distance_col = ifelse(distance, 'distance', NULL), ...
+      trades_directory, general_directory, verbose, matches,
+      distance_col = "distance", ...
     )
 
-  dplyr::distinct(tibble::tibble(out))
+  combined <- dplyr::distinct(tibble::tibble(combined))
+
+  if (distance) { combined } else { dplyr::select(combined, -distance) }
 }
 
 

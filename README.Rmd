@@ -80,8 +80,10 @@ print.data.frame(trades_directory)
 Match general to trades directory records:
 
 ```{r `match records`}
+distance <- TRUE; matches <- TRUE
+
 directory <- combine_match_general_to_trades(
-  trades_directory, general_directory, progress, verbose,
+  trades_directory, general_directory, progress, verbose, distance, matches,
   method = "osa", max_dist = 5L
 )
 

@@ -8,6 +8,7 @@ combine_match_general_to_trades_progress(
   trades_directory,
   general_directory,
   verbose,
+  matches,
   ...
 )
 }
@@ -25,6 +26,10 @@ such as a \code{\link[tibble]{tibble}}. Columns must at least include
 
 \item{verbose}{Whether the function should be executed silently (\code{FALSE}) or
 not (\code{TRUE}).}
+
+\item{matches}{Whether (\code{TRUE}) or not (\code{FALSE}) a column 'match' showing
+general directory matches' name and address(es) should be added to the
+output dataset.}
 
 \item{...}{Further arguments to be passed down to
 \code{\link[fuzzyjoin]{stringdist_left_join}}.}

@@ -141,16 +141,20 @@ trades_clean_directory_progress <- function(directory, verbose){
 #'   standardisation operations.
 #'
 #' @examples
+#' pages <- rep("71", 2L)
+#' ranks <- c("135", "326")
+#' surnames <- c("ABOT", "ABRCROMBIE")
+#' forenames <- c("Wm.", "Alex")
+#' occupations <- c(
+#'   "Wine and spirit mercht - See Advertisement in Appendix.", "Bkr"
+#' )
+#' types <- rep("OWN ACCOUNT", 2L)
+#' numbers <- c("1S20", "I2")
+#' bodies <- c("Londn rd.", "Dixen pl")
 #' directory <- tibble::tibble(
-#'   page = rep("71", 2L),
-#'   rank = c("135", "326"),
-#'   surname = c("ABOT", "ABRCROMBIE"), forename = c("Wm.", "Alex"),
-#'   occupation = c(
-#'     "Wine and spirit mercht — See Advertisement in Appendix.", "Bkr"
-#'   ),
-#'   type = rep("OWN ACCOUNT", 2L),
-#'   address.trade.number = c("1S20", "I2"),
-#'   address.trade.body = c("Londn rd.", "Dixen pl")
+#'   page = pages, rank = ranks, surname = surnames, forename = forenames,
+#'   occupation = occupations, type = types,
+#'   address.trade.number = numbers, address.trade.body = bodies
 #' )
 #' trades_clean_directory(directory, progress = TRUE, verbose = FALSE)
 #'
