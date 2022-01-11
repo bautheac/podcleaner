@@ -8,7 +8,7 @@ Authors@R:
              email = "olivier.bautheac@strath.ac.uk"),
       person(given = "University of Strathclyde",
              role = c("cph", "fnd")))
-Maintainer: Olivier Bautheac <o.bautheac@gmail.com>
+Maintainer: Olivier Bautheac <olivier.bautheac@strath.ac.uk>
 Description: Attempts to clean optical character recognition (OCR) errors in 
   legacy Scottish Post Office Directories. Further attempts to match records from 
   trades and general directories.  
